@@ -1,7 +1,6 @@
 # Исключаем всё
 *
 
-.consulo/
 *.csproj
 *.unityproj
 *.sln
@@ -16,6 +15,7 @@
 *.mdb
 *.opendb
 *.VC.db
+*.vrm
 
 !.gitignore
 
