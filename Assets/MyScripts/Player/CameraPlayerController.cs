@@ -7,7 +7,6 @@ public class CameraPlayerController
     public static CameraPlayerController self;
     public Camera firstPersonCamera; // Камера от первого лица
     public Camera thirdPersonCamera; // Камера от третьего лица
-    private Camera activeCamera;
     private CamerasController _camerasController;
 
     // private Transform playerCameraBody; // Тело игрока
@@ -17,7 +16,6 @@ public class CameraPlayerController
     // public bool isPlayerMove = false;
     private Vector2 _lookInput;
     public float lookSpeed = 12f;
-    private float xRotation = 0f;
 
     public Transform _pointHeadCamera; // Точка, на которой фокусируется камера
     private Transform pointHeadAimCamera;
@@ -60,27 +58,20 @@ public class CameraPlayerController
         _camerasController.AddCamera(firstPersonCamera, CamerasController.Cameras.firstPersonCamera);
         _camerasController.AddCamera(thirdPersonCamera, CamerasController.Cameras.thirdPersonCamera);
         _camerasController.SetActiveCamera(CamerasController.Cameras.thirdPersonCamera);
-        
+
         EditPointAimCameraXY();
     }
     public void SetLookInput(Vector2 lookInput) { _lookInput = lookInput; }
 
     public void Update()
     {
-        activeCamera = _camerasController.activeCamera;
-
         float mouseX = _lookInput.x * lookSpeed * Time.deltaTime;
         float mouseY = _lookInput.y * lookSpeed * Time.deltaTime;
 
-        if (_camerasController.activeCameraName == CamerasController.Cameras.thirdPersonCamera)
-        {
-            HandleThirdPersonRotation(mouseX, mouseY, activeCamera.transform);
-        }
-        else if (_camerasController.activeCameraName == CamerasController.Cameras.firstPersonCamera)
-        {
-            HandleFirstPersonRotation(mouseX, mouseY, activeCamera.transform);
-        }
-        cameraBeforePosition = activeCamera.transform.position;
+        HandleThirdPersonRotation(mouseX, mouseY, thirdPersonCamera.transform);
+        firstPersonCamera.transform.localRotation = thirdPersonCamera.transform.localRotation;
+
+        cameraBeforePosition = thirdPersonCamera.transform.position;
     }
 
     public void OnScrollInputPerformed(InputAction.CallbackContext ctx)
@@ -94,18 +85,6 @@ public class CameraPlayerController
         targetCameraDistanceFar = targetCameraDistanceNow;
         // Debug.Log($"scrollValue {scrollValue} targetCameraDistanceNow {currentCameraDistance}");
     }
-
-    private void HandleFirstPersonRotation(float mouseX, float mouseY, Transform cameraTransform)
-    {
-        // Вращение камеры и тела персонажа для вида от первого лица
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
-        cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        playerCameraBody.Rotate(Vector3.up * mouseX);
-        // playerModel.localRotation = Quaternion.identity;
-    }
-
 
     private void HandleThirdPersonRotation(float mouseX, float mouseY, Transform cameraTransform)
     {
@@ -140,25 +119,11 @@ public class CameraPlayerController
         cameraTransform.position = _pointHeadCamera.position + direction;
 
         RotatePlayerToCameraAndCompensate(cameraTransform, direction.normalized); // Компенсируем поворот камеры, чтобы она оставалась на месте при движении
-        // AdjustPlayerModelRotation(oldPlayerModelRotation); // Тело игрока поворачивается только во время движения
         CameraRaycast(); // камера не проходит сквозь текстуры
         AdjustCameraDistance(smoothCameraDistance); // менять расстояние камеры колёсиком мыши (или если камера уперлась в потолок/стены и тд)
         PointAimCameraDynamicDistance();
-        activeCamera.transform.LookAt(pointAimCamera);
+        thirdPersonCamera.transform.LookAt(pointAimCamera);
     }
-
-    // private void AdjustPlayerModelRotation(Quaternion oldPlayerModelRotation)
-    // {
-    //     if (isPlayerMove)
-    //     {
-    //         // Если персонаж движется, сбрасываем поворот модели к изначальному состоянию
-    //         playerModel.localRotation = Quaternion.Slerp(playerModel.localRotation, Quaternion.identity, Time.deltaTime * rotationSpeed);
-    //     }
-    //     else
-    //     {
-    //         playerModel.rotation = oldPlayerModelRotation;
-    //     }
-    // }
 
     private void RotatePlayerToCameraAndCompensate(Transform cameraTransform, Vector3 cameraDirection)
     {
@@ -208,8 +173,6 @@ public class CameraPlayerController
 
     private void AdjustCameraDistance(float smoothCamera)
     {
-        Camera activeCamera = thirdPersonCamera;
-
         // Плавное приближение текущего расстояния камеры к целевому
         currentCameraDistance = Mathf.SmoothDamp(
             currentCameraDistance,
@@ -219,9 +182,9 @@ public class CameraPlayerController
         );
 
         // Рассчитываем направление от игрока до камеры
-        Vector3 direction = (activeCamera.transform.position - _pointHeadCamera.position).normalized;
+        Vector3 direction = (thirdPersonCamera.transform.position - _pointHeadCamera.position).normalized;
         // Обновляем позицию камеры
-        activeCamera.transform.position = _pointHeadCamera.position + direction * currentCameraDistance;
+        thirdPersonCamera.transform.position = _pointHeadCamera.position + direction * currentCameraDistance;
     }
 
 
@@ -271,7 +234,7 @@ public class CameraPlayerController
     private bool CheckCameraPath(float distance)
     {
         Vector3 pointHeadCamera = _pointHeadCamera.position;
-        Vector3 directionToCamera = (activeCamera.transform.position - pointHeadCamera).normalized;
+        Vector3 directionToCamera = (thirdPersonCamera.transform.position - pointHeadCamera).normalized;
         Vector3 targetPointDistance2 = pointHeadCamera + directionToCamera * distance;
 
         RaycastHit[] hitsForward = Physics.SphereCastAll(pointHeadCamera, cameraRadius, directionToCamera, distance, ~cameraIgnoreLayerMask)
@@ -302,7 +265,7 @@ public class CameraPlayerController
 
     private bool DidCameraPassThroughObstacle()
     {
-        Vector3 cameraCurrentPosition = activeCamera.transform.position;
+        Vector3 cameraCurrentPosition = thirdPersonCamera.transform.position;
 
         // Кидаем луч от старой позиции к новой
         if (Physics.Raycast(cameraBeforePosition, (cameraCurrentPosition - cameraBeforePosition).normalized,

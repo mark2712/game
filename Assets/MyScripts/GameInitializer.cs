@@ -5,11 +5,7 @@ using UnityEngine;
 public class GameInitializer : MonoBehaviour
 {
     PlayerController playerController;
-    // CamerasController camerasController;
-    // CameraPlayerController cameraPlayerController;
-
-    private GameStateManager gameStateManager;
-    private MoveStateManager _moveStateManager;
+    private States.MainStateManager mainStateManager;
     private InputController _inputController;
     private PlayerInputActions _inputActions;
 
@@ -17,17 +13,12 @@ public class GameInitializer : MonoBehaviour
     {
 
         playerController = GameContext.playerController;
-        // camerasController = GameContext.camerasController;
-        // cameraPlayerController = GameContext.cameraPlayerController;
-        // uiManager = GameContext.uiManager;
-
         _inputActions = GameContext.inputActions;
-        gameStateManager = GameContext.gameStateManager;
-        _moveStateManager = GameContext.moveStateManager;
+        mainStateManager = GameContext.mainStateManager;
         _inputController = GameContext.inputController;
 
         // Начальное состояние
-        gameStateManager.GoToStateEnter(new StandState());
+        mainStateManager.GoToStateEnter(new States.GameState());
 
         // Инициализация ввода
         _inputController.InitializeInput(_inputActions);
@@ -41,7 +32,7 @@ public class GameInitializer : MonoBehaviour
     void Update()
     {
         playerController.Update();
-        gameStateManager.Update();
+        mainStateManager.Update();
     }
     // void LateUpdate()
     // {
@@ -50,7 +41,7 @@ public class GameInitializer : MonoBehaviour
     void FixedUpdate()
     {
         playerController.FixedUpdate();
-        gameStateManager.FixedUpdate();
+        mainStateManager.FixedUpdate();
     }
 }
 
@@ -60,30 +51,35 @@ public class GameInitializer : MonoBehaviour
 public static class GameContext
 {
     public static PlayerController playerController { get; }
+    public static PlayerModelRotationSync playerModelRotationSync { get; }
     public static CamerasController camerasController { get; }
     public static CameraPlayerController cameraPlayerController { get; }
     public static UIManager uiManager { get; }
-    public static GameStateManager gameStateManager { get; }
-    public static MoveStateManager moveStateManager { get; }
+    public static States.MainStateManager mainStateManager { get; }
     public static InputController inputController { get; }
     public static PlayerInputActions inputActions { get; }
 
     static GameContext()
     {
         GameObject player = GameObject.Find("Player");
+        Transform playerModel = player.transform.Find("PlayerModel");
         GameObject playerCamera = GameObject.Find("PlayerCamera");
         GameObject uiManagerGameObject = GameObject.Find("UIManager");
 
         playerController = new(player);
+        playerController.OnGroundStateChanged += isGround => { States.Flags.Ground = isGround; };
+
+        playerModelRotationSync = playerModel.GetComponent<PlayerModelRotationSync>();
+
         camerasController = new();
         cameraPlayerController = new(playerCamera, camerasController);
 
         uiManager = uiManagerGameObject.GetComponent<UIManager>();
 
         inputActions = new PlayerInputActions();
-        gameStateManager = new();
-        moveStateManager = new();
-        inputController = new InputController(gameStateManager);
+        mainStateManager = new();
+        inputController = new InputController(mainStateManager);
+        States.FlagsEvents flagsEvents = new(mainStateManager);
     }
 }
 

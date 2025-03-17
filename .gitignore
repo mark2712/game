@@ -16,6 +16,7 @@
 *.opendb
 *.VC.db
 *.vrm
+*.meta
 
 !.gitignore
 

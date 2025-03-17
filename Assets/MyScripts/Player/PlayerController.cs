@@ -1,7 +1,14 @@
+using System;
 using UnityEngine;
 
 public class PlayerController
 {
+    // public float baseMoveSpeed = 4f;
+    public float baseMoveSpeed
+    {
+        get => 4f;
+        private set { }
+    }
     public float nowMoveSpeed = 4f;
     public float jumpForce = 9f;
     public float gravityScaleNow = 2f;
@@ -11,7 +18,22 @@ public class PlayerController
     public bool isMoveOn;
     public bool isJump = false;
     public bool isJumpOn;
-    public bool isGround;
+
+    public event Action<bool> OnGroundStateChanged;
+    private bool _isGround;
+    public bool IsGround
+    {
+        get => _isGround;
+        private set
+        {
+            if (_isGround != value)
+            {
+                _isGround = value;
+                OnGroundStateChanged?.Invoke(_isGround);
+            }
+        }
+    }
+
     public enum GroundState { Ground, Wall, Air }
     public GroundState groundedRay = GroundState.Ground;
     public GroundState groundedSphereRay = GroundState.Ground;
@@ -36,6 +58,7 @@ public class PlayerController
 
     private PhysicsMaterial _playerSkinMaterial;
     private PhysicsMaterial _playerMaterial;
+    public Transform playerModel;
 
     public PlayerController(GameObject Player)
     {
@@ -56,6 +79,9 @@ public class PlayerController
         _characterBottomCollider = player.Find("ColliderBottom").GetComponent<CapsuleCollider>();
         if (_characterBottomCollider == null) Debug.LogError("CharacterBottom CapsuleCollider не найден! Убедитесь, что он находится на объекте Player.");
 
+        playerModel = player.Find("PlayerModel");
+        if (playerModel == null) Debug.LogError("PlayerModel не найден!");
+
         _stepOffsetContainer = player.Find("StepOffsetContainer");
         stepOffset1 = _stepOffsetContainer.Find("StepOffset1");
         stepOffset2 = _stepOffsetContainer.Find("StepOffset2");
@@ -64,6 +90,7 @@ public class PlayerController
 
         _playerSkinMaterial = _characterCollider.sharedMaterial;
         _playerMaterial = _characterBottomCollider.sharedMaterial;
+
 
         layerMask = LayerMask.GetMask("Player");
 
@@ -89,8 +116,14 @@ public class PlayerController
         move = (player.right * _moveInput.x + player.forward * _moveInput.y).normalized * nowMoveSpeed;
         isMove = move.magnitude > 0.01f;
 
+        if (isMove) // вращение персонажа в сторону камеры происходит тольок при движении
+        {
+            characterRigidbody.MoveRotation(CameraPlayerController.self.playerCameraBody.rotation);
+            // characterRigidbody.MoveRotation(Quaternion.Slerp(characterRigidbody.rotation, CameraPlayerController.self.playerCameraBody.rotation, Time.deltaTime * 20f));
+        }
+
         CheckGround();
-        isGround = groundedRay == GroundState.Ground || groundedSphereRay == GroundState.Ground;
+        IsGround = groundedRay == GroundState.Ground || groundedSphereRay == GroundState.Ground;
 
         if (groundedSphereRay == GroundState.Wall)
         {
@@ -103,7 +136,7 @@ public class PlayerController
 
         if (slopeLimitCollisionOn)
         {
-            if (!isGround)
+            if (!IsGround)
             {
                 isJumpOn = false; // прыжок запрещен
                 isMoveOn = false; // движение ограничено
@@ -114,8 +147,6 @@ public class PlayerController
         {
             if (isMove)
             {
-                characterRigidbody.MoveRotation(CameraPlayerController.self.playerCameraBody.rotation);
-                // characterRigidbody.MoveRotation(Quaternion.Slerp(characterRigidbody.rotation, CameraPlayerController.self.playerCameraBody.rotation, Time.deltaTime * 20f));
                 return _playerSkinMaterial;
             }
             else
@@ -154,7 +185,7 @@ public class PlayerController
             Vector3 relativeMove = move + new Vector3(_platformVelocity.x, 0, _platformVelocity.z);
             Vector3 velocityChange = relativeMove - new Vector3(velocity.x, 0, velocity.z);
 
-            if (isGround)
+            if (IsGround)
             {
                 float stepeHight = CheckForSteps(move);
                 if (stepeHight > 0)
@@ -186,7 +217,7 @@ public class PlayerController
     }
     private void Jump(float jumpForce)
     {
-        if (isGround && isJumpOn)
+        if (IsGround && isJumpOn)
         {
             float currentVerticalSpeed = characterRigidbody.linearVelocity.y;
             if (currentVerticalSpeed > 0) { currentVerticalSpeed = 0; }
