@@ -25,6 +25,7 @@ namespace States
             throw new Exception("Можно вызвать только у GameState");
         }
 
+        public virtual void OnMoveChanged() { }
         public virtual void OnGroundChanged() { }
         public virtual void OnShiftChanged() { }
 
@@ -77,6 +78,7 @@ namespace States
 
     interface IStateFlagsEvents
     {
+        void OnMoveChanged();
         void OnGroundChanged();
         void OnShiftChanged();
     }

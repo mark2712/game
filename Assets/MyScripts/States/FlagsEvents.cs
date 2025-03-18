@@ -8,6 +8,7 @@ namespace States
         {
             _mainStateManager = mainStateManager;
 
+            Flags.OnMoveChanged += _ => _mainStateManager.OnMoveChanged();
             Flags.OnGroundChanged += _ => _mainStateManager.OnGroundChanged();
             Flags.OnShiftChanged += _ => _mainStateManager.OnShiftChanged();
         }

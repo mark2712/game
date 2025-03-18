@@ -6,13 +6,11 @@ namespace States
 {
     public class MoveState : MoveStateBase
     {
-        public override void ShiftPerformed()
+        public override void Enter()
         {
-            Flags.Shift = true;
-        }
-        public override void KeyX_performed()
-        {
-            Flags.Shift = true;
+            GameContext.playerController.nowMoveSpeed = GameContext.playerController.BaseMoveSpeed;
+            GameContext.playerModelRotationSync.MoveSync(true);
+            GameContext.playerAnimationController.Move();
         }
     }
 }

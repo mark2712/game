@@ -12,7 +12,7 @@ namespace States
 
         public override void Enter()
         {
-            GameContext.playerModelRotationSync.MoveSync(true);
+            // GameContext.playerModelRotationSync.MoveSync(true);
         }
 
         public override void Update()
@@ -39,6 +39,11 @@ namespace States
         {
             // GoToState<JumpState>();
             GameContext.playerController.Jump();
+        }
+
+        public override void OnMoveChanged()
+        {
+            GoToState(new GameState());
         }
 
         public override void OnGroundChanged()
@@ -69,6 +74,20 @@ namespace States
         public override void KeyI_performed()
         {
             GoToState(new DialogState());
+        }
+
+
+        public override void ShiftPerformed()
+        {
+            Flags.Shift = true;
+        }
+        public override void ShiftCanceled()
+        {
+            Flags.Shift = false;
+        }
+        public override void KeyX_performed()
+        {
+            Flags.Shift = !Flags.Shift;
         }
     }
 }

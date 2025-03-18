@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerController
 {
     // public float baseMoveSpeed = 4f;
-    public float baseMoveSpeed
+    public float BaseMoveSpeed
     {
         get => 4f;
         private set { }
@@ -14,12 +14,27 @@ public class PlayerController
     public float gravityScaleNow = 2f;
     public byte slopeLimit = 55;
     public float _groundedRayLength;
-    public bool isMove;
+
+    public event Action<bool> OnMoveChanged;
+    private bool _isMove;
+    public bool IsMove
+    {
+        get => _isMove;
+        private set
+        {
+            if (_isMove != value)
+            {
+                _isMove = value;
+                OnMoveChanged?.Invoke(_isMove);
+            }
+        }
+    }
+
     public bool isMoveOn;
     public bool isJump = false;
     public bool isJumpOn;
 
-    public event Action<bool> OnGroundStateChanged;
+    public event Action<bool> OnGroundChanged;
     private bool _isGround;
     public bool IsGround
     {
@@ -29,7 +44,7 @@ public class PlayerController
             if (_isGround != value)
             {
                 _isGround = value;
-                OnGroundStateChanged?.Invoke(_isGround);
+                OnGroundChanged?.Invoke(_isGround);
             }
         }
     }
@@ -114,9 +129,9 @@ public class PlayerController
         isMoveOn = true;
 
         move = (player.right * _moveInput.x + player.forward * _moveInput.y).normalized * nowMoveSpeed;
-        isMove = move.magnitude > 0.01f;
+        IsMove = move.magnitude > 0.01f;
 
-        if (isMove) // вращение персонажа в сторону камеры происходит тольок при движении
+        if (IsMove) // вращение персонажа в сторону камеры происходит тольок при движении
         {
             characterRigidbody.MoveRotation(CameraPlayerController.self.playerCameraBody.rotation);
             // characterRigidbody.MoveRotation(Quaternion.Slerp(characterRigidbody.rotation, CameraPlayerController.self.playerCameraBody.rotation, Time.deltaTime * 20f));
@@ -145,7 +160,7 @@ public class PlayerController
 
         PhysicsMaterial MoveMaterial()
         {
-            if (isMove)
+            if (IsMove)
             {
                 return _playerSkinMaterial;
             }

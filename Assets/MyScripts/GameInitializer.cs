@@ -54,6 +54,7 @@ public static class GameContext
     public static PlayerModelRotationSync playerModelRotationSync { get; }
     public static CamerasController camerasController { get; }
     public static CameraPlayerController cameraPlayerController { get; }
+    public static PlayerAnimationController playerAnimationController { get; }
     public static UIManager uiManager { get; }
     public static States.MainStateManager mainStateManager { get; }
     public static InputController inputController { get; }
@@ -67,12 +68,15 @@ public static class GameContext
         GameObject uiManagerGameObject = GameObject.Find("UIManager");
 
         playerController = new(player);
-        playerController.OnGroundStateChanged += isGround => { States.Flags.Ground = isGround; };
+        playerController.OnGroundChanged += isGround => { States.Flags.Ground = isGround; };
+        playerController.OnMoveChanged += isMove => { States.Flags.Move = isMove; };
 
         playerModelRotationSync = playerModel.GetComponent<PlayerModelRotationSync>();
 
         camerasController = new();
         cameraPlayerController = new(playerCamera, camerasController);
+
+        playerAnimationController = new(playerModel.GetChild(0));
 
         uiManager = uiManagerGameObject.GetComponent<UIManager>();
 

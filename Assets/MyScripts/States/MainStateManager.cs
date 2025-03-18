@@ -20,7 +20,7 @@ namespace States
         public void GoToState(State newState)
         {
             if (newState is GameState) { newState = newState.GetGameState(); }
-            if (!newState.Reentry && state.GetType() == newState.GetType()) { return; }
+            // if (!newState.Reentry && state.GetType() == newState.GetType()) { return; }
             state.Exit();
             GoToStateEnter(newState);
         }
@@ -45,9 +45,9 @@ namespace States
         }
 
         // Events
+        public void OnMoveChanged() { state?.OnMoveChanged(); }
         public void OnGroundChanged() { state?.OnGroundChanged(); }
         public void OnShiftChanged() { state?.OnShiftChanged(); }
-
 
         public void FixedUpdate() { state?.FixedUpdate(); }
         public void Update() { state?.Update(); }

@@ -9,8 +9,23 @@ namespace States
         public static bool Water = false;
         public static bool Fly = false;
 
+        public static event Action<bool> OnMoveChanged;
         public static event Action<bool> OnGroundChanged;
         public static event Action<bool> OnShiftChanged;
+
+        private static bool _move = false;
+        public static bool Move
+        {
+            get => _move;
+            set
+            {
+                if (_move != value)
+                {
+                    _move = value;
+                    OnMoveChanged?.Invoke(_move);
+                }
+            }
+        }
 
         private static bool _ground = false;
         public static bool Ground

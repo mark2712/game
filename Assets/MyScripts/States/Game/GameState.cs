@@ -26,7 +26,21 @@ namespace States
             {
                 if (Flags.Ground)
                 {
-                    return Flags.Shift ? new MoveRunState() : new MoveState();
+                    if (Flags.Move)
+                    {
+                        if (Flags.Shift)
+                        {
+                            return new MoveRunState();
+                        }
+                        else
+                        {
+                            return new MoveState();
+                        }
+                    }
+                    else
+                    {
+                        return new StandState();
+                    }
                 }
                 else
                 {
