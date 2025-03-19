@@ -1,0 +1,114 @@
+using System;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+namespace States
+{
+    public class GameStateBase : State
+    {
+        // public HandsState handsState;
+
+        public override bool Reentry => false;
+
+        public override void Enter()
+        {
+            GameContext.playerController.nowMoveSpeed = PlayerSpeed.Get();
+            GameContext.playerModelRotationSync.MoveSync(true);
+        }
+
+        public override void Update()
+        {
+            GameContext.cameraPlayerController.Update();
+        }
+
+        // Flags
+        public override void OnMoveChanged()
+        {
+            GoToState(new GameState());
+        }
+
+        public override void OnGroundChanged()
+        {
+            GoToState(new GameState());
+        }
+
+        public override void OnShiftChanged()
+        {
+            GoToState(new GameState());
+        }
+
+        public override void OnSneakChanged()
+        {
+            GoToState(new GameState());
+        }
+
+        //Inputs
+        public override void LookInput(Vector2 lookInput)
+        {
+            GameContext.cameraPlayerController.SetLookInput(lookInput);
+        }
+
+        public override void MoveInput(Vector2 moveInput)
+        {
+            GameContext.playerController.SetMoveInput(moveInput);
+        }
+
+        public override void ScrollPerformed(InputAction.CallbackContext ctx)
+        {
+            GameContext.cameraPlayerController.OnScrollInputPerformed(ctx);
+        }
+
+        // Inputs Keys
+        public override void SpacePerformed()
+        {
+            GoToState<JumpState>();
+        }
+        public override void ConsolePerformed()
+        {
+            mainStateManager.GoToLayer(new MenuState());
+        }
+
+        public override void KeyT_performed()
+        {
+            CounterFPS.Inc();
+        }
+
+        public override void KeyZ_performed()
+        {
+            GameContext.camerasController.ChangeActiveCameraThirdFirstPerson();
+        }
+
+        public override void KeyI_performed()
+        {
+            GoToState(new DialogState());
+        }
+
+
+        // Shift - Sneak
+        public override void ShiftPerformed()
+        {
+            Flags.Shift = true;
+        }
+        public override void ShiftCanceled()
+        {
+            Flags.Shift = false;
+        }
+        public override void KeyX_performed()
+        {
+            Flags.Shift = !Flags.Shift;
+        }
+
+        public override void CtrlPerformed()
+        {
+            Flags.Sneak = true;
+        }
+        public override void CtrlCanceled()
+        {
+            Flags.Sneak = false;
+        }
+        public override void KeyC_performed()
+        {
+            Flags.Sneak = !Flags.Sneak;
+        }
+    }
+}

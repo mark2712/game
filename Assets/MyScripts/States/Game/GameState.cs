@@ -15,7 +15,21 @@ namespace States
             {
                 if (Flags.Ground)
                 {
-                    return Flags.Shift ? new SneakSlowState() : new SneakState();
+                    if (Flags.Move)
+                    {
+                        if (Flags.Shift)
+                        {
+                            return new SneakSlowState();
+                        }
+                        else
+                        {
+                            return new SneakState();
+                        }
+                    }
+                    else
+                    {
+                        return new SneakStandState();
+                    }
                 }
                 else
                 {

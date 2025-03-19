@@ -4,7 +4,6 @@ namespace States
 {
     public static class Flags
     {
-        public static bool Sneak = false;
         public static bool Combat = false;
         public static bool Water = false;
         public static bool Fly = false;
@@ -12,6 +11,7 @@ namespace States
         public static event Action<bool> OnMoveChanged;
         public static event Action<bool> OnGroundChanged;
         public static event Action<bool> OnShiftChanged;
+        public static event Action<bool> OnSneakChanged;
 
         private static bool _move = false;
         public static bool Move
@@ -51,6 +51,20 @@ namespace States
                 {
                     _shift = value;
                     OnShiftChanged?.Invoke(_shift);
+                }
+            }
+        }
+
+        private static bool _sneak = false;
+        public static bool Sneak
+        {
+            get => _sneak;
+            set
+            {
+                if (_sneak != value)
+                {
+                    _sneak = value;
+                    OnSneakChanged?.Invoke(_sneak);
                 }
             }
         }

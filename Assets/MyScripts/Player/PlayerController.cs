@@ -3,10 +3,9 @@ using UnityEngine;
 
 public class PlayerController
 {
-    // public float baseMoveSpeed = 4f;
     public float BaseMoveSpeed
     {
-        get => 4f;
+        get => 3.7f;
         private set { }
     }
     public float nowMoveSpeed = 4f;
@@ -131,7 +130,7 @@ public class PlayerController
         move = (player.right * _moveInput.x + player.forward * _moveInput.y).normalized * nowMoveSpeed;
         IsMove = move.magnitude > 0.01f;
 
-        if (IsMove) // вращение персонажа в сторону камеры происходит тольок при движении
+        if (IsMove) // вращение персонажа в сторону камеры происходит только при движении
         {
             characterRigidbody.MoveRotation(CameraPlayerController.self.playerCameraBody.rotation);
             // characterRigidbody.MoveRotation(Quaternion.Slerp(characterRigidbody.rotation, CameraPlayerController.self.playerCameraBody.rotation, Time.deltaTime * 20f));

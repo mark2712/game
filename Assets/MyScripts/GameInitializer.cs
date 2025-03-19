@@ -32,6 +32,7 @@ public class GameInitializer : MonoBehaviour
     void Update()
     {
         playerController.Update();
+        mainStateManager.UpdateState();
         mainStateManager.Update();
     }
     // void LateUpdate()

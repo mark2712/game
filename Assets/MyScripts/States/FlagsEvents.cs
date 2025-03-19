@@ -11,6 +11,7 @@ namespace States
             Flags.OnMoveChanged += _ => _mainStateManager.OnMoveChanged();
             Flags.OnGroundChanged += _ => _mainStateManager.OnGroundChanged();
             Flags.OnShiftChanged += _ => _mainStateManager.OnShiftChanged();
+            Flags.OnSneakChanged += _ => _mainStateManager.OnSneakChanged();
         }
     }
 }

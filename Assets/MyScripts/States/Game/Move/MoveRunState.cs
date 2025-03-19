@@ -1,11 +1,11 @@
 namespace States
 {
-    public class SneakSlowState : MoveStateBase
+    public class MoveRunState : MoveStateBase
     {
         public override void Enter()
         {
             base.Enter();
-            GameContext.playerAnimationController.SneakSlow();
+            GameContext.playerAnimationController.Run();
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +8,7 @@ namespace States
     public abstract class State : IStateMonoBehaviour, IStateFlagsEvents, IStateInputEvents
     {
         public MainStateManager mainStateManager = GameContext.mainStateManager;
+        protected float timer;
         public virtual bool Reentry => true; //разрешен переход из текущего стояния в это же стояние ThisState -> ThisState
 
         public virtual void GoToState<TNewState>() where TNewState : State
@@ -20,6 +22,20 @@ namespace States
             mainStateManager.GoToState(newState);
         }
 
+        protected void StartTimer(float durationMs)
+        {
+            timer = Time.time + durationMs / 1000f;
+        }
+        protected bool IsTimerFinished()
+        {
+            bool isFinished = Time.time >= timer;
+            if (isFinished)
+            {
+                timer = Time.time;
+            }
+            return isFinished;
+        }
+
         public virtual State GetGameState()
         {
             throw new Exception("Можно вызвать только у GameState");
@@ -28,6 +44,7 @@ namespace States
         public virtual void OnMoveChanged() { }
         public virtual void OnGroundChanged() { }
         public virtual void OnShiftChanged() { }
+        public virtual void OnSneakChanged() { }
 
         public virtual void Enter() { }
         public virtual void Exit() { }
@@ -36,9 +53,6 @@ namespace States
         public virtual void LateUpdate() { }
 
         /* События ввода */
-        public virtual void EscPerformed() { }
-        public virtual void ConsolePerformed() { }
-
         public virtual void MoveInput(Vector2 moveInput) { }
         public virtual void LookInput(Vector2 lookInput) { }
         public virtual void ScrollPerformed(InputAction.CallbackContext ctx) { }
@@ -47,6 +61,8 @@ namespace States
         public virtual void Mouse2Performed() { }
         public virtual void Mouse3Performed() { }
 
+        public virtual void EscPerformed() { }
+        public virtual void ConsolePerformed() { }
         public virtual void TabPerformed() { }
         public virtual void ShiftPerformed() { }
         public virtual void ShiftCanceled() { }
@@ -81,6 +97,7 @@ namespace States
         void OnMoveChanged();
         void OnGroundChanged();
         void OnShiftChanged();
+        void OnSneakChanged();
     }
 
 
@@ -91,6 +108,8 @@ namespace States
         void Mouse2Performed();
         void Mouse3Performed();
 
+        void EscPerformed();
+        void ConsolePerformed();
         void TabPerformed();
         void ShiftPerformed();
         void ShiftCanceled();
@@ -98,7 +117,6 @@ namespace States
         void CtrlCanceled();
         void AltPerformed();
         void SpacePerformed();
-
 
         void KeyQ_performed();
         void KeyE_performed();
@@ -127,6 +145,8 @@ sneak: { 'Off', 'On' }
 action: { 'Off', 'Punch', 'Hit', 'Bow', 'Cast', 'Magic', 'Baff', 'Inventory', 'Menu', 'Dialog' }
 baff: { 'Off', 'Cold', 'Fire' }
 
+
+GameOver, Cutscene, Dialog, Action, Move
 
 
 GameFSM
