@@ -29,20 +29,21 @@ public class GameInitializer : MonoBehaviour
 
     public void Start() { Cursor.lockState = CursorLockMode.Locked; Cursor.visible = false; }
 
+
+    void FixedUpdate()
+    {
+        playerController.FixedUpdate();
+        mainStateManager.FixedUpdate();
+    }
     void Update()
     {
         playerController.Update();
         mainStateManager.UpdateState();
         mainStateManager.Update();
     }
-    // void LateUpdate()
-    // {
-    //     playerController.LateUpdate();
-    // }
-    void FixedUpdate()
+    void LateUpdate()
     {
-        playerController.FixedUpdate();
-        mainStateManager.FixedUpdate();
+        playerController.LateUpdate();
     }
 }
 

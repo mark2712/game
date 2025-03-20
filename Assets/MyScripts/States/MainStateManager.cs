@@ -8,10 +8,16 @@ namespace States
     public class MainStateManager : IStateMonoBehaviour, IStateFlagsEvents, IStateInputEvents
     {
         public virtual State State { get; set; }
+        public EventQueue eventQueue;
+
+        public MainStateManager()
+        {
+            eventQueue = new();
+        }
 
         public virtual void UpdateState()
         {
-
+            eventQueue.ProcessEvents();
         }
 
         public virtual void GoToStateEnter(State newState)
