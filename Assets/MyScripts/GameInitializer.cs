@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
 
 public class GameInitializer : MonoBehaviour
@@ -44,6 +45,7 @@ public class GameInitializer : MonoBehaviour
     void LateUpdate()
     {
         playerController.LateUpdate();
+        mainStateManager.LateUpdate();
     }
 }
 
@@ -69,7 +71,7 @@ public static class GameContext
         GameObject playerCamera = GameObject.Find("PlayerCamera");
         GameObject uiManagerGameObject = GameObject.Find("UIManager");
 
-        playerController = new(player);
+        playerController = new GroundPlayerController(player);
         playerController.OnGroundChanged += isGround => { States.Flags.Ground = isGround; };
         playerController.OnMoveChanged += isMove => { States.Flags.Move = isMove; };
 

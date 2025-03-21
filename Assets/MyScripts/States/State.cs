@@ -68,6 +68,7 @@ namespace States
         public virtual void CtrlPerformed() { }
         public virtual void CtrlCanceled() { }
         public virtual void AltPerformed() { }
+        public virtual void AltCanceled() { }
         public virtual void SpacePerformed() { }
 
 
@@ -115,6 +116,7 @@ namespace States
         void CtrlPerformed();
         void CtrlCanceled();
         void AltPerformed();
+        void AltCanceled();
         void SpacePerformed();
 
         void KeyQ_performed();
@@ -148,46 +150,40 @@ baff: { 'Off', 'Cold', 'Fire' }
 GameOver, Cutscene, Dialog, Action, Move
 
 
+PauseState - ставит игру на паузу (например открытие консоли ~), единственне сотояние для которого нужны Layers
+
 GameFSM
 'Game', 'Dialog', 'Cutscene', 'GameOver', 'Punch', 'Hit', 'ShootBow', 'Cast' - Самостоятельные состояния. Тоесть персонаж не может одновременно ходить, вести диалог и бить.
 
-Game: (можно управлять персонажем)
-    body (анимация отсюда распространяется не только на ноги, но и на всё тело)
-        move - MoveFSM
-            kick
-            air
-            jump
-            normal { 'Stand', 'Forward', 'Backward', 'Left', 'Right', 'ForwardLeft', 'ForwardRight', 'BackwardLeft', 'BackwardRight' }
-            run { 'Stand', 'Forward' }
-        sneak - SneakFSM
-            air
-            jump
-            normal { 'Stand', 'Forward' }
-            slow { 'Stand', 'Forward' }
-        water
-            normal
-            run
-        fly
-            normal
-            run
-    
-    hands (работает параллельно с body, перекрывает руки из анимации body)
-        leftAndRight
-            action (Baff, Inventory, Magic...) - затрагивает только руки, не путать с ударами и магией
-        leftOrRight
-            left (HandLeftFSM)
-                skill...
-            right (HandRightFSM)
-                weapon...
-----
+Game: (body) можно управлять персонажем, анимация отсюда распространяется на всё тело. Переход сюда управляется флагами Flags
+    move - MoveFSM
+        kick
+        air
+        stand
+        normal { 'Forward', 'Backward', 'Left', 'Right', 'ForwardLeft', 'ForwardRight', 'BackwardLeft', 'BackwardRight' }
+        run (Forward)
+    sneak - SneakFSM
+        air
+        jump
+        stand
+        normal (Forward)
+        slow (Forward)
+    water
+        normal
+        run
+    fly
+        normal
+        run
+    jump
+    air (base)
 
-'Game', 'Dialog' и тд управляется стейтом
+hands (работает параллельно с другими сотояниями, перекрывает руки)
+    leftAndRight
+        action (Baff, Inventory, Magic...) - затрагивает только руки, не путать с ударами и магией
+    leftOrRight
+        left (HandLeftFSM)
+            skill...
+        right (HandRightFSM)
+            weapon...
 
-Глобальные флаги:
-sneak/move управялется флагом isSneak
-normal/run(slow) управялется флагом isShift
-
-isSneak
-isShift
-isGround
 */

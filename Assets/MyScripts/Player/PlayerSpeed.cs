@@ -1,6 +1,6 @@
 public static class PlayerSpeed
 {
-    public static float Base = 3.8f;
+    public static float Base = 3.5f;
     // public static float Run;
     // public static float Sneak;
     // public static float SneakSlow;
@@ -16,18 +16,18 @@ public static class PlayerSpeed
         {
             if (States.Flags.Shift)
             {
-                return Base * 0.4f;
+                return Base * 0.7f;
             }
             else
             {
-                return Base * 0.6f; ;
+                return Base * 0.5f; ;
             }
         }
         else
         {
             if (States.Flags.Shift)
             {
-                return Base * 1.8f;
+                return Base * 1.9f;
             }
             else
             {

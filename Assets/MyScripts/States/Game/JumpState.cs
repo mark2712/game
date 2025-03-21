@@ -8,8 +8,7 @@ namespace States
 
             GameContext.playerController.Jump();
 
-            GameContext.playerController.nowMoveSpeed = GameContext.playerController.BaseMoveSpeed;
-            GameContext.playerModelRotationSync.MoveSync(true);
+            GameContext.playerController.NowMoveSpeed = PlayerSpeed.Get();
             GameContext.playerAnimationController.Jump();
 
             StartTimer(200);
@@ -18,7 +17,7 @@ namespace States
         public override void Update()
         {
             base.Update();
-            GameContext.playerController.nowMoveSpeed = PlayerSpeed.Get();
+            GameContext.playerController.NowMoveSpeed = PlayerSpeed.Get();
 
             if (IsTimerFinished())
             {

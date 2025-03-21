@@ -37,6 +37,8 @@ public class InputController
         inputActions.Player.Ctrl.canceled += _ => eventQueue.AddEvent(() => mainStateManager.CtrlCanceled());
 
         inputActions.Player.Alt.performed += _ => eventQueue.AddEvent(() => mainStateManager.AltPerformed());
+        inputActions.Player.Alt.canceled += _ => eventQueue.AddEvent(() => mainStateManager.AltCanceled());
+
         inputActions.Player.Space.performed += _ => eventQueue.AddEvent(() => mainStateManager.SpacePerformed());
 
         inputActions.Player.Q.performed += _ => eventQueue.AddEvent(() => mainStateManager.KeyQ_performed());

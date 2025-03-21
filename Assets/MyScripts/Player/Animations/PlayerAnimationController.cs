@@ -11,6 +11,14 @@ public class PlayerAnimationController
         Jump = 5,
         Sneak = 6,
         SneakSlow = 7,
+
+        MoveRight = 8,
+        MoveLeft = 9,
+        MoveForwardRight = 10,
+        MoveBackwardRight = 11,
+        MoveForwardLeft = 12,
+        MoveBackwardLeft = 13,
+        MoveBackward = 14,
     }
 
     private readonly Animator animator;
@@ -20,52 +28,26 @@ public class PlayerAnimationController
         animator = playerModelVRM.GetComponent<Animator>();
     }
 
-    public void ChangeState(ID id)
+    public void ChangeState(ID id, bool moveSync = true)
     {
+        GameContext.playerModelRotationSync.MoveSync(moveSync);
         animator.SetInteger("ID", (int)id);
         animator.SetTrigger("ChangeState");
     }
 
-    public void Stand() => ChangeState(ID.Stand);
-    public void Move() => ChangeState(ID.Move);
+    public void Stand() => ChangeState(ID.Stand, false);
+    public void Move() => ChangeState(ID.Move, false);
     public void Run() => ChangeState(ID.Run);
     public void Air() => ChangeState(ID.Air);
     public void Jump() => ChangeState(ID.Jump);
     public void Sneak() => ChangeState(ID.Sneak);
     public void SneakSlow() => ChangeState(ID.SneakSlow);
 
-    // public void PlayAnimationInstant(string stateName)
-    // {
-    //     animator.Play(stateName);
-    // }
-
-    // public void Stand() => PlayAnimationInstant("NormalStand");
-    // public void Move() => PlayAnimationInstant("NormalMove");
-    // public void Run() => PlayAnimationInstant("NormalRun");
-    // public void Air() => PlayAnimationInstant("NormalAir");
-
-    // public void Stand()
-    // {
-    //     // animator.Play("NormalStand");
-    //     animator.SetInteger("ID", 1);
-    //     // animator.SetInteger("ID", 0);
-    // }
-    // public void Move()
-    // {
-    //     animator.SetInteger("ID", 2);
-    //     // animator.SetInteger("ID", 0);
-    //     // animator.Play("HumanM@Walk01_Forward");
-    // }
-    // public void Run()
-    // {
-    //     animator.SetInteger("ID", 3);
-    //     // animator.SetInteger("ID", 0);
-    //     // animator.Play("HumanF@Run01_Forward");
-    // }
-    // public void Air()
-    // {
-    //     animator.SetInteger("ID", 4);
-    //     // animator.SetInteger("ID", 0);
-    //     // animator.Play("HumanF@Fall01");
-    // }
+    public void MoveRight() => ChangeState(ID.MoveRight, false);
+    public void MoveLeft() => ChangeState(ID.MoveLeft, false);
+    public void MoveForwardRight() => ChangeState(ID.MoveForwardRight, false);
+    public void MoveBackwardRight() => ChangeState(ID.MoveBackwardRight, false);
+    public void MoveForwardLeft() => ChangeState(ID.MoveForwardLeft, false);
+    public void MoveBackwardLeft() => ChangeState(ID.MoveBackwardLeft, false);
+    public void MoveBackward() => ChangeState(ID.MoveBackward, false);
 }

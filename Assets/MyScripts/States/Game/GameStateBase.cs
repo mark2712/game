@@ -12,8 +12,7 @@ namespace States
 
         public override void Enter()
         {
-            GameContext.playerController.nowMoveSpeed = PlayerSpeed.Get();
-            GameContext.playerModelRotationSync.MoveSync(true);
+            GameContext.playerController.NowMoveSpeed = PlayerSpeed.Get();
         }
 
         public override void Update()
@@ -103,6 +102,14 @@ namespace States
             Flags.Sneak = true;
         }
         public override void CtrlCanceled()
+        {
+            Flags.Sneak = false;
+        }
+        public override void AltPerformed()
+        {
+            Flags.Sneak = true;
+        }
+        public override void AltCanceled()
         {
             Flags.Sneak = false;
         }

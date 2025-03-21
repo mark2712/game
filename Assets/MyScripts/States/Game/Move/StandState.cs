@@ -5,7 +5,6 @@ namespace States
         public override void Enter()
         {
             base.Enter();
-            GameContext.playerModelRotationSync.MoveSync(false);
             GameContext.playerAnimationController.Stand();
         }
     }

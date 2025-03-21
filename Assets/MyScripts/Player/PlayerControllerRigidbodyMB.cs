@@ -1,33 +1,36 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControllerRigidbodyMB : MonoBehaviour
+
+namespace Player
 {
-    public static PlayerControllerRigidbodyMB self;
-    public float moveSpeed = 4f;
-    public float runSpeed = 7f;
-    public float jumpForce = 9f;
-    public float gravityScale = 2f;
-
-    void Awake()
+    public class PlayerControllerRigidbodyMB : MonoBehaviour
     {
-        self = this;
-    }
+        public static PlayerControllerRigidbodyMB self;
+        public float moveSpeed = 4f;
+        public float runSpeed = 7f;
+        public float jumpForce = 9f;
+        public float gravityScale = 2f;
 
-    public void OnCollisionStay(Collision collision)
-    {
-        foreach (ContactPoint contact in collision.contacts)
+        void Awake()
         {
-            float surfaceAngle = Vector3.Angle(contact.normal, Vector3.up);
-            PlayerController playerController = GameContext.playerController;
+            self = this;
+        }
 
-            // Если угол между 70° и 90°, это стена
-            if (surfaceAngle >= 70f && surfaceAngle <= 89f)
+        public void OnCollisionStay(Collision collision)
+        {
+            foreach (ContactPoint contact in collision.contacts)
             {
-                playerController.slopeLimitCollisionOn = true;
-                return; // Достаточно одного контакта
+                float surfaceAngle = Vector3.Angle(contact.normal, Vector3.up);
+                PlayerController playerController = GameContext.playerController;
+
+                // Если угол между 70° и 90°, это стена
+                if (surfaceAngle >= 70f && surfaceAngle <= 89f)
+                {
+                    playerController.slopeLimitCollisionOn = true;
+                    return; // Достаточно одного контакта
+                }
+                playerController.slopeLimitCollisionOn = false;
             }
-            playerController.slopeLimitCollisionOn = false;
         }
     }
 }

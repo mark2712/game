@@ -19,11 +19,11 @@ namespace States
                     {
                         if (Flags.Shift)
                         {
-                            return new SneakSlowState();
+                            return new SneakState();
                         }
                         else
                         {
-                            return new SneakState();
+                            return new SneakSlowState();
                         }
                     }
                     else

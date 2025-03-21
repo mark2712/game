@@ -5,14 +5,13 @@ namespace States
         public override void Enter()
         {
             base.Enter();
-            GameContext.playerModelRotationSync.MoveSync(true);
             GameContext.playerAnimationController.Air();
         }
 
         public override void Update()
         {
             base.Update();
-            GameContext.playerController.nowMoveSpeed = PlayerSpeed.Get();
+            GameContext.playerController.NowMoveSpeed = PlayerSpeed.Get();
         }
 
         public override void SpacePerformed() { }

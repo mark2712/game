@@ -81,6 +81,7 @@ namespace States
         public void CtrlPerformed() { State?.CtrlPerformed(); }
         public void CtrlCanceled() { State?.CtrlCanceled(); }
         public void AltPerformed() { State?.AltPerformed(); }
+        public void AltCanceled() { State?.AltCanceled(); }
         public void SpacePerformed() { State?.SpacePerformed(); }
 
         public void KeyQ_performed() { State?.KeyQ_performed(); }
