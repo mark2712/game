@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Player;
 using UnityEngine;
 
@@ -19,7 +17,7 @@ public class GameInitializer : MonoBehaviour
         _inputController = GameContext.inputController;
 
         // Начальное состояние
-        mainStateManager.GoToStateEnter(new States.GameState());
+        mainStateManager.GoToStateEnter(States.MainStateManager.GetGameState());
 
         // Инициализация ввода
         _inputController.InitializeInput(_inputActions);
@@ -28,9 +26,10 @@ public class GameInitializer : MonoBehaviour
         playerController.Awake();
     }
 
-    public void Start() { Cursor.lockState = CursorLockMode.Locked; Cursor.visible = false; }
-
-
+    public void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked; Cursor.visible = false;
+    }
     void FixedUpdate()
     {
         playerController.FixedUpdate();
@@ -46,6 +45,7 @@ public class GameInitializer : MonoBehaviour
     {
         playerController.LateUpdate();
         mainStateManager.LateUpdate();
+        GameContext.emotionController.LateUpdate();
     }
 }
 
@@ -63,6 +63,7 @@ public static class GameContext
     public static States.MainStateManager mainStateManager { get; }
     public static InputController inputController { get; }
     public static PlayerInputActions inputActions { get; }
+    public static EmotionController emotionController { get; }
 
     static GameContext()
     {
@@ -81,6 +82,7 @@ public static class GameContext
         cameraPlayerController = new(playerCamera, camerasController);
 
         playerAnimationController = new(playerModel.GetChild(0));
+        emotionController = new(playerModel.GetChild(0));
 
         uiManager = uiManagerGameObject.GetComponent<UIManager>();
 
@@ -90,100 +92,5 @@ public static class GameContext
         States.FlagsEvents flagsEvents = new(mainStateManager);
     }
 }
-
-
-
-
-
-// public static class ServiceLocator
-// {
-//     private static readonly Dictionary<Type, object> _services = new Dictionary<Type, object>();
-
-//     // Регистрация сервиса по типу
-//     public static T Register<T>(T service)
-//     {
-//         _services[typeof(T)] = service;
-//         return service;
-//     }
-
-//     // Получение сервиса по типу
-//     public static T Get<T>()
-//     {
-//         if (_services.TryGetValue(typeof(T), out var service))
-//         {
-//             return (T)service;
-//         }
-//         throw new InvalidOperationException($"Service of type {typeof(T)} is not registered.");
-//     }
-
-//     // Проверка, зарегистрирован ли сервис
-//     public static bool IsRegistered<T>()
-//     {
-//         return _services.ContainsKey(typeof(T));
-//     }
-// }
-
-
-
-
-// public class GameContext
-// {
-//     public static GameContext self;
-//     public PlayerController playerController { get; }
-//     public CamerasController camerasController { get; }
-//     public CameraPlayerController cameraPlayerController { get; }
-//     public GameObject UIManagerGameObject { get; }
-//     public UIManager UIManager { get; }
-//     public MoveStateManager moveStateManager { get; }
-
-//     public GameContext(PlayerController playerController, CamerasController camerasController, CameraPlayerController cameraPlayerController, GameObject UIManager)
-//     {
-//         self = this;
-//         this.playerController = playerController;
-//         this.camerasController = camerasController;
-//         this.cameraPlayerController = cameraPlayerController;
-//         UIManagerGameObject = UIManager;
-//         this.UIManager = UIManager.GetComponent<UIManager>();
-//     }
-// }
-
-
-
-
-
-
-// public class DIContainer
-// {
-//     private readonly Dictionary<Type, object> _registrations = new Dictionary<Type, object>();
-//     private readonly Dictionary<Type, Func<object>> _factories = new Dictionary<Type, Func<object>>();
-
-//     // Регистрация экземпляра
-//     public void Register<T>(T instance)
-//     {
-//         _registrations[typeof(T)] = instance;
-//     }
-
-//     // Регистрация фабрики для создания экземпляра
-//     public void Register<T>(Func<T> factory)
-//     {
-//         _factories[typeof(T)] = () => factory();
-//     }
-
-//     // Получение экземпляра
-//     public T Resolve<T>()
-//     {
-//         if (_registrations.TryGetValue(typeof(T), out var instance))
-//         {
-//             return (T)instance;
-//         }
-
-//         if (_factories.TryGetValue(typeof(T), out var factory))
-//         {
-//             return (T)factory();
-//         }
-
-//         throw new InvalidOperationException($"No registration or factory found for type {typeof(T)}");
-//     }
-// }
 
 

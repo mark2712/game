@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace States
 {
-    public class MainStateManager : IStateMonoBehaviour, IStateFlagsEvents, IStateInputEvents
+    public partial class MainStateManager : IStateMonoBehaviour, IStateFlagsEvents, IStateInputEvents
     {
         public virtual State State { get; set; }
         public EventQueue eventQueue;
@@ -18,19 +18,29 @@ namespace States
         public virtual void UpdateState()
         {
             eventQueue.ProcessEvents();
+            GoToState();
         }
 
         public virtual void GoToStateEnter(State newState)
         {
-            if (newState is GameState) { newState = newState.GetGameState(); }
             State = newState;
             Debug.Log($"Переход в состояние: {State.GetType().Name}");
             State.Enter();
         }
 
+        public virtual void GoToState()
+        {
+            if (State.NewState != null)
+            {
+                GoToState(State.NewState);
+            }
+        }
+
+        /*
+        ВАЖНО! Переход к сотояниям нужно осуществлять строго в состянии. Если переход произойдет не как вызов метода у текущего сотояния, то могут быть потенциальные проблемы. Используйте такой переход с умом.
+        */
         public virtual void GoToState(State newState)
         {
-            if (newState is GameState) { newState = newState.GetGameState(); }
             if (!newState.Reentry && State.GetType() == newState.GetType()) { return; }
             State.Exit();
             GoToStateEnter(newState);
@@ -60,6 +70,7 @@ namespace States
         public void OnGroundChanged() { State?.OnGroundChanged(); }
         public void OnShiftChanged() { State?.OnShiftChanged(); }
         public void OnSneakChanged() { State?.OnSneakChanged(); }
+        // public void OnGameOverChanged() { State?.OnGameOverChanged(); }
 
         public void FixedUpdate() { State?.FixedUpdate(); }
         public void Update() { State?.Update(); }

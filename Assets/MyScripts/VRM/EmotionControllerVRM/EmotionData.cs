@@ -3,44 +3,54 @@ using System.Collections.Generic;
 [System.Serializable]
 public class Emotion
 {
-    public string name; // Название эмоции
-    public Dictionary<string, float> blendShapeValues; // Параметры BlendShape и их значения
+    public Dictionary<string, float> blendShapeValues;
+
+    public Emotion(Dictionary<string, float> blendShapeValues)
+    {
+        this.blendShapeValues = blendShapeValues ?? new Dictionary<string, float>();
+    }
 }
 
 public static class EmotionDatabase
 {
-    public static List<Emotion> Emotions = new List<Emotion>
+    public static readonly Dictionary<string, Emotion> Emotions = new Dictionary<string, Emotion>
     {
-        new Emotion
-        {
-            name = "Neutral",
-            blendShapeValues = new Dictionary<string, float>
+        { "Neutral", new Emotion(new Dictionary<string, float>
             {
                 { "Fcl_ALL_Neutral", 100f }
-            }
+            })
         },
-        new Emotion
-        {
-            name = "Angry",
-            blendShapeValues = new Dictionary<string, float>
+        { "Angry", new Emotion(new Dictionary<string, float>
             {
                 { "Fcl_ALL_Angry", 100f },
                 { "Fcl_BRW_Angry", 50f },
                 { "Fcl_EYE_Angry", 30f }
-            }
+            })
         },
-        new Emotion
-        {
-            name = "Joy",
-            blendShapeValues = new Dictionary<string, float>
+        { "Happy", new Emotion(new Dictionary<string, float>
             {
-                { "Fcl_ALL_Joy", 100f },
-                { "Fcl_BRW_Joy", 50f },
-                { "Fcl_EYE_Joy", 30f }
-            }
+                { "Fcl_ALL_Happy", 100f },
+                { "Fcl_MTH_Smile", 80f },
+                { "Fcl_EYE_Happy", 40f }
+            })
         },
+        { "Sad", new Emotion(new Dictionary<string, float>
+            {
+                { "Fcl_ALL_Sad", 100f },
+                { "Fcl_BRW_Sad", 60f },
+                { "Fcl_MTH_Sad", 30f }
+            })
+        },
+        { "Surprised", new Emotion(new Dictionary<string, float>
+            {
+                { "Fcl_ALL_Surprised", 100f },
+                { "Fcl_MTH_O", 50f },
+            })
+        }
     };
 }
+
+
 
 /*
 Fcl_ALL_Neutral

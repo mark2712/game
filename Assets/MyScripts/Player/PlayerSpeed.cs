@@ -16,18 +16,18 @@ public static class PlayerSpeed
         {
             if (States.Flags.Shift)
             {
-                return Base * 0.7f;
+                return Base * 0.62f;
             }
             else
             {
-                return Base * 0.5f; ;
+                return Base * 0.42f;
             }
         }
         else
         {
             if (States.Flags.Shift)
             {
-                return Base * 1.9f;
+                return Base * 2;
             }
             else
             {

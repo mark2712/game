@@ -7,18 +7,23 @@ namespace States
     public abstract class State : IStateMonoBehaviour, IStateFlagsEvents, IStateInputEvents
     {
         public MainStateManager mainStateManager = GameContext.mainStateManager;
+        public State NewState; // переход к новому сосотоянию происходит не сразу, а в MainStateManager
         protected float timer;
         public virtual bool Reentry => true; //разрешен переход из текущего стояния в это же стояние ThisState -> ThisState
 
-        public virtual void GoToState<TNewState>() where TNewState : State
+        protected virtual void GoToState<TNewState>() where TNewState : State
         {
             TNewState newState = Activator.CreateInstance(typeof(TNewState)) as TNewState;
-            mainStateManager.GoToState(newState);
+            NewState = newState;
+        }
+        protected virtual void GoToState(State newState)
+        {
+            NewState = newState;
         }
 
-        public virtual void GoToState(State newState)
+        protected virtual void GoToGameState()
         {
-            mainStateManager.GoToState(newState);
+            NewState = MainStateManager.GetGameState();
         }
 
         protected void StartTimer(float durationMs)
@@ -33,11 +38,6 @@ namespace States
                 timer = Time.time;
             }
             return isFinished;
-        }
-
-        public virtual State GetGameState()
-        {
-            throw new Exception("Можно вызвать только у GameState");
         }
 
         public virtual void OnMoveChanged() { }
@@ -82,8 +82,6 @@ namespace States
         public virtual void KeyX_performed() { }
         public virtual void KeyC_performed() { }
     }
-
-
 
     interface IStateMonoBehaviour
     {

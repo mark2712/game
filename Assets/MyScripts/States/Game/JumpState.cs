@@ -21,7 +21,7 @@ namespace States
 
             if (IsTimerFinished())
             {
-                GoToState(new GameState());
+                GoToGameState();
             }
         }
 

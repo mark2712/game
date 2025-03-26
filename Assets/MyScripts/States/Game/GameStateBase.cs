@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,22 +22,22 @@ namespace States
         // Flags
         public override void OnMoveChanged()
         {
-            GoToState(new GameState());
+            GoToGameState();
         }
 
         public override void OnGroundChanged()
         {
-            GoToState(new GameState());
+            GoToGameState();
         }
 
         public override void OnShiftChanged()
         {
-            GoToState(new GameState());
+            GoToGameState();
         }
 
         public override void OnSneakChanged()
         {
-            GoToState(new GameState());
+            GoToGameState();
         }
 
         //Inputs

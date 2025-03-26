@@ -15,7 +15,7 @@ namespace States
 
         public override void ConsolePerformed()
         {
-            mainStateManager.GoToState(new GameState());
+            GoToGameState();
         }
 
         public override void KeyI_performed()
