@@ -6,24 +6,23 @@ namespace States
 {
     public abstract class State : IStateMonoBehaviour, IStateFlagsEvents, IStateInputEvents
     {
-        public MainStateManager mainStateManager = GameContext.mainStateManager;
-        public State NewState; // переход к новому сосотоянию происходит не сразу, а в MainStateManager
+        public virtual MainStateManager StateManager => GameContext.mainStateManager;
         protected float timer;
         public virtual bool Reentry => true; //разрешен переход из текущего стояния в это же стояние ThisState -> ThisState
 
         protected virtual void GoToState<TNewState>() where TNewState : State
         {
             TNewState newState = Activator.CreateInstance(typeof(TNewState)) as TNewState;
-            NewState = newState;
+            StateManager.GoToState(newState);
         }
         protected virtual void GoToState(State newState)
         {
-            NewState = newState;
+            StateManager.GoToState(newState);
         }
 
         protected virtual void GoToGameState()
         {
-            NewState = MainStateManager.GetGameState();
+            StateManager.GoToState(MainStateManager.GetGameState());
         }
 
         protected void StartTimer(float durationMs)
@@ -176,8 +175,7 @@ Game: (body) можно управлять персонажем, анимаци�
     air (base)
 
 hands (работает параллельно с другими сотояниями, перекрывает руки)
-    leftAndRight
-        action (Baff, Inventory, Magic...) - затрагивает только руки, не путать с ударами и магией
+    action (Baff, Inventory, Magic...) - затрагивает только руки, не путать с ударами и магией
     leftOrRight
         left (HandLeftFSM)
             skill...

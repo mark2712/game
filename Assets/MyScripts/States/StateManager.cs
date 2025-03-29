@@ -5,51 +5,9 @@ using UnityEngine.InputSystem;
 
 namespace States
 {
-    public partial class MainStateManager : IStateMonoBehaviour, IStateFlagsEvents, IStateInputEvents
+    public abstract class StateManager : IStateMonoBehaviour, IStateFlagsEvents, IStateInputEvents
     {
         public virtual State State { get; set; }
-        public EventQueue eventQueue = new();
-
-        public virtual void UpdateState()
-        {
-            eventQueue.ProcessEvents();
-        }
-
-        public virtual void GoToStateEnter(State newState)
-        {
-            State = newState;
-            Debug.Log($"Переход в состояние: {State.GetType().Name}");
-            State.Enter();
-        }
-
-        /*
-        ВАЖНО! Переход к сотояниям нужно осуществлять строго в состянии. Если переход произойдет не как вызов метода у текущего сотояния, то могут быть потенциальные проблемы. Используйте такой переход с умом.
-        */
-        public virtual void GoToState(State newState)
-        {
-            if (!newState.Reentry && State.GetType() == newState.GetType()) { return; }
-            State.Exit();
-            GoToStateEnter(newState);
-        }
-
-        // Layers
-        private Stack<State> _stateStack = new Stack<State>();
-
-        public void GoToLayer(State newState)
-        {
-            _stateStack.Push(State);
-            GoToStateEnter(newState);
-        }
-
-        public void ReturnToLayer()
-        {
-            if (_stateStack.Count > 0)
-            {
-                State.Exit();
-                State = _stateStack.Pop();
-                Debug.Log($"Возврат к состоянию: {State.GetType().Name}");
-            }
-        }
 
         // Events
         public void OnMoveChanged() { State?.OnMoveChanged(); }

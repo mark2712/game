@@ -40,7 +40,7 @@ namespace States
 
         public override void ConsolePerformed()
         {
-            mainStateManager.ReturnToLayer();
+            StateManager.ReturnToLayer();
         }
     }
 }

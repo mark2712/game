@@ -5,18 +5,20 @@ public class GameInitializer : MonoBehaviour
 {
     PlayerController playerController;
     private States.MainStateManager mainStateManager;
+    private States.HandsStateManager handsStateManager;
     private InputController _inputController;
     private PlayerInputActions _inputActions;
 
     private void Awake()
     {
-
         playerController = GameContext.playerController;
         _inputActions = GameContext.inputActions;
         mainStateManager = GameContext.mainStateManager;
+        handsStateManager = GameContext.handsStateManager;
         _inputController = GameContext.inputController;
 
         // Начальное состояние
+        handsStateManager.GoToStateEnter(new States.HandsStateTest1());
         mainStateManager.GoToStateEnter(States.MainStateManager.GetGameState());
 
         // Инициализация ввода
@@ -39,6 +41,7 @@ public class GameInitializer : MonoBehaviour
     {
         playerController.Update();
         mainStateManager.UpdateState();
+        handsStateManager.UpdateState();
         mainStateManager.Update();
     }
     void LateUpdate()
@@ -61,6 +64,7 @@ public static class GameContext
     public static PlayerAnimationController playerAnimationController { get; }
     public static UIManager uiManager { get; }
     public static States.MainStateManager mainStateManager { get; }
+    public static States.HandsStateManager handsStateManager { get; }
     public static InputController inputController { get; }
     public static PlayerInputActions inputActions { get; }
     public static EmotionController emotionController { get; }
@@ -69,6 +73,7 @@ public static class GameContext
     {
         GameObject player = GameObject.Find("Player");
         Transform playerModel = player.transform.Find("PlayerModel");
+        PlayerModelVRM playerModelVRM = new(playerModel);
         GameObject playerCamera = GameObject.Find("PlayerCamera");
         GameObject uiManagerGameObject = GameObject.Find("UIManager");
 
@@ -81,8 +86,8 @@ public static class GameContext
         camerasController = new();
         cameraPlayerController = new(playerCamera, camerasController);
 
-        playerAnimationController = new(playerModel.GetChild(0));
-        emotionController = new(playerModel.GetChild(0));
+        playerAnimationController = new(playerModelVRM.model);
+        emotionController = new(playerModelVRM.model);
 
         uiManager = uiManagerGameObject.GetComponent<UIManager>();
 
@@ -90,6 +95,7 @@ public static class GameContext
         mainStateManager = new();
         inputController = new InputController(mainStateManager);
         States.FlagsEvents flagsEvents = new(mainStateManager);
+        handsStateManager = new();
     }
 }
 

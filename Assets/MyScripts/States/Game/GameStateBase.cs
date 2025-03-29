@@ -5,8 +5,6 @@ namespace States
 {
     public class GameStateBase : State
     {
-        // public HandsState handsState;
-
         public override bool Reentry => false;
 
         public override void Enter()
@@ -63,7 +61,7 @@ namespace States
         }
         public override void ConsolePerformed()
         {
-            mainStateManager.GoToLayer(new MenuState());
+            StateManager.GoToLayer(new MenuState());
         }
 
         public override void KeyT_performed()
@@ -79,6 +77,11 @@ namespace States
         public override void KeyI_performed()
         {
             GoToState(new DialogState());
+        }
+
+        public override void Mouse1Performed()
+        {
+            GameContext.handsStateManager.State.Mouse1Performed();
         }
 
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerAnimationController
 {
-    public enum ID
+    public enum Main
     {
         Stand = 1,
         Run = 3,
@@ -15,6 +15,13 @@ public class PlayerAnimationController
 
     public enum Move { Forward = 1, ForwardRight = 2, ForwardLeft = 3, Right = 4, Left = 5, BackwardRight = 6, BackwardLeft = 7, Backward = 8, }
     public enum MoveSlow { Forward = 1, ForwardRight = 2, ForwardLeft = 3, Right = 4, Left = 5, BackwardRight = 6, BackwardLeft = 7, Backward = 8, }
+
+    public enum Hands
+    {
+        None = 1,
+        SwordRightHand = 2,
+        SwordLeftHand = 3,
+    }
 
     private readonly Animator animator;
 
@@ -33,16 +40,22 @@ public class PlayerAnimationController
         ChangeState((int)id, "MoveSlow", false);
     }
 
-    public void ChangeStateID(ID id, bool moveSync = true)
+    public void ChangeStateID(Main id, bool moveSync = true)
     {
-        ChangeState((int)id, "ID", moveSync);
+        ChangeState((int)id, "Main", moveSync);
     }
+
+    public void ChangeStateHands(Hands id, bool moveSync = true)
+    {
+        ChangeState((int)id, "Hands", moveSync);
+    }
+
 
     public void ChangeState(int id, string NameID, bool moveSync = true)
     {
         animator.SetInteger("Move", 0);
         animator.SetInteger("MoveSlow", 0);
-        animator.SetInteger("ID", 0);
+        animator.SetInteger("Main", 0);
 
         GameContext.playerModelRotationSync.MoveSync(moveSync);
         animator.SetInteger(NameID, id);
@@ -51,11 +64,11 @@ public class PlayerAnimationController
 
 
 
-    public void Stand() => ChangeStateID(ID.Stand, false);
-    public void Run() => ChangeStateID(ID.Run);
-    public void Air() => ChangeStateID(ID.Air);
-    public void Jump() => ChangeStateID(ID.Jump);
-    public void SneakSlow() => ChangeStateID(ID.SneakSlow);
+    public void Stand() => ChangeStateID(Main.Stand, false);
+    public void Run() => ChangeStateID(Main.Run);
+    public void Air() => ChangeStateID(Main.Air);
+    public void Jump() => ChangeStateID(Main.Jump);
+    public void SneakSlow() => ChangeStateID(Main.SneakSlow);
 
     public void MoveForward() => ChangeMoveState(Move.Forward);
     public void MoveRight() => ChangeMoveState(Move.Right);
@@ -74,4 +87,8 @@ public class PlayerAnimationController
     public void MoveSlowForwardLeft() => ChangeMoveSlowState(MoveSlow.ForwardLeft);
     public void MoveSlowBackwardLeft() => ChangeMoveSlowState(MoveSlow.BackwardLeft);
     public void MoveSlowBackward() => ChangeMoveSlowState(MoveSlow.Backward);
+
+    public void HandNone() => ChangeStateHands(Hands.None);
+    public void SwordRightHand() => ChangeStateHands(Hands.SwordRightHand);
+    public void SwordLeftHand() => ChangeStateHands(Hands.SwordLeftHand);
 }
