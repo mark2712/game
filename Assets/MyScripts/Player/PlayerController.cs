@@ -8,6 +8,7 @@ namespace Player
     {
         public virtual float NowMoveSpeed { get; set; }
         public virtual byte SlopeLimit => 55;
+        public bool DoubleJumpOn = false;
 
         public event Action<bool> OnMoveChanged;
         protected bool _isMove;
@@ -39,15 +40,9 @@ namespace Player
             }
         }
 
-        protected bool _isJump;
-        public virtual bool IsJump // можно ли выпонить арыжок в этом кадре?
-        {
-            get => _isJump;
-            protected set
-            {
-                _isJump = value;
-            }
-        }
+        public virtual bool IsJump { get; set; } // можно ли выпонить прыжок в этом кадре?
+        public int JumpCount = 0;
+        public float LastJumpTime { get; set; } // Время последнего прыжка
 
         public enum GroundState { Ground, Wall, Air }
         public GroundState groundedRay = GroundState.Ground;
@@ -117,7 +112,7 @@ namespace Player
         public void SetMoveInput(Vector2 moveInput) { MoveInput = moveInput; }
         public void SyncCamera() { CameraPlayerController.self.playerCameraBody.position = player.position; }
 
-        public virtual void Jump() { IsJump = true; }
+        public virtual void Jump() { }
 
         protected void CheckGround()
         {

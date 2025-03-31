@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace States
 {
-    public class SneakState : SneakStateBase
+    public class SneakState : BaseSneakState
     {
         protected Vector2 moveInput = GameContext.playerController.MoveInput;
         protected int dirX = 2;

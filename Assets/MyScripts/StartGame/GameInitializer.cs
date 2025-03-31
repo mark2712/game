@@ -4,7 +4,7 @@ using UnityEngine;
 public class GameInitializer : MonoBehaviour
 {
     PlayerController playerController;
-    private States.MainStateManager mainStateManager;
+    private States.StateManager mainStateManager;
     private States.HandsStateManager handsStateManager;
     private InputController _inputController;
     private PlayerInputActions _inputActions;
@@ -41,7 +41,6 @@ public class GameInitializer : MonoBehaviour
     {
         playerController.Update();
         mainStateManager.UpdateState();
-        handsStateManager.UpdateState();
         mainStateManager.Update();
     }
     void LateUpdate()
@@ -63,11 +62,15 @@ public static class GameContext
     public static CameraPlayerController cameraPlayerController { get; }
     public static PlayerAnimationController playerAnimationController { get; }
     public static UIManager uiManager { get; }
-    public static States.MainStateManager mainStateManager { get; }
-    public static States.HandsStateManager handsStateManager { get; }
     public static InputController inputController { get; }
     public static PlayerInputActions inputActions { get; }
     public static EmotionController emotionController { get; }
+
+    public static States.StateManager mainStateManager { get; }
+    public static States.HandsStateManager handsStateManager { get; }
+    public static States.RightHandStateManager rightHandStateManager { get; }
+    public static States.LeftHandStateManager leftHandStateManager { get; }
+    public static States.ModalStateManager modalStateManager { get; }
 
     static GameContext()
     {
@@ -95,7 +98,10 @@ public static class GameContext
         mainStateManager = new();
         inputController = new InputController(mainStateManager);
         States.FlagsEvents flagsEvents = new(mainStateManager);
-        handsStateManager = new();
+        handsStateManager = new(mainStateManager);
+        rightHandStateManager = new(mainStateManager);
+        leftHandStateManager = new(mainStateManager);
+        modalStateManager = new(mainStateManager);
     }
 }
 

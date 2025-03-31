@@ -7,6 +7,7 @@ public class PlayerAnimationController
     public enum Main
     {
         Stand = 1,
+        Kick = 2,
         Run = 3,
         Air = 4,
         Jump = 5,
@@ -53,9 +54,10 @@ public class PlayerAnimationController
 
     public void ChangeState(int id, string NameID, bool moveSync = true)
     {
+        animator.SetInteger("Main", 0);
         animator.SetInteger("Move", 0);
         animator.SetInteger("MoveSlow", 0);
-        animator.SetInteger("Main", 0);
+        animator.SetInteger("Hands", 0);
 
         GameContext.playerModelRotationSync.MoveSync(moveSync);
         animator.SetInteger(NameID, id);
@@ -63,11 +65,13 @@ public class PlayerAnimationController
     }
 
 
+    public void Kick() => ChangeStateID(Main.Kick);
+
 
     public void Stand() => ChangeStateID(Main.Stand, false);
     public void Run() => ChangeStateID(Main.Run);
-    public void Air() => ChangeStateID(Main.Air);
-    public void Jump() => ChangeStateID(Main.Jump);
+    public void Air() => ChangeStateID(Main.Air, false);
+    public void Jump() => ChangeStateID(Main.Jump, false);
     public void SneakSlow() => ChangeStateID(Main.SneakSlow);
 
     public void MoveForward() => ChangeMoveState(Move.Forward);

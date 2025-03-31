@@ -6,7 +6,7 @@ namespace States
 {
     public abstract class State : IStateMonoBehaviour, IStateFlagsEvents, IStateInputEvents
     {
-        public virtual MainStateManager StateManager => GameContext.mainStateManager;
+        public virtual StateManager StateManager => GameContext.mainStateManager;
         protected float timer;
         public virtual bool Reentry => true; //разрешен переход из текущего стояния в это же стояние ThisState -> ThisState
 
@@ -22,7 +22,7 @@ namespace States
 
         protected virtual void GoToGameState()
         {
-            StateManager.GoToState(MainStateManager.GetGameState());
+            StateManager.GoToState(StateManager.GetGameState());
         }
 
         protected void StartTimer(float durationMs)
@@ -39,16 +39,22 @@ namespace States
             return isFinished;
         }
 
+        public virtual void ParentEnter() { }
+        public virtual void ParentReturn() { }
+        public virtual void ParentReentry() { }
+        public virtual void ParentExit() { }
+        public virtual void Enter() { }
+        public virtual void Exit() { }
+
+        public virtual void FixedUpdate() { }
+        public virtual void Update() { }
+        public virtual void LateUpdate() { }
+
+        /* События флагов */
         public virtual void OnMoveChanged() { }
         public virtual void OnGroundChanged() { }
         public virtual void OnShiftChanged() { }
         public virtual void OnSneakChanged() { }
-
-        public virtual void Enter() { }
-        public virtual void Exit() { }
-        public virtual void FixedUpdate() { }
-        public virtual void Update() { }
-        public virtual void LateUpdate() { }
 
         /* События ввода */
         public virtual void MoveInput(Vector2 moveInput) { }

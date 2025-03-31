@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace States
 {
-    public class StandState : MoveStateBase
+    public class StandState : BaseMoveState
     {
         public override void Enter()
         {

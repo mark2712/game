@@ -1,17 +1,20 @@
+using UnityEngine;
+
 namespace States
 {
-    public class JumpState : GameStateBase
+    public class JumpState : BaseAirState
     {
         public override void Enter()
         {
             base.Enter();
+            Jump();
+        }
 
-            GameContext.playerController.Jump();
-
-            GameContext.playerController.NowMoveSpeed = PlayerSpeed.Get();
-            GameContext.playerAnimationController.Jump();
-
+        protected virtual void Jump()
+        {
             StartTimer(200);
+            GameContext.playerController.Jump();
+            GameContext.playerAnimationController.Jump();
         }
 
         public override void Update()

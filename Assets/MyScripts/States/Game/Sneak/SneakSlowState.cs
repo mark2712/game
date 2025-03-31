@@ -1,6 +1,6 @@
 namespace States
 {
-    public class SneakSlowState : MoveStateBase
+    public class SneakSlowState : BaseSneakState
     {
         public override void Enter()
         {

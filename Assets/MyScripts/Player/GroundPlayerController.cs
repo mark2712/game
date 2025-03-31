@@ -116,26 +116,47 @@ namespace Player
             }
         }
 
+        public override void Jump() { IsJump = true; }
         protected void JumpSpase()
         {
             if (IsJump)
             {
                 IsJump = false;
-                Jump(jumpForce);
+                float time = Time.time - LastJumpTime;
+                if (JumpCount < 2 && time > 0.1f)
+                {
+                    float jumpMultiplier = 1;
+                    // если сделать второй прыжок сразу то скорость не просто складывается а почему то как будто умножается. Поэтому чем меньше прошло времени с момента последнего прыжка тем меньше будет сила прыжка
+                    if (JumpCount == 1) // только для второго прыжка
+                    {
+                        jumpMultiplier = Mathf.Clamp01(Time.time - LastJumpTime + 0.3f) * 0.95f;
+                    }
+                    LastJumpTime = Time.time;
+                    JumpCount++;
+                    JumpExec(jumpForce * jumpMultiplier);
+                }
             }
         }
         protected void JumpStep(float jumpForce)
         {
-            Jump(jumpForce);
-        }
-        protected void Jump(float jumpForce)
-        {
-            if (IsGround && isJumpOn)
+            if (IsGround)
             {
-                float currentVerticalSpeed = characterRigidbody.linearVelocity.y;
-                if (currentVerticalSpeed > 0) { currentVerticalSpeed = 0; }
-                characterRigidbody.AddForce(Vector3.up * (jumpForce * characterRigidbody.mass - currentVerticalSpeed * characterRigidbody.mass), ForceMode.Impulse);
+                JumpExec(jumpForce);
             }
+        }
+        protected void JumpExec(float jumpForce)
+        {
+            float currentVerticalSpeed = characterRigidbody.linearVelocity.y;
+            if (currentVerticalSpeed > 0) { currentVerticalSpeed = 0; } // если платформа движется вниз то прыжок будет как со статичной поверхности
+
+            // Если падение слишком быстрое то второй прыжок в воздухе не даёт результата
+            if (currentVerticalSpeed < -7 && !IsGround)
+            {
+                float speedFactor = Mathf.InverseLerp(-9f, -20f, currentVerticalSpeed);
+                currentVerticalSpeed = Mathf.Lerp(currentVerticalSpeed, 0f, speedFactor);
+            }
+
+            characterRigidbody.AddForce(Vector3.up * (jumpForce * characterRigidbody.mass - currentVerticalSpeed * characterRigidbody.mass), ForceMode.Impulse);
         }
 
         protected void ApplyGravity()

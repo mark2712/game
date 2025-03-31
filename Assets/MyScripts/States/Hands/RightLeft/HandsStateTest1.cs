@@ -11,7 +11,7 @@ namespace States
             GameContext.playerAnimationController.HandNone();
         }
 
-        public override void Mouse1Performed()
+        public override void Mouse2Performed()
         {
             GoToState(new HandsStateTest2());
         }

@@ -3,40 +3,35 @@ using UnityEngine.InputSystem;
 
 namespace States
 {
-    public class GameStateBase : State
+    public class HitState : State
     {
-        public override bool Reentry => false;
+        public override bool Reentry => true;
 
         public override void Enter()
         {
-            GameContext.playerController.NowMoveSpeed = PlayerSpeed.Get();
+            StateManager.handsStateManager.isNowHit = true;
+            GameContext.playerController.SetMoveInput(Vector2.zero);
+            GameContext.playerAnimationController.Kick();
+            StartTimer(1300);
+        }
+
+        public override void Exit()
+        {
+            StateManager.handsStateManager.isNowHit = false;
         }
 
         public override void Update()
         {
             GameContext.cameraPlayerController.Update();
+
+            if (IsTimerFinished())
+            {
+                GoToGameState();
+            }
         }
 
         // Flags
-        public override void OnMoveChanged()
-        {
-            GoToGameState();
-        }
-
-        public override void OnGroundChanged()
-        {
-            GoToGameState();
-        }
-
-        public override void OnShiftChanged()
-        {
-            GoToGameState();
-        }
-
-        public override void OnSneakChanged()
-        {
-            GoToGameState();
-        }
+        // none
 
         //Inputs
         public override void LookInput(Vector2 lookInput)
@@ -44,10 +39,13 @@ namespace States
             GameContext.cameraPlayerController.SetLookInput(lookInput);
         }
 
-        public override void MoveInput(Vector2 moveInput)
-        {
-            GameContext.playerController.SetMoveInput(moveInput);
-        }
+        // public override void MoveInput(Vector2 moveInput)
+        // {
+        //     if (moveInput.magnitude == 0)
+        //     {
+        //         GameContext.playerController.SetMoveInput(Vector2.zero);
+        //     }
+        // }
 
         public override void ScrollPerformed(InputAction.CallbackContext ctx)
         {
@@ -57,7 +55,7 @@ namespace States
         // Inputs Keys
         public override void SpacePerformed()
         {
-            GoToState<JumpState>();
+            // GoToState<JumpState>();
         }
         public override void ConsolePerformed()
         {
@@ -74,14 +72,9 @@ namespace States
             GameContext.camerasController.ChangeActiveCameraThirdFirstPerson();
         }
 
-        public override void KeyI_performed()
-        {
-            GoToState(new DialogState());
-        }
-
         public override void Mouse1Performed()
         {
-            GameContext.handsStateManager.State.Mouse1Performed();
+            // GameContext.handsStateManager.State.Mouse1Performed();
         }
 
 

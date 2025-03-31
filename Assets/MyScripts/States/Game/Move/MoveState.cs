@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace States
 {
-    public class MoveState : MoveStateBase
+    public class MoveState : BaseMoveState
     {
         protected Vector2 moveInput = GameContext.playerController.MoveInput;
         protected int dirX = 2;

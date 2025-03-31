@@ -1,6 +1,6 @@
 namespace States
 {
-    public partial class MainStateManager
+    public partial class StateManager
     {
         public static State GetGameState()
         {

@@ -12,6 +12,11 @@ namespace States
 
         public override void Mouse1Performed()
         {
+            mainStateManager.GoToState(new HitState());
+        }
+
+        public override void Mouse2Performed()
+        {
             GoToState(new HandsStateTest1());
         }
     }

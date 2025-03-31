@@ -1,6 +1,6 @@
 namespace States
 {
-    public class MoveRunState : MoveStateBase
+    public class MoveRunState : BaseMoveState
     {
         public override void Enter()
         {
