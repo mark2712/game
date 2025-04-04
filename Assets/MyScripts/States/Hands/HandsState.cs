@@ -2,22 +2,21 @@ namespace States
 {
     public abstract class HandsState : State
     {
-        public override StateManager StateManager => GameContext.handsStateManager;
-        public StateManager mainStateManager = GameContext.mainStateManager;
+        public override SM SM => GameContext.HandsSM;
     }
 
     public abstract class RightHandState : State
     {
-        public override StateManager StateManager => GameContext.rightHandStateManager;
+        public override SM SM => GameContext.RightHandSM;
     }
 
     public abstract class LeftHandState : State
     {
-        public override StateManager StateManager => GameContext.leftHandStateManager;
+        public override SM SM => GameContext.LeftHandSM;
     }
 
     public abstract class ModalState : State
     {
-        public override StateManager StateManager => GameContext.modalStateManager;
+        public override SM SM => GameContext.ModalSM;
     }
 }

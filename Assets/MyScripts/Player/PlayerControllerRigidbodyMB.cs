@@ -21,7 +21,7 @@ namespace Player
             foreach (ContactPoint contact in collision.contacts)
             {
                 float surfaceAngle = Vector3.Angle(contact.normal, Vector3.up);
-                PlayerController playerController = GameContext.playerController;
+                PlayerController playerController = GameContext.PlayerController;
 
                 // Если угол между 70° и 90°, это стена
                 if (surfaceAngle >= 70f && surfaceAngle <= 89f)

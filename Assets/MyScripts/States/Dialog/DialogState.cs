@@ -13,14 +13,15 @@ namespace States
             // Debug.Log("Диалог закрыт");
         }
 
-        public override void ConsolePerformed()
+        public override State ConsolePerformed()
         {
-            GoToGameState();
+            return SM.GetGameState();
         }
 
-        public override void KeyI_performed()
+        public override State KeyI_performed()
         {
             Debug.Log("Диалог уже открыт");
+            return null;
         }
     }
 }

@@ -5,7 +5,7 @@ namespace States
         public override void Enter()
         {
             base.Enter();
-            GameContext.emotionController.SetEmotion("Surprised", 50f);
+            GameContext.EmotionController.SetEmotion("Surprised", 50f);
         }
     }
 }

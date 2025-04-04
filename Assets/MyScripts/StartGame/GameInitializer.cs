@@ -4,22 +4,22 @@ using UnityEngine;
 public class GameInitializer : MonoBehaviour
 {
     PlayerController playerController;
-    private States.StateManager mainStateManager;
-    private States.HandsStateManager handsStateManager;
+    private States.SM mainSM;
+    private States.HandsSM handsSM;
     private InputController _inputController;
     private PlayerInputActions _inputActions;
 
     private void Awake()
     {
-        playerController = GameContext.playerController;
-        _inputActions = GameContext.inputActions;
-        mainStateManager = GameContext.mainStateManager;
-        handsStateManager = GameContext.handsStateManager;
-        _inputController = GameContext.inputController;
+        playerController = GameContext.PlayerController;
+        _inputActions = GameContext.InputActions;
+        mainSM = GameContext.MainSM;
+        handsSM = GameContext.HandsSM;
+        _inputController = GameContext.InputController;
 
         // Начальное состояние
-        handsStateManager.GoToStateEnter(new States.HandsStateTest1());
-        mainStateManager.GoToStateEnter(States.MainStateManager.GetGameState());
+        handsSM.GoToStateEnter(new States.NoneWeapon());
+        mainSM.GoToStateEnter(States.MainSM.GetGameState());
 
         // Инициализация ввода
         _inputController.InitializeInput(_inputActions);
@@ -35,19 +35,34 @@ public class GameInitializer : MonoBehaviour
     void FixedUpdate()
     {
         playerController.FixedUpdate();
-        mainStateManager.FixedUpdate();
+        mainSM.FixedUpdate();
     }
     void Update()
     {
-        playerController.Update();
-        mainStateManager.UpdateState();
-        mainStateManager.Update();
+        if (GameContext.IsPause)
+        {
+
+        }
+        else
+        {
+            playerController.Update();
+        }
+
+        mainSM.UpdateState();
+        mainSM.Update();
     }
     void LateUpdate()
     {
-        playerController.LateUpdate();
-        mainStateManager.LateUpdate();
-        GameContext.emotionController.LateUpdate();
+        if (GameContext.IsPause)
+        {
+
+        }
+        else
+        {
+            playerController.LateUpdate();
+            GameContext.EmotionController.LateUpdate();
+        }
+        mainSM.LateUpdate();
     }
 }
 
@@ -56,21 +71,22 @@ public class GameInitializer : MonoBehaviour
 
 public static class GameContext
 {
-    public static PlayerController playerController { get; }
-    public static PlayerModelRotationSync playerModelRotationSync { get; }
-    public static CamerasController camerasController { get; }
-    public static CameraPlayerController cameraPlayerController { get; }
-    public static PlayerAnimationController playerAnimationController { get; }
-    public static UIManager uiManager { get; }
-    public static InputController inputController { get; }
-    public static PlayerInputActions inputActions { get; }
-    public static EmotionController emotionController { get; }
+    public static bool IsPause = false;
+    public static PlayerController PlayerController { get; }
+    public static PlayerModelRotationSync PlayerModelRotationSync { get; }
+    public static CamerasController CamerasController { get; }
+    public static CameraPlayerController CameraPlayerController { get; }
+    public static PlayerAnimationController PlayerAnimationController { get; }
+    public static UIManager UIManager { get; }
+    public static InputController InputController { get; }
+    public static PlayerInputActions InputActions { get; }
+    public static EmotionController EmotionController { get; }
 
-    public static States.StateManager mainStateManager { get; }
-    public static States.HandsStateManager handsStateManager { get; }
-    public static States.RightHandStateManager rightHandStateManager { get; }
-    public static States.LeftHandStateManager leftHandStateManager { get; }
-    public static States.ModalStateManager modalStateManager { get; }
+    public static States.SM MainSM { get; }
+    public static States.HandsSM HandsSM { get; }
+    public static States.RightHandSM RightHandSM { get; }
+    public static States.LeftHandSM LeftHandSM { get; }
+    public static States.ModalSM ModalSM { get; }
 
     static GameContext()
     {
@@ -80,28 +96,29 @@ public static class GameContext
         GameObject playerCamera = GameObject.Find("PlayerCamera");
         GameObject uiManagerGameObject = GameObject.Find("UIManager");
 
-        playerController = new GroundPlayerController(player);
-        playerController.OnGroundChanged += isGround => { States.Flags.Ground = isGround; };
-        playerController.OnMoveChanged += isMove => { States.Flags.Move = isMove; };
+        PlayerController = new GroundPlayerController(player);
+        PlayerController.OnGroundChanged += isGround => { States.Flags.Ground = isGround; };
+        PlayerController.OnMoveChanged += isMove => { States.Flags.Move = isMove; };
 
-        playerModelRotationSync = playerModel.GetComponent<PlayerModelRotationSync>();
+        PlayerModelRotationSync = playerModel.GetComponent<PlayerModelRotationSync>();
 
-        camerasController = new();
-        cameraPlayerController = new(playerCamera, camerasController);
+        CamerasController = new();
+        CameraPlayerController = new(playerCamera, CamerasController);
 
-        playerAnimationController = new(playerModelVRM.model);
-        emotionController = new(playerModelVRM.model);
+        PlayerAnimationController = new(playerModelVRM.model);
+        EmotionController = new(playerModelVRM.model);
 
-        uiManager = uiManagerGameObject.GetComponent<UIManager>();
+        UIManager = uiManagerGameObject.GetComponent<UIManager>();
 
-        inputActions = new PlayerInputActions();
-        mainStateManager = new();
-        inputController = new InputController(mainStateManager);
-        States.FlagsEvents flagsEvents = new(mainStateManager);
-        handsStateManager = new(mainStateManager);
-        rightHandStateManager = new(mainStateManager);
-        leftHandStateManager = new(mainStateManager);
-        modalStateManager = new(mainStateManager);
+        InputActions = new PlayerInputActions();
+
+        MainSM = new();
+        InputController = new(MainSM);
+        new States.FlagsEvents(MainSM);
+        ModalSM = new(MainSM);
+        HandsSM = new(MainSM);
+        RightHandSM = new(HandsSM);
+        LeftHandSM = new(HandsSM);
     }
 }
 

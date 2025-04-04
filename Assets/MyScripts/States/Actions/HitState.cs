@@ -9,108 +9,68 @@ namespace States
 
         public override void Enter()
         {
-            StateManager.handsStateManager.isNowHit = true;
-            GameContext.playerController.SetMoveInput(Vector2.zero);
-            GameContext.playerAnimationController.Kick();
-            StartTimer(1300);
+            GameContext.HandsSM.IsNowHit = true;
+            GameContext.PlayerController.NowMoveSpeed = PlayerSpeed.Hit;
+            GameContext.PlayerAnimationController.Kick();
+            StartTimer(1200);
         }
 
         public override void Exit()
         {
-            StateManager.handsStateManager.isNowHit = false;
+            GameContext.HandsSM.IsNowHit = false;
+            GameContext.PlayerController.NowMoveSpeed = PlayerSpeed.Get();
         }
 
-        public override void Update()
+        public override State Update()
         {
-            GameContext.cameraPlayerController.Update();
+            GameContext.CameraPlayerController.Update(GameContext.InputController.LookInput);
+            GameContext.PlayerController.SetMoveInput(GameContext.InputController.MoveInput); // можно немного сместиться в выбранном направлении
 
             if (IsTimerFinished())
             {
-                GoToGameState();
+                if (GameContext.InputActions.Player.Mouse1.IsPressed())
+                {
+                    return new HitState();
+                }
+                return SM.GetGameState();
             }
+            return null;
         }
-
-        // Flags
-        // none
 
         //Inputs
-        public override void LookInput(Vector2 lookInput)
+        public override State ScrollPerformed(InputAction.CallbackContext ctx)
         {
-            GameContext.cameraPlayerController.SetLookInput(lookInput);
-        }
-
-        // public override void MoveInput(Vector2 moveInput)
-        // {
-        //     if (moveInput.magnitude == 0)
-        //     {
-        //         GameContext.playerController.SetMoveInput(Vector2.zero);
-        //     }
-        // }
-
-        public override void ScrollPerformed(InputAction.CallbackContext ctx)
-        {
-            GameContext.cameraPlayerController.OnScrollInputPerformed(ctx);
+            GameContext.CameraPlayerController.OnScrollInputPerformed(ctx);
+            return null;
         }
 
         // Inputs Keys
-        public override void SpacePerformed()
+        public override State SpacePerformed()
         {
-            // GoToState<JumpState>();
+            return null;
         }
-        public override void ConsolePerformed()
+        public override State ConsolePerformed()
         {
-            StateManager.GoToLayer(new MenuState());
-        }
-
-        public override void KeyT_performed()
-        {
-            CounterFPS.Inc();
+            SM.GoToLayer(new MenuState());
+            return null;
         }
 
-        public override void KeyZ_performed()
+        public override State Mouse1Performed()
         {
-            GameContext.camerasController.ChangeActiveCameraThirdFirstPerson();
-        }
-
-        public override void Mouse1Performed()
-        {
-            // GameContext.handsStateManager.State.Mouse1Performed();
+            // тут можно сделать комбо
+            return null;
         }
 
 
         // Shift - Sneak
-        public override void ShiftPerformed()
-        {
-            Flags.Shift = true;
-        }
-        public override void ShiftCanceled()
-        {
-            Flags.Shift = false;
-        }
-        public override void KeyX_performed()
-        {
-            Flags.Shift = !Flags.Shift;
-        }
+        public override State ShiftPerformed() { Flags.Shift = true; return null; }
+        public override State ShiftCanceled() { Flags.Shift = false; return null; }
+        public override State KeyX_performed() { Flags.Shift = !Flags.Shift; return null; }
 
-        public override void CtrlPerformed()
-        {
-            Flags.Sneak = true;
-        }
-        public override void CtrlCanceled()
-        {
-            Flags.Sneak = false;
-        }
-        public override void AltPerformed()
-        {
-            Flags.Sneak = true;
-        }
-        public override void AltCanceled()
-        {
-            Flags.Sneak = false;
-        }
-        public override void KeyC_performed()
-        {
-            Flags.Sneak = !Flags.Sneak;
-        }
+        public override State CtrlPerformed() { Flags.Sneak = true; return null; }
+        public override State CtrlCanceled() { Flags.Sneak = false; return null; }
+        public override State AltPerformed() { Flags.Sneak = true; return null; }
+        public override State AltCanceled() { Flags.Sneak = false; return null; }
+        public override State KeyC_performed() { Flags.Sneak = !Flags.Sneak; return null; }
     }
 }

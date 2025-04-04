@@ -1,137 +1,149 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace States
 {
-    public abstract class State : IStateMonoBehaviour, IStateFlagsEvents, IStateInputEvents
+    // public abstract class State : IStateMonoBehaviour, IStateFlagsEvents, IStateInputEvents
+    public abstract class State
     {
-        public virtual StateManager StateManager => GameContext.mainStateManager;
-        protected float timer;
+        public virtual SM SM => GameContext.MainSM;
         public virtual bool Reentry => true; //разрешен переход из текущего стояния в это же стояние ThisState -> ThisState
 
         protected virtual void GoToState<TNewState>() where TNewState : State
         {
             TNewState newState = Activator.CreateInstance(typeof(TNewState)) as TNewState;
-            StateManager.GoToState(newState);
+            SM.GoToState(newState);
         }
         protected virtual void GoToState(State newState)
         {
-            StateManager.GoToState(newState);
+            SM.GoToState(newState);
         }
 
         protected virtual void GoToGameState()
         {
-            StateManager.GoToState(StateManager.GetGameState());
+            SM.GoToState(SM.GetGameState());
         }
 
-        protected void StartTimer(float durationMs)
+        // Таймер
+        private Dictionary<string, float> timers = new Dictionary<string, float>();
+
+        protected void StartTimer(float durationMs, string name = "Timer")
         {
-            timer = Time.time + durationMs / 1000f;
+            timers[name] = Time.time + durationMs / 1000f;
         }
-        protected bool IsTimerFinished()
+
+        protected bool IsTimerFinished(string name = "Timer")
         {
-            bool isFinished = Time.time >= timer;
-            if (isFinished)
+            if (timers.TryGetValue(name, out float endTime))
             {
-                timer = Time.time;
+                if (Time.time >= endTime)
+                {
+                    timers[name] = Time.time; // Сброс таймера
+                    return true;
+                }
             }
-            return isFinished;
+            return false;
         }
 
-        public virtual void ParentEnter() { }
-        public virtual void ParentReturn() { }
-        public virtual void ParentReentry() { }
-        public virtual void ParentExit() { }
+
+        /* SM */
         public virtual void Enter() { }
         public virtual void Exit() { }
 
-        public virtual void FixedUpdate() { }
-        public virtual void Update() { }
-        public virtual void LateUpdate() { }
+        // public virtual State ParentEnter() { return null; }
+        // public virtual State ParentReturn() { return null; }
+        // public virtual State ParentReentry() { return null; }
+        // public virtual State ParentExit() { return null; }
+
+        /* События MonoBehaviour */
+        public virtual State FixedUpdate() { return null; }
+        public virtual State Update() { return null; }
+        public virtual State LateUpdate() { return null; }
 
         /* События флагов */
-        public virtual void OnMoveChanged() { }
-        public virtual void OnGroundChanged() { }
-        public virtual void OnShiftChanged() { }
-        public virtual void OnSneakChanged() { }
+        public virtual State OnMoveChanged() { return null; }
+        public virtual State OnGroundChanged() { return null; }
+        public virtual State OnShiftChanged() { return null; }
+        public virtual State OnSneakChanged() { return null; }
 
         /* События ввода */
-        public virtual void MoveInput(Vector2 moveInput) { }
-        public virtual void LookInput(Vector2 lookInput) { }
-        public virtual void ScrollPerformed(InputAction.CallbackContext ctx) { }
+        // public virtual State MoveInput(Vector2 moveInput) { return null; }
+        // public virtual State LookInput(Vector2 lookInput) { return null; }
+        public virtual State ScrollPerformed(InputAction.CallbackContext ctx) { return null; }
 
-        public virtual void Mouse1Performed() { }
-        public virtual void Mouse2Performed() { }
-        public virtual void Mouse3Performed() { }
+        public virtual State Mouse1Performed() { return null; }
+        public virtual State Mouse2Performed() { return null; }
+        public virtual State Mouse3Performed() { return null; }
 
-        public virtual void EscPerformed() { }
-        public virtual void ConsolePerformed() { }
-        public virtual void TabPerformed() { }
-        public virtual void ShiftPerformed() { }
-        public virtual void ShiftCanceled() { }
-        public virtual void CtrlPerformed() { }
-        public virtual void CtrlCanceled() { }
-        public virtual void AltPerformed() { }
-        public virtual void AltCanceled() { }
-        public virtual void SpacePerformed() { }
+        public virtual State EscPerformed() { return null; }
+        public virtual State ConsolePerformed() { return null; }
+        public virtual State TabPerformed() { return null; }
+        public virtual State ShiftPerformed() { return null; }
+        public virtual State ShiftCanceled() { return null; }
+        public virtual State CtrlPerformed() { return null; }
+        public virtual State CtrlCanceled() { return null; }
+        public virtual State AltPerformed() { return null; }
+        public virtual State AltCanceled() { return null; }
+        public virtual State SpacePerformed() { return null; }
 
 
-        public virtual void KeyQ_performed() { }
-        public virtual void KeyE_performed() { }
-        public virtual void KeyR_performed() { }
-        public virtual void KeyT_performed() { }
-        public virtual void KeyI_performed() { }
-        public virtual void KeyF_performed() { }
-        public virtual void KeyZ_performed() { }
-        public virtual void KeyX_performed() { }
-        public virtual void KeyC_performed() { }
+        public virtual State KeyQ_performed() { return null; }
+        public virtual State KeyE_performed() { return null; }
+        public virtual State KeyR_performed() { return null; }
+        public virtual State KeyT_performed() { return null; }
+        public virtual State KeyI_performed() { return null; }
+        public virtual State KeyF_performed() { return null; }
+        public virtual State KeyZ_performed() { return null; }
+        public virtual State KeyX_performed() { return null; }
+        public virtual State KeyC_performed() { return null; }
     }
 
-    interface IStateMonoBehaviour
-    {
-        void FixedUpdate();
-        void Update();
-        void LateUpdate();
-    }
+    //     interface IStateMonoBehaviour
+    //     {
+    //         State FixedUpdate();
+    //         State Update();
+    //         State LateUpdate();
+    //     }
 
-    interface IStateFlagsEvents
-    {
-        void OnMoveChanged();
-        void OnGroundChanged();
-        void OnShiftChanged();
-        void OnSneakChanged();
-    }
+    //     interface IStateFlagsEvents
+    //     {
+    //         State OnMoveChanged();
+    //         State OnGroundChanged();
+    //         State OnShiftChanged();
+    //         State OnSneakChanged();
+    //     }
 
 
 
-    interface IStateInputEvents
-    {
-        void Mouse1Performed();
-        void Mouse2Performed();
-        void Mouse3Performed();
+    //     interface IStateInputEvents
+    //     {
+    //         State Mouse1Performed();
+    //         State Mouse2Performed();
+    //         State Mouse3Performed();
 
-        void EscPerformed();
-        void ConsolePerformed();
-        void TabPerformed();
-        void ShiftPerformed();
-        void ShiftCanceled();
-        void CtrlPerformed();
-        void CtrlCanceled();
-        void AltPerformed();
-        void AltCanceled();
-        void SpacePerformed();
+    //         State EscPerformed();
+    //         State ConsolePerformed();
+    //         State TabPerformed();
+    //         State ShiftPerformed();
+    //         State ShiftCanceled();
+    //         State CtrlPerformed();
+    //         State CtrlCanceled();
+    //         State AltPerformed();
+    //         State AltCanceled();
+    //         State SpacePerformed();
 
-        void KeyQ_performed();
-        void KeyE_performed();
-        void KeyR_performed();
-        void KeyT_performed();
-        void KeyI_performed();
-        void KeyF_performed();
-        void KeyZ_performed();
-        void KeyX_performed();
-        void KeyC_performed();
-    }
+    //         State KeyQ_performed();
+    //         State KeyE_performed();
+    //         State KeyR_performed();
+    //         State KeyT_performed();
+    //         State KeyI_performed();
+    //         State KeyF_performed();
+    //         State KeyZ_performed();
+    //         State KeyX_performed();
+    //         State KeyC_performed();
+    //     }
 }
 
 

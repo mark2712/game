@@ -25,10 +25,17 @@ public class PlayerAnimationController
     }
 
     private readonly Animator animator;
+    public int HandsLayerIndex;
 
     public PlayerAnimationController(Transform playerModelVRM)
     {
         animator = playerModelVRM.GetComponent<Animator>();
+        HandsLayerIndex = animator.GetLayerIndex("Hands");
+    }
+
+    public void EditHandsLayerIndex(float weight)
+    {
+        animator.SetLayerWeight(HandsLayerIndex, weight);
     }
 
     public void ChangeMoveState(Move id)
@@ -59,7 +66,7 @@ public class PlayerAnimationController
         animator.SetInteger("MoveSlow", 0);
         animator.SetInteger("Hands", 0);
 
-        GameContext.playerModelRotationSync.MoveSync(moveSync);
+        GameContext.PlayerModelRotationSync.MoveSync(moveSync);
         animator.SetInteger(NameID, id);
         animator.SetTrigger("ChangeState");
     }

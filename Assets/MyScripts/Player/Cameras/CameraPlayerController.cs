@@ -62,7 +62,7 @@ public class CameraPlayerController
         EditPointAimCameraXY();
     }
     public void SetLookInput(Vector2 lookInput) { _lookInput = lookInput; }
-
+    public void Update(Vector2 lookInput) { _lookInput = lookInput; Update(); }
     public void Update()
     {
         float mouseX = _lookInput.x * lookSpeed * Time.deltaTime;
@@ -72,6 +72,8 @@ public class CameraPlayerController
         firstPersonCamera.transform.localRotation = thirdPersonCamera.transform.localRotation;
 
         cameraBeforePosition = thirdPersonCamera.transform.position;
+
+        _lookInput = Vector2.zero;
     }
 
     public void OnScrollInputPerformed(InputAction.CallbackContext ctx)

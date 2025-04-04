@@ -5,7 +5,7 @@ namespace States
         public override void Enter()
         {
             base.Enter();
-            GameContext.playerAnimationController.SneakSlow();
+            GameContext.PlayerAnimationController.SneakSlow();
         }
     }
 }

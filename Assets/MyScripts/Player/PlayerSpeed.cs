@@ -4,12 +4,14 @@ public static class PlayerSpeed
     public static float Run;
     public static float Sneak;
     public static float SneakSlow;
+    public static float Hit;
 
     static PlayerSpeed()
     {
         Run = Base * 2f;
         Sneak = Base * 0.62f;
         SneakSlow = Base * 0.42f;
+        Hit = Base * 0.12f;
     }
 
     public static float Get()

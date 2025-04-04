@@ -8,7 +8,6 @@ namespace Player
     {
         public virtual float NowMoveSpeed { get; set; }
         public virtual byte SlopeLimit => 55;
-        public bool DoubleJumpOn = false;
 
         public event Action<bool> OnMoveChanged;
         protected bool _isMove;
@@ -41,7 +40,6 @@ namespace Player
         }
 
         public virtual bool IsJump { get; set; } // можно ли выпонить прыжок в этом кадре?
-        public int JumpCount = 0;
         public float LastJumpTime { get; set; } // Время последнего прыжка
 
         public enum GroundState { Ground, Wall, Air }

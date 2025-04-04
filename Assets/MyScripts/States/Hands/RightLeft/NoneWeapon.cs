@@ -2,18 +2,18 @@ using UnityEngine;
 
 namespace States
 {
-    public class HandsStateTest1 : HandsState
+    public class NoneWeapon : HandsState
     {
         public override void Enter()
         {
             base.Enter();
             // GameContext.playerAnimationController.SwordLeftHand();
-            GameContext.playerAnimationController.HandNone();
+            GameContext.PlayerAnimationController.HandNone();
         }
 
-        public override void Mouse2Performed()
+        public override State Mouse2Performed()
         {
-            GoToState(new HandsStateTest2());
+            return new TakeWeapon();
         }
     }
 }

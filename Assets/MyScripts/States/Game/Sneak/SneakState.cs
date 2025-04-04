@@ -4,7 +4,7 @@ namespace States
 {
     public class SneakState : BaseSneakState
     {
-        protected Vector2 moveInput = GameContext.playerController.MoveInput;
+        protected Vector2 moveInput = GameContext.PlayerController.MoveInput;
         protected int dirX = 2;
         protected int dirY = 2;
 
@@ -16,17 +16,21 @@ namespace States
             // GameContext.playerAnimationController.Sneak();
         }
 
-        public override void Update()
+        public override State Update()
         {
             base.Update();
+            moveInput = GameContext.InputController.MoveInput;
+            GameContext.CameraPlayerController.SetLookInput(GameContext.InputController.LookInput);
             UpdateAnimation();
+            return null;
         }
 
-        public override void MoveInput(Vector2 moveInput)
-        {
-            base.MoveInput(moveInput);
-            this.moveInput = moveInput;
-        }
+        // public override State MoveInput(Vector2 moveInput)
+        // {
+        //     base.MoveInput(moveInput);
+        //     this.moveInput = moveInput;
+        //     return null;
+        // }
 
         private void UpdateAnimation()
         {
@@ -42,14 +46,14 @@ namespace States
 
                 switch ((dirX, dirY))
                 {
-                    case (0, 1): GameContext.playerAnimationController.MoveSlowForward(); break;
-                    case (0, -1): GameContext.playerAnimationController.MoveSlowBackward(); break;
-                    case (1, 0): GameContext.playerAnimationController.MoveSlowRight(); break;
-                    case (-1, 0): GameContext.playerAnimationController.MoveSlowLeft(); break;
-                    case (1, 1): GameContext.playerAnimationController.MoveSlowForwardRight(); break;
-                    case (-1, 1): GameContext.playerAnimationController.MoveSlowForwardLeft(); break;
-                    case (1, -1): GameContext.playerAnimationController.MoveSlowBackwardRight(); break;
-                    case (-1, -1): GameContext.playerAnimationController.MoveSlowBackwardLeft(); break;
+                    case (0, 1): GameContext.PlayerAnimationController.MoveSlowForward(); break;
+                    case (0, -1): GameContext.PlayerAnimationController.MoveSlowBackward(); break;
+                    case (1, 0): GameContext.PlayerAnimationController.MoveSlowRight(); break;
+                    case (-1, 0): GameContext.PlayerAnimationController.MoveSlowLeft(); break;
+                    case (1, 1): GameContext.PlayerAnimationController.MoveSlowForwardRight(); break;
+                    case (-1, 1): GameContext.PlayerAnimationController.MoveSlowForwardLeft(); break;
+                    case (1, -1): GameContext.PlayerAnimationController.MoveSlowBackwardRight(); break;
+                    case (-1, -1): GameContext.PlayerAnimationController.MoveSlowBackwardLeft(); break;
                 }
             }
         }

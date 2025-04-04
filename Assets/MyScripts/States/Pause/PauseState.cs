@@ -7,7 +7,7 @@ namespace States
         private float _time;
         public override void Enter()
         {
-            // Debug.Log("Пауза Enter");
+            GameContext.IsPause = true;
             _time = Time.timeScale;
             Time.timeScale = 0;
             Cursor.visible = true;
@@ -15,7 +15,7 @@ namespace States
 
         public override void Exit()
         {
-            // Debug.Log("Пауза Exit");
+            GameContext.IsPause = false;
             Time.timeScale = _time;
             Cursor.visible = false;
         }
@@ -27,20 +27,19 @@ namespace States
         public override void Enter()
         {
             base.Enter();
-            // Debug.Log("Меню открыто");
-            GameContext.uiManager.OpenMenu();
+            GameContext.UIManager.OpenMenu();
         }
 
         public override void Exit()
         {
             base.Exit();
-            // Debug.Log("Меню закрыто");
-            GameContext.uiManager.CloseMenu();
+            GameContext.UIManager.CloseMenu();
         }
 
-        public override void ConsolePerformed()
+        public override State ConsolePerformed()
         {
-            StateManager.ReturnToLayer();
+            SM.ReturnToLayer();
+            return null;
         }
     }
 }

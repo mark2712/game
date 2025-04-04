@@ -4,6 +4,7 @@ namespace States
 {
     public class JumpState : BaseAirState
     {
+        public override bool Reentry => true;
         public override void Enter()
         {
             base.Enter();
@@ -13,26 +14,27 @@ namespace States
         protected virtual void Jump()
         {
             StartTimer(200);
-            GameContext.playerController.Jump();
-            GameContext.playerAnimationController.Jump();
+            GameContext.PlayerController.Jump();
+            GameContext.PlayerAnimationController.Jump();
         }
 
-        public override void Update()
+        public override State Update()
         {
             base.Update();
-            GameContext.playerController.NowMoveSpeed = PlayerSpeed.Get();
+            GameContext.PlayerController.NowMoveSpeed = PlayerSpeed.Get();
 
             if (IsTimerFinished())
             {
-                GoToGameState();
+                return SM.GetGameState();
             }
+            return null;
         }
 
-        public override void SpacePerformed() { }
+        public override State SpacePerformed() { return null; }
 
-        public override void OnMoveChanged() { }
-        public override void OnGroundChanged() { }
-        public override void OnShiftChanged() { }
-        public override void OnSneakChanged() { }
+        public override State OnMoveChanged() { return null; }
+        public override State OnGroundChanged() { return null; }
+        public override State OnShiftChanged() { return null; }
+        public override State OnSneakChanged() { return null; }
     }
 }

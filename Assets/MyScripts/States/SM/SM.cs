@@ -5,31 +5,20 @@ using UnityEngine.InputSystem;
 
 namespace States
 {
-    public partial class StateManager : IStateMonoBehaviour, IStateFlagsEvents, IStateInputEvents
+    public partial class SM
     {
         public virtual State State { get; set; }
-        public StateManager parentStateManager;
+        public SM parentSM;
         public EventQueue eventQueue = new();
 
-        public HandsStateManager handsStateManager;
-        public RightHandStateManager rightHandStateManager;
-        public LeftHandStateManager leftHandStateManager;
-        public ModalStateManager modalStateManager;
-
-        public StateManager(StateManager parentStateManager = null)
+        public SM(SM parentSM = null)
         {
-            this.parentStateManager = parentStateManager;
+            this.parentSM = parentSM;
         }
 
         public virtual void UpdateState()
         {
-            eventQueue.ProcessEvents();
-
-            handsStateManager?.UpdateState();
-            rightHandStateManager?.UpdateState();
-            leftHandStateManager?.UpdateState();
-            modalStateManager?.UpdateState();
-
+            eventQueue.ProcessEvents(this);
             if (NextLayerState != null)
             {
                 GoToLayer();
@@ -94,7 +83,7 @@ namespace States
         public void EscPerformed() { eventQueue.AddEvent(() => State.EscPerformed()); }
         public void ConsolePerformed() { eventQueue.AddEvent(() => State.ConsolePerformed()); }
         // public void MoveInput(Vector2 moveInput) { eventQueue.AddEvent(() => State.MoveInput(moveInput)); }
-        public void LookInput(Vector2 lookInput) { eventQueue.AddEvent(() => State.LookInput(lookInput)); }
+        // public void LookInput(Vector2 lookInput) { eventQueue.AddEvent(() => State.LookInput(lookInput)); }
         public void ScrollPerformed(InputAction.CallbackContext ctx) { eventQueue.AddEvent(() => State.ScrollPerformed(ctx)); }
 
         public void Mouse1Performed() { eventQueue.AddEvent(() => State.Mouse1Performed()); }

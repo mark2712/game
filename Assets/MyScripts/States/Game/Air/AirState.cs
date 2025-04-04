@@ -7,22 +7,24 @@ namespace States
         public override void Enter()
         {
             base.Enter();
-            GameContext.playerAnimationController.Air();
+            GameContext.PlayerAnimationController.Air();
         }
 
-        public override void Update()
+        public override State Update()
         {
             base.Update();
-            GameContext.playerController.NowMoveSpeed = PlayerSpeed.Get();
+            GameContext.PlayerController.NowMoveSpeed = PlayerSpeed.Get();
+            return null;
         }
 
-        public override void SpacePerformed()
+        public override State SpacePerformed()
         {
-            Player.PlayerController playerController = GameContext.playerController;
-            if (playerController.JumpCount < 2 && Time.time - playerController.LastJumpTime > 0.1f && playerController.DoubleJumpOn)
-            {
-                GoToState<DoubleJumpState>();
-            }
+            // Player.PlayerController playerController = GameContext.playerController;
+            // if (playerController.JumpCount < 2 && Time.time - playerController.LastJumpTime > 0.1f && playerController.DoubleJumpOn)
+            // {
+            //     GoToState<DoubleJumpState>();
+            // }
+            return null;
         }
     }
 }
