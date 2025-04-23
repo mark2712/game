@@ -1,9 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace States
 {
-    public class TakeWeapon : HandsState
+    public class TakeWeapon : HandsBase
     {
+        public override List<ConflictRule> Conflicts => new()
+        {
+            new ConflictAll<InventoryState>(),
+        };
+
         public override void Enter()
         {
             base.Enter();

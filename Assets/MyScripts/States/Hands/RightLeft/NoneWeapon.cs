@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace States
 {
-    public class NoneWeapon : HandsState
+    public class NoneWeapon : HandsBase
     {
         public override void Enter()
         {
@@ -14,6 +14,11 @@ namespace States
         public override State Mouse2Performed()
         {
             return new TakeWeapon();
+        }
+
+        public override State TabPerformed()
+        {
+            return SMController.ModalSM.State.TabPerformed();
         }
     }
 }

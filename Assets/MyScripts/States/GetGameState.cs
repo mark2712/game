@@ -12,21 +12,21 @@ namespace States
                     {
                         if (Flags.Shift)
                         {
-                            return new SneakState();
+                            return new Sneak();
                         }
                         else
                         {
-                            return new SneakSlowState();
+                            return new SneakSlow();
                         }
                     }
                     else
                     {
-                        return new SneakStandState();
+                        return new SneakStand();
                     }
                 }
                 else
                 {
-                    return new SneakAirState();
+                    return new SneakAir();
                 }
             }
             else
@@ -37,21 +37,21 @@ namespace States
                     {
                         if (Flags.Shift)
                         {
-                            return new MoveRunState();
+                            return new MoveRun();
                         }
                         else
                         {
-                            return new MoveState();
+                            return new Move();
                         }
                     }
                     else
                     {
-                        return new StandState();
+                        return new Stand();
                     }
                 }
                 else
                 {
-                    return new MoveAirState();
+                    return new MoveAir();
                 }
             }
         }
@@ -62,10 +62,10 @@ namespace States
 
 // if (Flags.Water)
 // {
-//     return Flags.Shift ? new SwimFastState() : new SwimState();
+//     return Flags.Shift ? new SwimFast() : new Swim();
 // }
 // else if (Flags.Fly)
 // {
-//     return Flags.Shift ? new FlyFastState() : new FlyState();
+//     return Flags.Shift ? new FlyFast() : new Fly();
 // }
 // else 

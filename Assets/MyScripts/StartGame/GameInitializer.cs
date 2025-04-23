@@ -4,8 +4,8 @@ using UnityEngine;
 public class GameInitializer : MonoBehaviour
 {
     PlayerController playerController;
-    private States.SM mainSM;
-    private States.HandsSM handsSM;
+
+    public States.SMController SMController;
     private InputController _inputController;
     private PlayerInputActions _inputActions;
 
@@ -13,13 +13,11 @@ public class GameInitializer : MonoBehaviour
     {
         playerController = GameContext.PlayerController;
         _inputActions = GameContext.InputActions;
-        mainSM = GameContext.MainSM;
-        handsSM = GameContext.HandsSM;
+        SMController = GameContext.SMController;
         _inputController = GameContext.InputController;
 
-        // Начальное состояние
-        handsSM.GoToStateEnter(new States.NoneWeapon());
-        mainSM.GoToStateEnter(States.MainSM.GetGameState());
+        // Начальные состояния
+        SMController.Initialize();
 
         // Инициализация ввода
         _inputController.InitializeInput(_inputActions);
@@ -35,34 +33,35 @@ public class GameInitializer : MonoBehaviour
     void FixedUpdate()
     {
         playerController.FixedUpdate();
-        mainSM.FixedUpdate();
+        SMController.FixedUpdate();
     }
     void Update()
     {
+        States.EventQueue.ProcessEvents();
+        SMController.MainSM.UpdateState(); // для слоёв (паузы)
+
         if (GameContext.IsPause)
         {
-
+            SMController.PauseUpdate();
         }
         else
         {
             playerController.Update();
+            SMController.Update();
         }
-
-        mainSM.UpdateState();
-        mainSM.Update();
     }
     void LateUpdate()
     {
         if (GameContext.IsPause)
         {
-
+            SMController.PauseLateUpdate();
         }
         else
         {
             playerController.LateUpdate();
             GameContext.EmotionController.LateUpdate();
+            SMController.LateUpdate();
         }
-        mainSM.LateUpdate();
     }
 }
 
@@ -82,11 +81,8 @@ public static class GameContext
     public static PlayerInputActions InputActions { get; }
     public static EmotionController EmotionController { get; }
 
+    public static States.SMController SMController { get; }
     public static States.SM MainSM { get; }
-    public static States.HandsSM HandsSM { get; }
-    public static States.RightHandSM RightHandSM { get; }
-    public static States.LeftHandSM LeftHandSM { get; }
-    public static States.ModalSM ModalSM { get; }
 
     static GameContext()
     {
@@ -112,13 +108,10 @@ public static class GameContext
 
         InputActions = new PlayerInputActions();
 
-        MainSM = new();
+        SMController = new();
+        MainSM = SMController.MainSM;
         InputController = new(MainSM);
         new States.FlagsEvents(MainSM);
-        ModalSM = new(MainSM);
-        HandsSM = new(MainSM);
-        RightHandSM = new(HandsSM);
-        LeftHandSM = new(HandsSM);
     }
 }
 

@@ -1,7 +1,7 @@
 namespace States
 {
-    public partial class MainSM : SM
+    public class MainSM : SM
     {
-        
+        public override State DefaultState => GetGameState();
     }
 }

@@ -5,11 +5,13 @@ public class UIManager : MonoBehaviour
     // Ссылки на панели меню и инвентаря
     public GameObject menuPanel;
     public GameObject inventoryPanel;
+    public GameObject consolePanel;
 
     void Awake()
     {
         if (menuPanel == null) menuPanel = GameObject.Find("Menu");
         if (inventoryPanel == null) inventoryPanel = GameObject.Find("Inventory");
+        if (consolePanel == null) consolePanel = GameObject.Find("Console");
         CloseAll();
     }
 
@@ -19,20 +21,23 @@ public class UIManager : MonoBehaviour
         inventoryPanel.SetActive(false); // Закрыть инвентарь, если он открыт
     }
 
-    public void OpenMenu() { menuPanel.SetActive(true); }
-    public void CloseMenu() { menuPanel.SetActive(false); }
-
     // Метод для открытия/закрытия меню
-    public void ToggleMenu()
+    public void ToggleMenu(bool open)
     {
         CloseAll();
-        menuPanel.SetActive(true);
+        menuPanel.SetActive(open);
+    }
+
+    public void ToggleConsole(bool open)
+    {
+        CloseAll();
+        consolePanel.SetActive(open);
     }
 
     // Метод для открытия/закрытия инвентаря
-    public void ToggleInventory()
+    public void ToggleInventory(bool open)
     {
         CloseAll();
-        inventoryPanel.SetActive(true);
+        inventoryPanel.SetActive(open);
     }
 }

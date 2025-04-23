@@ -3,14 +3,78 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 namespace States
 {
-    // public abstract class State : IStateMonoBehaviour, IStateFlagsEvents, IStateInputEvents
+    public enum StateEventType
+    {
+        JumpFinished,
+        HitFinished,
+        InventoryOpened,
+    }
+
+    public abstract class ConflictRule
+    {
+        public SMController SMController = GameContext.SMController; 
+        public abstract void Resolve();
+    }
+
     public abstract class State
     {
-        public virtual SM SM => GameContext.MainSM;
-        public virtual bool Reentry => true; //разрешен переход из текущего стояния в это же стояние ThisState -> ThisState
+        public SMController SMController = GameContext.SMController;
+        public virtual SM SM { get; set; }
+        public virtual bool Reentry => true; // разрешен переход из текущего состояния в это же состояния ThisState -> ThisState
 
+
+        /* Конфликтные состояния */
+        public virtual List<ConflictRule> Conflicts => new(); // все указанные State перейдут в DefaultState 
+
+        // ConflictAll - если состояние это TNotAllowedState или его потомок то будет принудительный переход в TGoToStste (DefaultState если нет TGoToStste)
+        public class ConflictAll<TNotAllowedState> : ConflictRule where TNotAllowedState : State, new()
+        {
+            public override void Resolve()
+            {
+                foreach (var sm in SMController.allSM)
+                {
+                    if (sm.State is TNotAllowedState || sm.State.GetType().IsSubclassOf(typeof(TNotAllowedState)))
+                    {
+                        sm.GoToState(sm.DefaultState);
+                    }
+                }
+            }
+        }
+
+        public class ConflictAll<TNotAllowedState, TGoToStste> : ConflictRule where TNotAllowedState : State where TGoToStste : State, new()
+        {
+            public override void Resolve()
+            {
+                foreach (var sm in SMController.allSM)
+                {
+                    if (sm.State is TNotAllowedState || sm.State.GetType().IsSubclassOf(typeof(TNotAllowedState)))
+                    {
+                        sm.GoToState(new TGoToStste());
+                    }
+                }
+            }
+        }
+
+        /* Создание кастомных событий */
+        public delegate State StateEventHandler(State state);
+        private readonly Dictionary<StateEventType, StateEventHandler> _eventHandlers = new();
+
+        protected void Register(StateEventType type, StateEventHandler handler)
+        {
+            _eventHandlers[type] = handler;
+        }
+
+        // выполнить событие
+        public virtual State HandleEvent(StateEventType type)
+        {
+            return _eventHandlers.TryGetValue(type, out var handler) ? handler(this) : null;
+        }
+
+
+        /* Переход в состояние */
         protected virtual void GoToState<TNewState>() where TNewState : State
         {
             TNewState newState = Activator.CreateInstance(typeof(TNewState)) as TNewState;
@@ -26,7 +90,7 @@ namespace States
             SM.GoToState(SM.GetGameState());
         }
 
-        // Таймер
+        /* Таймер */
         private Dictionary<string, float> timers = new Dictionary<string, float>();
 
         protected void StartTimer(float durationMs, string name = "Timer")
@@ -52,15 +116,10 @@ namespace States
         public virtual void Enter() { }
         public virtual void Exit() { }
 
-        // public virtual State ParentEnter() { return null; }
-        // public virtual State ParentReturn() { return null; }
-        // public virtual State ParentReentry() { return null; }
-        // public virtual State ParentExit() { return null; }
-
         /* События MonoBehaviour */
-        public virtual State FixedUpdate() { return null; }
-        public virtual State Update() { return null; }
-        public virtual State LateUpdate() { return null; }
+        public virtual void FixedUpdate() { }
+        public virtual void Update() { }
+        public virtual void LateUpdate() { }
 
         /* События флагов */
         public virtual State OnMoveChanged() { return null; }
@@ -99,56 +158,7 @@ namespace States
         public virtual State KeyX_performed() { return null; }
         public virtual State KeyC_performed() { return null; }
     }
-
-    //     interface IStateMonoBehaviour
-    //     {
-    //         State FixedUpdate();
-    //         State Update();
-    //         State LateUpdate();
-    //     }
-
-    //     interface IStateFlagsEvents
-    //     {
-    //         State OnMoveChanged();
-    //         State OnGroundChanged();
-    //         State OnShiftChanged();
-    //         State OnSneakChanged();
-    //     }
-
-
-
-    //     interface IStateInputEvents
-    //     {
-    //         State Mouse1Performed();
-    //         State Mouse2Performed();
-    //         State Mouse3Performed();
-
-    //         State EscPerformed();
-    //         State ConsolePerformed();
-    //         State TabPerformed();
-    //         State ShiftPerformed();
-    //         State ShiftCanceled();
-    //         State CtrlPerformed();
-    //         State CtrlCanceled();
-    //         State AltPerformed();
-    //         State AltCanceled();
-    //         State SpacePerformed();
-
-    //         State KeyQ_performed();
-    //         State KeyE_performed();
-    //         State KeyR_performed();
-    //         State KeyT_performed();
-    //         State KeyI_performed();
-    //         State KeyF_performed();
-    //         State KeyZ_performed();
-    //         State KeyX_performed();
-    //         State KeyC_performed();
-    //     }
 }
-
-
-
-
 
 
 /*
