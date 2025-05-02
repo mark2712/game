@@ -98,14 +98,14 @@ namespace States
 
 
         // Shift - Sneak
-        public override State ShiftPerformed() { Flags.Shift = true; return null; }
-        public override State ShiftCanceled() { Flags.Shift = false; return null; }
-        public override State KeyX_performed() { Flags.Shift = !Flags.Shift; return null; }
+        public override State ShiftPerformed() { Flags.Set(FlagName.Shift, true); return null; }
+        public override State ShiftCanceled() { Flags.Set(FlagName.Shift, false); return null; }
+        public override State KeyX_performed() { Flags.Inverse(FlagName.Shift); return null; }
 
-        public override State CtrlPerformed() { Flags.Sneak = true; return null; }
-        public override State CtrlCanceled() { Flags.Sneak = false; return null; }
-        public override State AltPerformed() { Flags.Sneak = true; return null; }
-        public override State AltCanceled() { Flags.Sneak = false; return null; }
-        public override State KeyC_performed() { Flags.Sneak = !Flags.Sneak; return null; }
+        public override State CtrlPerformed() { Flags.Set(FlagName.Sneak, true); return null; }
+        public override State CtrlCanceled() { Flags.Set(FlagName.Sneak, false); return null; }
+        public override State AltPerformed() { Flags.Set(FlagName.Sneak, true); return null; }
+        public override State AltCanceled() { Flags.Set(FlagName.Sneak, false); return null; }
+        public override State KeyC_performed() { Flags.Inverse(FlagName.Sneak); return null; }
     }
 }

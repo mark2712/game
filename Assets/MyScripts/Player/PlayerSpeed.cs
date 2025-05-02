@@ -1,3 +1,5 @@
+using States;
+
 public static class PlayerSpeed
 {
     public static float Base = 3.5f;
@@ -16,9 +18,9 @@ public static class PlayerSpeed
 
     public static float Get()
     {
-        if (States.Flags.Sneak)
+        if (Flags.Get(FlagName.Sneak))
         {
-            if (States.Flags.Shift)
+            if (Flags.Get(FlagName.Shift))
             {
                 return Sneak;
             }
@@ -29,7 +31,7 @@ public static class PlayerSpeed
         }
         else
         {
-            if (States.Flags.Shift)
+            if (Flags.Get(FlagName.Shift))
             {
                 return Run;
             }

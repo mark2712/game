@@ -19,5 +19,11 @@ namespace States
             SM.ReturnToLayer();
             return null;
         }
+
+        public override State EscPerformed()
+        {
+            SM.ReturnToLayer();
+            return null;
+        }
     }
 }

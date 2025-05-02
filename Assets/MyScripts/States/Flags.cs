@@ -1,72 +1,71 @@
 using System;
+using System.Collections.Generic;
 
 namespace States
 {
+    public enum FlagName
+    {
+        Move,
+        Shift,
+        Sneak,
+
+        Ground,
+        Water,
+        Fly,
+
+        Stun,
+        Drop,
+        Fainted,
+        Dead,
+        // Destroyed,
+        // GameOver,
+        // Combat,
+        LegsShackled,
+        LegsRope,
+        HandsShackled,
+        HandsRope,
+    }
+
     public static class Flags
     {
-        public static bool Combat = false;
-        public static bool Water = false;
-        public static bool Fly = false;
+        private static readonly Dictionary<FlagName, bool> _values = new();
+        private static readonly Dictionary<FlagName, Action<bool>> _callbacks = new();
 
-        public static event Action<bool> OnMoveChanged;
-        public static event Action<bool> OnGroundChanged;
-        public static event Action<bool> OnShiftChanged;
-        public static event Action<bool> OnSneakChanged;
-
-        private static bool _move = false;
-        public static bool Move
+        static Flags()
         {
-            get => _move;
-            set
+            foreach (FlagName flag in Enum.GetValues(typeof(FlagName)))
+                _values[flag] = false;
+        }
+
+        public static bool Get(FlagName flag) => _values[flag];
+
+        public static void Inverse(FlagName flag)
+        {
+            Set(flag, !Get(flag));
+        }
+
+        public static void Set(FlagName flag, bool value)
+        {
+            if (_values[flag] != value)
             {
-                if (_move != value)
-                {
-                    _move = value;
-                    OnMoveChanged?.Invoke(_move);
-                }
+                _values[flag] = value;
+                if (_callbacks.TryGetValue(flag, out var callback))
+                    callback?.Invoke(value);
             }
         }
 
-        private static bool _ground = false;
-        public static bool Ground
+        public static void Subscribe(FlagName flag, Action<bool> callback)
         {
-            get => _ground;
-            set
-            {
-                if (_ground != value)
-                {
-                    _ground = value;
-                    OnGroundChanged?.Invoke(_ground);
-                }
-            }
+            if (_callbacks.ContainsKey(flag))
+                _callbacks[flag] += callback;
+            else
+                _callbacks[flag] = callback;
         }
 
-        private static bool _shift = false;
-        public static bool Shift
+        public static void Unsubscribe(FlagName flag, Action<bool> callback)
         {
-            get => _shift;
-            set
-            {
-                if (_shift != value)
-                {
-                    _shift = value;
-                    OnShiftChanged?.Invoke(_shift);
-                }
-            }
-        }
-
-        private static bool _sneak = false;
-        public static bool Sneak
-        {
-            get => _sneak;
-            set
-            {
-                if (_sneak != value)
-                {
-                    _sneak = value;
-                    OnSneakChanged?.Invoke(_sneak);
-                }
-            }
+            if (_callbacks.ContainsKey(flag))
+                _callbacks[flag] -= callback;
         }
     }
 }

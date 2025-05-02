@@ -224,6 +224,132 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Num1"",
+                    ""type"": ""Button"",
+                    ""id"": ""2769d404-186e-4cf3-950e-f2bd73cb36bb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Num2"",
+                    ""type"": ""Button"",
+                    ""id"": ""9ba3dbb8-3500-4eb6-baf6-0349d62e6a66"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Num3"",
+                    ""type"": ""Button"",
+                    ""id"": ""b84d67da-9f78-4411-bb38-a99a8d0a4a8e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Num4"",
+                    ""type"": ""Button"",
+                    ""id"": ""397676bb-f371-46bd-b396-a77856386d91"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Num5"",
+                    ""type"": ""Button"",
+                    ""id"": ""cd5d4376-7fbc-4284-af32-b7cda2b75b7a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Num6"",
+                    ""type"": ""Button"",
+                    ""id"": ""955e8e4f-aeae-453f-a3af-481ae088ca93"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Num7"",
+                    ""type"": ""Button"",
+                    ""id"": ""86d94e16-531c-40ad-9b7e-2a1cf9c36d9b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Num8"",
+                    ""type"": ""Button"",
+                    ""id"": ""b4dcd999-5567-4270-9c7c-4c5aed321268"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Num9"",
+                    ""type"": ""Button"",
+                    ""id"": ""0d119319-fe61-4fd2-9b87-c36b6ed06014"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Num0"",
+                    ""type"": ""Button"",
+                    ""id"": ""6abb1e59-5a59-44f4-8bbb-b41beb26837f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""F1"",
+                    ""type"": ""Button"",
+                    ""id"": ""3bb155c4-a65d-4974-a8b1-1ebbf8b87538"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""F2"",
+                    ""type"": ""Button"",
+                    ""id"": ""09c234af-5e7d-40fc-b3df-0f23322759ca"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""F3"",
+                    ""type"": ""Button"",
+                    ""id"": ""906ed79b-07e3-46ff-9509-9d0f878b49db"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""F4"",
+                    ""type"": ""Button"",
+                    ""id"": ""d15a074b-77b2-40c6-9f38-92158cefbb8c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -532,6 +658,160 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Alt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""11a843c0-e4cf-404a-80ad-13b958b56b6a"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Num1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6fb8514b-c9d2-44da-b88b-f5283e366bef"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Num2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fa8e31e1-3901-49f3-ae46-a101b64c5d44"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Num3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""993a4d07-8edc-40a7-8d5b-12f6f71639d6"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Num4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""02cd63f4-6c3c-4592-bd64-966209eefcae"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Num5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c1ddd4fd-51c3-4d11-966e-a37272df1847"",
+                    ""path"": ""<Keyboard>/6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Num6"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a8d80c8f-0b87-40c7-88b7-d5142ae65b18"",
+                    ""path"": ""<Keyboard>/7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Num7"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ddafe374-f91a-4397-a6c5-4e2eb272e657"",
+                    ""path"": ""<Keyboard>/8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Num8"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""06e019e0-ef53-40f5-9ddd-5f2c3b405182"",
+                    ""path"": ""<Keyboard>/9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Num9"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""47950e06-dc41-4ee3-ba97-c6b427febe2e"",
+                    ""path"": ""<Keyboard>/0"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Num0"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""65d5bb2a-ea90-4ae6-9ace-93b1b7a52b2f"",
+                    ""path"": ""<Keyboard>/f1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""F1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3e123ad9-09dd-4cca-9970-67d1c28bce3c"",
+                    ""path"": ""<Keyboard>/f2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""F2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""189b51f9-bc97-4151-8745-98a3dcc13743"",
+                    ""path"": ""<Keyboard>/f3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""F3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ef9978b4-9855-451d-9a68-4f1ee640a0eb"",
+                    ""path"": ""<Keyboard>/f4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""F4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -851,6 +1131,20 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Z = m_Player.FindAction("Z", throwIfNotFound: true);
         m_Player_X = m_Player.FindAction("X", throwIfNotFound: true);
         m_Player_C = m_Player.FindAction("C", throwIfNotFound: true);
+        m_Player_Num1 = m_Player.FindAction("Num1", throwIfNotFound: true);
+        m_Player_Num2 = m_Player.FindAction("Num2", throwIfNotFound: true);
+        m_Player_Num3 = m_Player.FindAction("Num3", throwIfNotFound: true);
+        m_Player_Num4 = m_Player.FindAction("Num4", throwIfNotFound: true);
+        m_Player_Num5 = m_Player.FindAction("Num5", throwIfNotFound: true);
+        m_Player_Num6 = m_Player.FindAction("Num6", throwIfNotFound: true);
+        m_Player_Num7 = m_Player.FindAction("Num7", throwIfNotFound: true);
+        m_Player_Num8 = m_Player.FindAction("Num8", throwIfNotFound: true);
+        m_Player_Num9 = m_Player.FindAction("Num9", throwIfNotFound: true);
+        m_Player_Num0 = m_Player.FindAction("Num0", throwIfNotFound: true);
+        m_Player_F1 = m_Player.FindAction("F1", throwIfNotFound: true);
+        m_Player_F2 = m_Player.FindAction("F2", throwIfNotFound: true);
+        m_Player_F3 = m_Player.FindAction("F3", throwIfNotFound: true);
+        m_Player_F4 = m_Player.FindAction("F4", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
@@ -957,6 +1251,20 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Z;
     private readonly InputAction m_Player_X;
     private readonly InputAction m_Player_C;
+    private readonly InputAction m_Player_Num1;
+    private readonly InputAction m_Player_Num2;
+    private readonly InputAction m_Player_Num3;
+    private readonly InputAction m_Player_Num4;
+    private readonly InputAction m_Player_Num5;
+    private readonly InputAction m_Player_Num6;
+    private readonly InputAction m_Player_Num7;
+    private readonly InputAction m_Player_Num8;
+    private readonly InputAction m_Player_Num9;
+    private readonly InputAction m_Player_Num0;
+    private readonly InputAction m_Player_F1;
+    private readonly InputAction m_Player_F2;
+    private readonly InputAction m_Player_F3;
+    private readonly InputAction m_Player_F4;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -983,6 +1291,20 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Z => m_Wrapper.m_Player_Z;
         public InputAction @X => m_Wrapper.m_Player_X;
         public InputAction @C => m_Wrapper.m_Player_C;
+        public InputAction @Num1 => m_Wrapper.m_Player_Num1;
+        public InputAction @Num2 => m_Wrapper.m_Player_Num2;
+        public InputAction @Num3 => m_Wrapper.m_Player_Num3;
+        public InputAction @Num4 => m_Wrapper.m_Player_Num4;
+        public InputAction @Num5 => m_Wrapper.m_Player_Num5;
+        public InputAction @Num6 => m_Wrapper.m_Player_Num6;
+        public InputAction @Num7 => m_Wrapper.m_Player_Num7;
+        public InputAction @Num8 => m_Wrapper.m_Player_Num8;
+        public InputAction @Num9 => m_Wrapper.m_Player_Num9;
+        public InputAction @Num0 => m_Wrapper.m_Player_Num0;
+        public InputAction @F1 => m_Wrapper.m_Player_F1;
+        public InputAction @F2 => m_Wrapper.m_Player_F2;
+        public InputAction @F3 => m_Wrapper.m_Player_F3;
+        public InputAction @F4 => m_Wrapper.m_Player_F4;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1058,6 +1380,48 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @C.started += instance.OnC;
             @C.performed += instance.OnC;
             @C.canceled += instance.OnC;
+            @Num1.started += instance.OnNum1;
+            @Num1.performed += instance.OnNum1;
+            @Num1.canceled += instance.OnNum1;
+            @Num2.started += instance.OnNum2;
+            @Num2.performed += instance.OnNum2;
+            @Num2.canceled += instance.OnNum2;
+            @Num3.started += instance.OnNum3;
+            @Num3.performed += instance.OnNum3;
+            @Num3.canceled += instance.OnNum3;
+            @Num4.started += instance.OnNum4;
+            @Num4.performed += instance.OnNum4;
+            @Num4.canceled += instance.OnNum4;
+            @Num5.started += instance.OnNum5;
+            @Num5.performed += instance.OnNum5;
+            @Num5.canceled += instance.OnNum5;
+            @Num6.started += instance.OnNum6;
+            @Num6.performed += instance.OnNum6;
+            @Num6.canceled += instance.OnNum6;
+            @Num7.started += instance.OnNum7;
+            @Num7.performed += instance.OnNum7;
+            @Num7.canceled += instance.OnNum7;
+            @Num8.started += instance.OnNum8;
+            @Num8.performed += instance.OnNum8;
+            @Num8.canceled += instance.OnNum8;
+            @Num9.started += instance.OnNum9;
+            @Num9.performed += instance.OnNum9;
+            @Num9.canceled += instance.OnNum9;
+            @Num0.started += instance.OnNum0;
+            @Num0.performed += instance.OnNum0;
+            @Num0.canceled += instance.OnNum0;
+            @F1.started += instance.OnF1;
+            @F1.performed += instance.OnF1;
+            @F1.canceled += instance.OnF1;
+            @F2.started += instance.OnF2;
+            @F2.performed += instance.OnF2;
+            @F2.canceled += instance.OnF2;
+            @F3.started += instance.OnF3;
+            @F3.performed += instance.OnF3;
+            @F3.canceled += instance.OnF3;
+            @F4.started += instance.OnF4;
+            @F4.performed += instance.OnF4;
+            @F4.canceled += instance.OnF4;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1128,6 +1492,48 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @C.started -= instance.OnC;
             @C.performed -= instance.OnC;
             @C.canceled -= instance.OnC;
+            @Num1.started -= instance.OnNum1;
+            @Num1.performed -= instance.OnNum1;
+            @Num1.canceled -= instance.OnNum1;
+            @Num2.started -= instance.OnNum2;
+            @Num2.performed -= instance.OnNum2;
+            @Num2.canceled -= instance.OnNum2;
+            @Num3.started -= instance.OnNum3;
+            @Num3.performed -= instance.OnNum3;
+            @Num3.canceled -= instance.OnNum3;
+            @Num4.started -= instance.OnNum4;
+            @Num4.performed -= instance.OnNum4;
+            @Num4.canceled -= instance.OnNum4;
+            @Num5.started -= instance.OnNum5;
+            @Num5.performed -= instance.OnNum5;
+            @Num5.canceled -= instance.OnNum5;
+            @Num6.started -= instance.OnNum6;
+            @Num6.performed -= instance.OnNum6;
+            @Num6.canceled -= instance.OnNum6;
+            @Num7.started -= instance.OnNum7;
+            @Num7.performed -= instance.OnNum7;
+            @Num7.canceled -= instance.OnNum7;
+            @Num8.started -= instance.OnNum8;
+            @Num8.performed -= instance.OnNum8;
+            @Num8.canceled -= instance.OnNum8;
+            @Num9.started -= instance.OnNum9;
+            @Num9.performed -= instance.OnNum9;
+            @Num9.canceled -= instance.OnNum9;
+            @Num0.started -= instance.OnNum0;
+            @Num0.performed -= instance.OnNum0;
+            @Num0.canceled -= instance.OnNum0;
+            @F1.started -= instance.OnF1;
+            @F1.performed -= instance.OnF1;
+            @F1.canceled -= instance.OnF1;
+            @F2.started -= instance.OnF2;
+            @F2.performed -= instance.OnF2;
+            @F2.canceled -= instance.OnF2;
+            @F3.started -= instance.OnF3;
+            @F3.performed -= instance.OnF3;
+            @F3.canceled -= instance.OnF3;
+            @F4.started -= instance.OnF4;
+            @F4.performed -= instance.OnF4;
+            @F4.canceled -= instance.OnF4;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1364,6 +1770,20 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnZ(InputAction.CallbackContext context);
         void OnX(InputAction.CallbackContext context);
         void OnC(InputAction.CallbackContext context);
+        void OnNum1(InputAction.CallbackContext context);
+        void OnNum2(InputAction.CallbackContext context);
+        void OnNum3(InputAction.CallbackContext context);
+        void OnNum4(InputAction.CallbackContext context);
+        void OnNum5(InputAction.CallbackContext context);
+        void OnNum6(InputAction.CallbackContext context);
+        void OnNum7(InputAction.CallbackContext context);
+        void OnNum8(InputAction.CallbackContext context);
+        void OnNum9(InputAction.CallbackContext context);
+        void OnNum0(InputAction.CallbackContext context);
+        void OnF1(InputAction.CallbackContext context);
+        void OnF2(InputAction.CallbackContext context);
+        void OnF3(InputAction.CallbackContext context);
+        void OnF4(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

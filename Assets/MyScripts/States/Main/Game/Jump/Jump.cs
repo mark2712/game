@@ -9,7 +9,7 @@ namespace States
         {
             base.Enter();
             DoJump();
-            Register(StateEventType.JumpFinished, _ => JumpFinished());
+            RegisterEvent(StateEventType.JumpFinished, _ => JumpFinished());
         }
 
         protected virtual void DoJump()
@@ -26,7 +26,7 @@ namespace States
 
             if (IsTimerFinished())
             {
-                SM.Trigger(StateEventType.JumpFinished);
+                SM.TriggerEvent(StateEventType.JumpFinished);
                 // JumpFinished();
             }
         }

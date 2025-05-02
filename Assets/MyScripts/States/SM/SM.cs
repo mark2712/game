@@ -79,7 +79,11 @@ namespace States
         }
 
         // Events
-        public void Trigger(StateEventType eventType)
+        public void FixedUpdate() { State.FixedUpdate(); }
+        public void Update() { State.Update(); }
+        public void LateUpdate() { State.LateUpdate(); }
+
+        public void TriggerEvent(StateEventType eventType)
         {
             EventQueue.AddEvent(() => State.HandleEvent(eventType));
         }
@@ -89,9 +93,6 @@ namespace States
         public void OnShiftChanged() { EventQueue.AddEvent(() => State.OnShiftChanged()); }
         public void OnSneakChanged() { EventQueue.AddEvent(() => State.OnSneakChanged()); }
         // public void OnGameOverChanged() { EventQueue.AddEvent(() => State.OnGameOverChanged()); }
-        public void FixedUpdate() { State.FixedUpdate(); }
-        public void Update() { State.Update(); }
-        public void LateUpdate() { State.LateUpdate(); }
 
         public void EscPerformed() { EventQueue.AddEvent(() => State.EscPerformed()); }
         public void ConsolePerformed() { EventQueue.AddEvent(() => State.ConsolePerformed()); }
@@ -119,6 +120,21 @@ namespace States
         public void KeyZ_performed() { EventQueue.AddEvent(() => State.KeyZ_performed()); }
         public void KeyX_performed() { EventQueue.AddEvent(() => State.KeyX_performed()); }
         public void KeyC_performed() { EventQueue.AddEvent(() => State.KeyC_performed()); }
-    }
 
+        public void Num1_performed() { EventQueue.AddEvent(() => State.Num1_performed()); }
+        public void Num2_performed() { EventQueue.AddEvent(() => State.Num2_performed()); }
+        public void Num3_performed() { EventQueue.AddEvent(() => State.Num3_performed()); }
+        public void Num4_performed() { EventQueue.AddEvent(() => State.Num4_performed()); }
+        public void Num5_performed() { EventQueue.AddEvent(() => State.Num5_performed()); }
+        public void Num6_performed() { EventQueue.AddEvent(() => State.Num6_performed()); }
+        public void Num7_performed() { EventQueue.AddEvent(() => State.Num7_performed()); }
+        public void Num8_performed() { EventQueue.AddEvent(() => State.Num8_performed()); }
+        public void Num9_performed() { EventQueue.AddEvent(() => State.Num9_performed()); }
+        public void Num0_performed() { EventQueue.AddEvent(() => State.Num0_performed()); }
+
+        public void F1_performed() { EventQueue.AddEvent(() => State.F1_performed()); }
+        public void F2_performed() { EventQueue.AddEvent(() => State.F2_performed()); }
+        public void F3_performed() { EventQueue.AddEvent(() => State.F3_performed()); }
+        public void F4_performed() { EventQueue.AddEvent(() => State.F4_performed()); }
+    }
 }

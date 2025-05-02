@@ -2,13 +2,13 @@ using UnityEngine;
 
 namespace States
 {
-    public class NoneWeapon : HandsBase
+    public class NoneWeapon : BaseHands
     {
         public override void Enter()
         {
             base.Enter();
             // GameContext.playerAnimationController.SwordLeftHand();
-            GameContext.PlayerAnimationController.HandNone();
+            GameContext.PlayerAnimationController.HandsNone();
         }
 
         public override State Mouse2Performed()

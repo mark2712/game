@@ -62,7 +62,7 @@ namespace States
         public delegate State StateEventHandler(State state);
         private readonly Dictionary<StateEventType, StateEventHandler> _eventHandlers = new();
 
-        protected void Register(StateEventType type, StateEventHandler handler)
+        protected void RegisterEvent(StateEventType type, StateEventHandler handler)
         {
             _eventHandlers[type] = handler;
         }
@@ -128,8 +128,6 @@ namespace States
         public virtual State OnSneakChanged() { return null; }
 
         /* События ввода */
-        // public virtual State MoveInput(Vector2 moveInput) { return null; }
-        // public virtual State LookInput(Vector2 lookInput) { return null; }
         public virtual State ScrollPerformed(InputAction.CallbackContext ctx) { return null; }
 
         public virtual State Mouse1Performed() { return null; }
@@ -147,7 +145,6 @@ namespace States
         public virtual State AltCanceled() { return null; }
         public virtual State SpacePerformed() { return null; }
 
-
         public virtual State KeyQ_performed() { return null; }
         public virtual State KeyE_performed() { return null; }
         public virtual State KeyR_performed() { return null; }
@@ -157,57 +154,21 @@ namespace States
         public virtual State KeyZ_performed() { return null; }
         public virtual State KeyX_performed() { return null; }
         public virtual State KeyC_performed() { return null; }
+
+        public virtual State Num1_performed() { return null; }
+        public virtual State Num2_performed() { return null; }
+        public virtual State Num3_performed() { return null; }
+        public virtual State Num4_performed() { return null; }
+        public virtual State Num5_performed() { return null; }
+        public virtual State Num6_performed() { return null; }
+        public virtual State Num7_performed() { return null; }
+        public virtual State Num8_performed() { return null; }
+        public virtual State Num9_performed() { return null; }
+        public virtual State Num0_performed() { return null; }
+
+        public virtual State F1_performed() { return null; }
+        public virtual State F2_performed() { return null; }
+        public virtual State F3_performed() { return null; }
+        public virtual State F4_performed() { return null; }
     }
 }
-
-
-/*
-global: { 'Game', 'Dialog', 'Cutscene', 'GameOver' }
-world: { 'Ground', 'Air', 'Water', 'GroundWater', 'WaterSurface' }
-combat: { 'Off', 'On', 'Skill' }
-move: { 'Stand', 'Forward', 'Backward', 'Left', 'Right', 'ForwardLeft', 'ForwardRight', 'BackwardLeft', 'BackwardRight' }
-shift: { 'Off', 'On' }
-sneak: { 'Off', 'On' }
-action: { 'Off', 'Punch', 'Hit', 'Bow', 'Cast', 'Magic', 'Baff', 'Inventory', 'Menu', 'Dialog' }
-baff: { 'Off', 'Cold', 'Fire' }
-
-
-GameOver, Cutscene, Dialog, Action, Move
-
-
-PauseState - ставит игру на паузу (например открытие консоли ~), единственне сотояние для которого нужны Layers
-
-GameFSM
-'Game', 'Dialog', 'Cutscene', 'GameOver', 'Punch', 'Hit', 'ShootBow', 'Cast' - Самостоятельные состояния. Тоесть персонаж не может одновременно ходить, вести диалог и бить.
-
-Game: (body) можно управлять персонажем, анимация отсюда распространяется на всё тело. Переход сюда управляется флагами Flags
-    move - MoveFSM
-        kick
-        air
-        stand
-        normal { 'Forward', 'Backward', 'Left', 'Right', 'ForwardLeft', 'ForwardRight', 'BackwardLeft', 'BackwardRight' }
-        run (Forward)
-    sneak - SneakFSM
-        air
-        jump
-        stand
-        normal (Forward)
-        slow (Forward)
-    water
-        normal
-        run
-    fly
-        normal
-        run
-    jump
-    air (base)
-
-hands (работает параллельно с другими сотояниями, перекрывает руки)
-    action (Baff, Inventory, Magic...) - затрагивает только руки, не путать с ударами и магией
-    leftOrRight
-        left (HandLeftFSM)
-            skill...
-        right (HandRightFSM)
-            weapon...
-
-*/

@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace States
 {
-    public class TakeWeapon : HandsBase
+    public class TakeWeapon : BaseHands
     {
         public override List<ConflictRule> Conflicts => new()
         {
-            new ConflictAll<InventoryState>(),
+            new ConflictAll<Inventory>(),
         };
 
         public override void Enter()
@@ -18,7 +18,7 @@ namespace States
 
         public override State Mouse1Performed()
         {
-            return new HitState();
+            return new Hit();
         }
 
         public override State Mouse2Performed()

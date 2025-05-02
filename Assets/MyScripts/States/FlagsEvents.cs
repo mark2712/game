@@ -4,10 +4,10 @@ namespace States
     {
         public FlagsEvents(SM mainSM)
         {
-            Flags.OnMoveChanged += _ => mainSM.OnMoveChanged();
-            Flags.OnGroundChanged += _ => mainSM.OnGroundChanged();
-            Flags.OnShiftChanged += _ => mainSM.OnShiftChanged();
-            Flags.OnSneakChanged += _ => mainSM.OnSneakChanged();
+            Flags.Subscribe(FlagName.Move, _ => mainSM.OnMoveChanged());
+            Flags.Subscribe(FlagName.Shift, _ => mainSM.OnShiftChanged());
+            Flags.Subscribe(FlagName.Sneak, _ => mainSM.OnSneakChanged());
+            Flags.Subscribe(FlagName.Ground, _ => mainSM.OnGroundChanged());
         }
     }
 }

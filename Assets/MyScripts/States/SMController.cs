@@ -6,6 +6,7 @@ namespace States
     {
         public MainSM MainSM;
         public ModalSM ModalSM;
+        public LegsSM LegsSM;
         public HandsSM HandsSM;
         public RightHandSM RightHandSM;
         public LeftHandSM LeftHandSM;

@@ -31,14 +31,4 @@ namespace States
             }
         }
     }
-
-    public class RightHandSM : SM
-    {
-        // public RightHandSM(SM parentSM) : base(parentSM) { }
-    }
-
-    public class LeftHandSM : SM
-    {
-        // public LeftHandSM(SM parentSM) : base(parentSM) { }
-    }
 }

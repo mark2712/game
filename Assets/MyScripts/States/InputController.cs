@@ -19,12 +19,6 @@ public class InputController
         inputActions.Player.Esc.performed += _ => mainSM.EscPerformed();
         inputActions.Player.Console.performed += _ => mainSM.ConsolePerformed();
 
-        // inputActions.Player.Move.performed += ctx => mainSM.MoveInput(ctx.ReadValue<Vector2>());
-        // inputActions.Player.Move.canceled += ctx => mainSM.MoveInput(Vector2.zero);
-
-        // inputActions.Player.Look.performed += ctx => mainSM.LookInput(ctx.ReadValue<Vector2>());
-        // inputActions.Player.Look.canceled += ctx => mainSM.LookInput(Vector2.zero);
-
         inputActions.Player.Move.performed += ctx => SetMoveInput(ctx.ReadValue<Vector2>());
         inputActions.Player.Move.canceled += ctx => SetMoveInput(Vector2.zero);
 
@@ -59,5 +53,24 @@ public class InputController
         inputActions.Player.Z.performed += _ => mainSM.KeyZ_performed();
         inputActions.Player.X.performed += _ => mainSM.KeyX_performed();
         inputActions.Player.C.performed += _ => mainSM.KeyC_performed();
+
+        inputActions.Player.Num1.performed += _ => mainSM.Num1_performed();
+        inputActions.Player.Num2.performed += _ => mainSM.Num2_performed();
+        inputActions.Player.Num3.performed += _ => mainSM.Num3_performed();
+        inputActions.Player.Num4.performed += _ => mainSM.Num4_performed();
+        inputActions.Player.Num5.performed += _ => mainSM.Num5_performed();
+        inputActions.Player.Num6.performed += _ => mainSM.Num6_performed();
+        inputActions.Player.Num7.performed += _ => mainSM.Num7_performed();
+        inputActions.Player.Num8.performed += _ => mainSM.Num8_performed();
+        inputActions.Player.Num9.performed += _ => mainSM.Num9_performed();
+        inputActions.Player.Num0.performed += _ => mainSM.Num0_performed();
+
+        inputActions.Player.F1.performed += _ => mainSM.F1_performed();
+        inputActions.Player.F2.performed += _ => mainSM.F2_performed();
+        inputActions.Player.F3.performed += _ => mainSM.F3_performed();
+        inputActions.Player.F4.performed += _ => mainSM.F4_performed();
+
+        // inputActions.Player.F6.performed += _ => mainSM.KeyC_performed();
+        // inputActions.Player.F9.performed += _ => mainSM.KeyC_performed();
     }
 }

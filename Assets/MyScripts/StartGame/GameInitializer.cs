@@ -93,8 +93,8 @@ public static class GameContext
         GameObject uiManagerGameObject = GameObject.Find("UIManager");
 
         PlayerController = new GroundPlayerController(player);
-        PlayerController.OnGroundChanged += isGround => { States.Flags.Ground = isGround; };
-        PlayerController.OnMoveChanged += isMove => { States.Flags.Move = isMove; };
+        PlayerController.OnGroundChanged += isGround => { States.Flags.Set(States.FlagName.Ground, isGround); };
+        PlayerController.OnMoveChanged += isMove => { States.Flags.Set(States.FlagName.Move, isMove); };
 
         PlayerModelRotationSync = playerModel.GetComponent<PlayerModelRotationSync>();
 
