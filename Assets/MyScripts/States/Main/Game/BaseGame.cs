@@ -17,7 +17,7 @@ namespace States
 
         public override void Enter()
         {
-            GameContext.PlayerController.NowMoveSpeed = PlayerSpeed.Get();
+            // GameContext.PlayerController.NowMoveSpeed = PlayerSpeed.Get();
         }
 
         public override void Update()
@@ -45,6 +45,16 @@ namespace States
         public override State OnSneakChanged()
         {
             return SM.GetGameState();
+        }
+
+        public override State OnLegsRopeChanged()
+        {
+            return SMController.LegsSM.State.OnLegsRopeChanged();
+        }
+
+        public override State OnHandsRopeChanged()
+        {
+            return SMController.HandsSM.State.OnHandsRopeChanged();
         }
 
         //Inputs
@@ -91,9 +101,18 @@ namespace States
         {
             return SMController.HandsSM.State.Mouse1Performed();
         }
-        public override State Mouse2Performed()
+        // public override State Mouse2Performed()
+        // {
+        //     return SMController.HandsSM.State.Mouse2Performed();
+        // }
+
+        public override State F1_performed()
         {
-            return SMController.HandsSM.State.Mouse2Performed();
+            return SMController.HandsSM.State.F1_performed();
+        }
+        public override State F2_performed()
+        {
+            return SMController.LegsSM.State.F2_performed();
         }
 
 

@@ -8,6 +8,7 @@ namespace States
         Move,
         Shift,
         Sneak,
+        Hit,
 
         Ground,
         Water,
@@ -49,6 +50,7 @@ namespace States
             if (_values[flag] != value)
             {
                 _values[flag] = value;
+                PlayerSpeed.Update();
                 if (_callbacks.TryGetValue(flag, out var callback))
                     callback?.Invoke(value);
             }

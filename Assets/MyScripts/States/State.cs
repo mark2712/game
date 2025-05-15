@@ -15,7 +15,7 @@ namespace States
 
     public abstract class ConflictRule
     {
-        public SMController SMController = GameContext.SMController; 
+        public SMController SMController = GameContext.SMController;
         public abstract void Resolve();
     }
 
@@ -126,6 +126,8 @@ namespace States
         public virtual State OnGroundChanged() { return null; }
         public virtual State OnShiftChanged() { return null; }
         public virtual State OnSneakChanged() { return null; }
+        public virtual State OnHandsRopeChanged() { return null; }
+        public virtual State OnLegsRopeChanged() { return null; }
 
         /* События ввода */
         public virtual State ScrollPerformed(InputAction.CallbackContext ctx) { return null; }

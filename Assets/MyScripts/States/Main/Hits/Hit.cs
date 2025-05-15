@@ -5,7 +5,6 @@ namespace States
         public override void Enter()
         {
             base.Enter();
-            GameContext.PlayerController.NowMoveSpeed = PlayerSpeed.Hit;
             GameContext.PlayerAnimationController.Kick();
             StartTimer(1200);
             RegisterEvent(StateEventType.HitFinished, _ => HitFinished());
@@ -14,7 +13,6 @@ namespace States
         public override void Exit()
         {
             base.Exit();
-            GameContext.PlayerController.NowMoveSpeed = PlayerSpeed.Get();
         }
 
         public override void Update()

@@ -55,6 +55,30 @@ namespace States
                 }
             }
         }
+
+        public static State GetLegsState()
+        {
+            if (Flags.Get(FlagName.LegsRope))
+            {
+                return new LegsRope();
+            }
+            else
+            {
+                return new LegsFree();
+            }
+        }
+
+        public static State GetHandsState()
+        {
+            if (Flags.Get(FlagName.HandsRope))
+            {
+                return new HandsRope();
+            }
+            else
+            {
+                return new HandsFree();
+            }
+        }
     }
 }
 

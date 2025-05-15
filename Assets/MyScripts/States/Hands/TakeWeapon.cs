@@ -23,7 +23,7 @@ namespace States
 
         public override State Mouse2Performed()
         {
-            return new NoneWeapon();
+            return new HandsFree();
         }
     }
 }

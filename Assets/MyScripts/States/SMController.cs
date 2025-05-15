@@ -20,6 +20,9 @@ namespace States
             ModalSM = new();
             Register(ModalSM);
 
+            LegsSM = new();
+            Register(LegsSM);
+
             HandsSM = new();
             Register(HandsSM);
         }

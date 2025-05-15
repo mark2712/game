@@ -92,6 +92,10 @@ namespace States
         public void OnGroundChanged() { EventQueue.AddEvent(() => State.OnGroundChanged()); }
         public void OnShiftChanged() { EventQueue.AddEvent(() => State.OnShiftChanged()); }
         public void OnSneakChanged() { EventQueue.AddEvent(() => State.OnSneakChanged()); }
+
+        public void OnHandsRopeChanged() { EventQueue.AddEvent(() => State.OnHandsRopeChanged()); }
+        public void OnLegsRopeChanged() { EventQueue.AddEvent(() => State.OnLegsRopeChanged()); }
+
         // public void OnGameOverChanged() { EventQueue.AddEvent(() => State.OnGameOverChanged()); }
 
         public void EscPerformed() { EventQueue.AddEvent(() => State.EscPerformed()); }

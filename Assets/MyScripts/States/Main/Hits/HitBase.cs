@@ -5,16 +5,24 @@ namespace States
 {
     public class HitBase : State
     {
+        public override SM SM => SMController.MainSM;
+
         public override bool Reentry => true;
 
         public override void Enter()
         {
-            SMController.HandsSM.IsNowHit = true;
+            Flags.Set(FlagName.Hit, true);
+        }
+
+        public override void Update()
+        {
+            GameContext.CameraPlayerController.Update(GameContext.InputController.LookInput);
+            GameContext.PlayerController.SetMoveInput(GameContext.InputController.MoveInput);
         }
 
         public override void Exit()
         {
-            SMController.HandsSM.IsNowHit = false;
+            Flags.Set(FlagName.Hit, false);
         }
 
         //Inputs

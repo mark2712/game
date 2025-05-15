@@ -13,7 +13,6 @@ namespace States
         public override void Update()
         {
             base.Update();
-            GameContext.PlayerController.NowMoveSpeed = PlayerSpeed.Get();
         }
 
         public override State SpacePerformed()

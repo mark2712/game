@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace States
 {
-    public class NoneWeapon : BaseHands
+    public class HandsFree : BaseHands
     {
         public override void Enter()
         {

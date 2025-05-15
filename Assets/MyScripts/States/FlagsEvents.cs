@@ -8,6 +8,9 @@ namespace States
             Flags.Subscribe(FlagName.Shift, _ => mainSM.OnShiftChanged());
             Flags.Subscribe(FlagName.Sneak, _ => mainSM.OnSneakChanged());
             Flags.Subscribe(FlagName.Ground, _ => mainSM.OnGroundChanged());
+
+            Flags.Subscribe(FlagName.LegsRope, _ => mainSM.OnLegsRopeChanged());
+            Flags.Subscribe(FlagName.HandsRope, _ => mainSM.OnHandsRopeChanged());
         }
     }
 }
