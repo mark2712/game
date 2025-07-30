@@ -10,21 +10,30 @@ namespace States
         Sneak,
         Hit,
 
+        // есть земля под ногами
         Ground,
+        WaterLegs,
+        WaterBody,
+
+        // нет опоры под ногами
         Water,
         Fly,
+        Air,
 
-        Stun,
-        Drop,
-        Fainted,
-        Dead,
-        // Destroyed,
-        // GameOver,
-        // Combat,
+        Stun, // застанен (не может ходить, открывать инвентари, атаковать)
+        Disabled, // без сознания, мертв
+
         LegsShackled,
         LegsRope,
         HandsShackled,
         HandsRope,
+
+        // Dead
+        // Drop,
+        // Fainted,
+        // Destroyed,
+        // GameOver,
+        // Combat,
     }
 
     public static class Flags

@@ -129,6 +129,9 @@ namespace States
         public virtual State OnHandsRopeChanged() { return null; }
         public virtual State OnLegsRopeChanged() { return null; }
 
+        /* Прочие события */
+        // public virtual State StartDialog() { return null; }
+
         /* События ввода */
         public virtual State ScrollPerformed(InputAction.CallbackContext ctx) { return null; }
 

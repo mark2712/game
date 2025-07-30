@@ -16,6 +16,16 @@ namespace Stats
 
         }
 
+        public void Begin()
+        {
+
+        }
+
+        public void End()
+        {
+
+        }
+
         public void FixedUpdate()
         {
 

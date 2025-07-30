@@ -27,93 +27,30 @@ namespace States
         }
 
         // Flags
-        public override State OnMoveChanged()
-        {
-            return SM.GetGameState();
-        }
-
-        public override State OnGroundChanged()
-        {
-            return SM.GetGameState();
-        }
-
-        public override State OnShiftChanged()
-        {
-            return SM.GetGameState();
-        }
-
-        public override State OnSneakChanged()
-        {
-            return SM.GetGameState();
-        }
-
-        public override State OnLegsRopeChanged()
-        {
-            return SMController.LegsSM.State.OnLegsRopeChanged();
-        }
-
-        public override State OnHandsRopeChanged()
-        {
-            return SMController.HandsSM.State.OnHandsRopeChanged();
-        }
+        public override State OnMoveChanged() { return SM.GetGameState(); }
+        public override State OnGroundChanged() { return SM.GetGameState(); }
+        public override State OnShiftChanged() { return SM.GetGameState(); }
+        public override State OnSneakChanged() { return SM.GetGameState(); }
+        public override State OnLegsRopeChanged() { return SMController.LegsSM.State.OnLegsRopeChanged(); }
+        public override State OnHandsRopeChanged() { return SMController.HandsSM.State.OnHandsRopeChanged(); }
 
         //Inputs
-        public override State ScrollPerformed(InputAction.CallbackContext ctx)
-        {
-            GameContext.CameraPlayerController.OnScrollInputPerformed(ctx);
-            return null;
-        }
+        public override State ScrollPerformed(InputAction.CallbackContext ctx) { GameContext.CameraPlayerController.OnScrollInputPerformed(ctx); return null; }
 
-        public override State SpacePerformed()
-        {
-            return new Jump();
-        }
-        public override State ConsolePerformed()
-        {
-            SM.GoToLayer(new Console());
-            return null;
-        }
+        public override State SpacePerformed() { return new Jump(); }
+        public override State ConsolePerformed() { SM.GoToLayer(new Console()); return null; }
 
-        public override State KeyT_performed()
-        {
-            CounterFPS.Inc();
-            return null;
-        }
+        // public override State KeyT_performed() { return new DialogState(); }
 
-        public override State TabPerformed()
-        {
-            return SMController.HandsSM.State.TabPerformed();
-        }
+        public override State TabPerformed() { return SMController.HandsSM.State.TabPerformed(); }
+        public override State KeyZ_performed() { GameContext.CamerasController.ChangeActiveCameraThirdFirstPerson(); return null; }
+        public override State KeyI_performed() { CounterFPS.Inc(); return null; }
 
-        public override State KeyZ_performed()
-        {
-            GameContext.CamerasController.ChangeActiveCameraThirdFirstPerson();
-            return null;
-        }
+        public override State Mouse1Performed() { return SMController.HandsSM.State.Mouse1Performed(); }
+        // public override State Mouse2Performed() { return SMController.HandsSM.State.Mouse2Performed(); }
 
-        public override State KeyI_performed()
-        {
-            return new Dialog();
-        }
-
-
-        public override State Mouse1Performed()
-        {
-            return SMController.HandsSM.State.Mouse1Performed();
-        }
-        // public override State Mouse2Performed()
-        // {
-        //     return SMController.HandsSM.State.Mouse2Performed();
-        // }
-
-        public override State F1_performed()
-        {
-            return SMController.HandsSM.State.F1_performed();
-        }
-        public override State F2_performed()
-        {
-            return SMController.LegsSM.State.F2_performed();
-        }
+        public override State F1_performed() { return SMController.HandsSM.State.F1_performed(); }
+        public override State F2_performed() { return SMController.LegsSM.State.F2_performed(); }
 
 
         // Shift - Sneak

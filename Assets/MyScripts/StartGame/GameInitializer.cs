@@ -72,9 +72,11 @@ public static class GameContext
 {
     public static bool IsPause = false;
     public static PlayerController PlayerController { get; }
+    public static Entities.BaseEntity PlayerEntity { get; }
     public static PlayerModelRotationSync PlayerModelRotationSync { get; }
     public static CamerasController CamerasController { get; }
     public static CameraPlayerController CameraPlayerController { get; }
+    public static Dialog.DialogueTrigger DialogueTrigger { get; }
     public static PlayerAnimationController PlayerAnimationController { get; }
     public static UIManager UIManager { get; }
     public static InputController InputController { get; }
@@ -89,8 +91,10 @@ public static class GameContext
         GameObject player = GameObject.Find("Player");
         Transform playerModel = player.transform.Find("PlayerModel");
         PlayerModelVRM playerModelVRM = new(playerModel);
+        Entities.BaseEntity PlayerEntity = player.GetComponent<Entities.PlayerEntity>();
         GameObject playerCamera = GameObject.Find("PlayerCamera");
         GameObject uiManagerGameObject = GameObject.Find("UIManager");
+        DialogueTrigger = new(player.transform.Find("DialogueTrigger"), PlayerEntity);
 
         PlayerController = new GroundPlayerController(player);
         PlayerController.OnGroundChanged += isGround => { States.Flags.Set(States.FlagName.Ground, isGround); };

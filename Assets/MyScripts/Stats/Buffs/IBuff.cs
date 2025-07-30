@@ -6,6 +6,8 @@ namespace Stats
     {
         void Enter();
         void Exit();
+        void Begin();
+        void End();
         void FixedUpdate();
     }
 

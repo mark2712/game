@@ -1,102 +1,125 @@
 using System;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 namespace Stats
 {
+    [System.Serializable]
     public class FloatStat
     {
-        public float BaseValue;    // Базовое значение (например, 100)
-        public float MaxOverflow;  // Сколько максимум можно превысить базу (например, 25%)
-        public float RegenRate;    // Регенерация вниз (в обычную сторону)
-
-        public float CurrentValue;
-
-        // События
-        public Action OnDeath;
-        public Action OnKnockout;
-        public Action OnOverflow;
-        public Action OnBackToLife;
-
-        public FloatStat(float baseValue, float regenRate, float currentValue = -1f, float maxOverflow = 0.25f)
+        private float _maxValue = 100;
+        private float _regenRate = 1;
+        private float _nowValue = 50;
+        public float MaxValue
         {
-            BaseValue = baseValue;
+            get => _maxValue;
+            set
+            {
+                if (value > 100000000)
+                {
+                    _maxValue = 100000000;
+                }
+                else
+                {
+                    _maxValue = value;
+                }
+            }
+        }
+        public float RegenRate
+        {
+            get => _regenRate;
+            set
+            {
+                if (value > 100000000)
+                {
+                    _regenRate = 100000000;
+                }
+                else
+                {
+                    _regenRate = value;
+                }
+            }
+        }
+        public float NowValue
+        {
+            get => _nowValue;
+            private set
+            {
+                _nowValue = value;
+            }
+        }
+
+        public float RegenDelaySeconds = 3f;
+        public bool CanRegenWhenNegative = false;
+
+        private float regenDelayTimer = 0f;
+        private bool wasKnockedOut = false;
+
+        // Событие: (newValue, oldValue, MaxValue)
+        public Action<float, float, float> OnNowValueChanged; // любое изменение здоровья
+        public Action<float, float, float> OnKnockout; // здоровье меньше 0
+        public Action<float, float, float> OnRecovered; // здоровье снова больше 0
+
+        public FloatStat(float maxValue, float regenRate, float nowValue)
+        {
+            MaxValue = maxValue;
             RegenRate = regenRate;
-            MaxOverflow = maxOverflow;
-            CurrentValue = currentValue >= 0 ? currentValue : baseValue;
+            NowValue = nowValue > maxValue ? maxValue : nowValue;
         }
 
-        public float MaxValue => BaseValue * (1f + MaxOverflow);
-
-        public void ChangeCurrentValue(float amount)
+        public void ChangeNowValue(float amount, bool interruptRegen = true)
         {
-            float oldValue = CurrentValue;
-            CurrentValue += amount;
-            CurrentValue = Mathf.Clamp(CurrentValue, -BaseValue * 2, MaxValue);
+            float old = NowValue;
 
-            // События
-            if (oldValue > 0 && CurrentValue <= 0)
-                OnKnockout?.Invoke();
+            NowValue += amount;
+            NowValue = Mathf.Clamp(NowValue, -MaxValue * 2f, MaxValue);
 
-            // if (oldValue > -BaseValue && CurrentValue <= -BaseValue)
-            //     OnDeath?.Invoke();
+            if (interruptRegen) // блокировать регенерацию 
+                regenDelayTimer = RegenDelaySeconds;
 
-            // if (oldValue <= BaseValue && CurrentValue > BaseValue)
-            //     OnOverflow?.Invoke();
+            if (NowValue != old)
+            {
+                OnNowValueChanged?.Invoke(NowValue, old, MaxValue);
 
-            // if (oldValue <= 0 && CurrentValue > 0)
-            //     OnBackToLife?.Invoke();
+                if (!wasKnockedOut && old > 0 && NowValue <= 0)
+                {
+                    wasKnockedOut = true;
+                    OnKnockout?.Invoke(NowValue, old, MaxValue);
+                }
+                else if (wasKnockedOut && old <= 0 && NowValue > 0)
+                {
+                    wasKnockedOut = false;
+                    OnRecovered?.Invoke(NowValue, old, MaxValue);
+                }
+            }
         }
 
-        public void ChangeBaseValue(float amount)
+        public void OverrideNowValue(float value, bool interruptRegen = false)
         {
-            BaseValue += amount;
-            if (CurrentValue > MaxValue)
-                CurrentValue = MaxValue;
+            float amount = NowValue - value;
+            ChangeNowValue(amount, interruptRegen);
+        }
+
+        public void ChangeMaxValue(float amount)
+        {
+            MaxValue += amount;
+            if (NowValue > MaxValue)
+                NowValue = MaxValue;
         }
 
         public void Regenerate(float deltaTime)
         {
-            if (CurrentValue < BaseValue)
+            if (regenDelayTimer > 0f)
             {
-                ChangeCurrentValue(RegenRate * deltaTime);
+                regenDelayTimer -= deltaTime;
+                return;
             }
-            else if (CurrentValue > BaseValue)
+
+            if (NowValue < MaxValue)
             {
-                // Перегретый HP теряет 1% от Base в секунду
-                ChangeCurrentValue(-BaseValue * 0.01f * deltaTime);
+                if (NowValue > 0 || CanRegenWhenNegative)
+                    ChangeNowValue(RegenRate * deltaTime, false);
             }
         }
     }
-
-    // public class FloatStat
-    // {
-    //     public float MaxValue;
-    //     public float CurrentValue;
-    //     public float RegenRate;
-
-    //     public FloatStat(float maxValue, float regenRate, float currentValue = 0)
-    //     {
-    //         MaxValue = maxValue;
-    //         CurrentValue = currentValue;
-    //         RegenRate = regenRate;
-    //     }
-
-    //     public void Regenerate(float deltaTime)
-    //     {
-    //         if (CurrentValue < MaxValue)
-    //             ChangeCurrentValue(RegenRate * deltaTime);
-    //     }
-
-    //     public void ChangeCurrentValue(float amount)
-    //     {
-    //         CurrentValue = Mathf.Clamp(CurrentValue + amount, -MaxValue * 2, MaxValue);
-    //     }
-
-    //     public void ChangeMaxValue(float amount)
-    //     {
-    //         MaxValue += amount;
-    //         if (CurrentValue > MaxValue)
-    //             CurrentValue = MaxValue;
-    //     }
-    // }
 }

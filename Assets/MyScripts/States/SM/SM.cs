@@ -37,7 +37,7 @@ namespace States
                 "ModalSM" => "#edfb7c",
                 _ => "#ffffff",
             };
-            Debug.Log($"<color={debugStateColor}>Переход в состояние: <b>{State.GetType().Name}</b> ({this.GetType().Name})</color>");
+            // Debug.Log($"<color={debugStateColor}>Переход в состояние: <b>{State.GetType().Name}</b> ({this.GetType().Name})</color>");
             State.Enter();
         }
 
@@ -97,6 +97,8 @@ namespace States
         public void OnLegsRopeChanged() { EventQueue.AddEvent(() => State.OnLegsRopeChanged()); }
 
         // public void OnGameOverChanged() { EventQueue.AddEvent(() => State.OnGameOverChanged()); }
+        // public void StartDialog() { EventQueue.AddEvent(() => State.StartDialog()); }
+
 
         public void EscPerformed() { EventQueue.AddEvent(() => State.EscPerformed()); }
         public void ConsolePerformed() { EventQueue.AddEvent(() => State.ConsolePerformed()); }

@@ -79,6 +79,39 @@ namespace States
                 return new HandsFree();
             }
         }
+
+        public static State GetEnvState()
+        {
+            if (Flags.Get(FlagName.Fly))
+            {
+                return new BaseGame(); // состояние полёт
+            }
+            else if (Flags.Get(FlagName.Air))
+            {
+                return new BaseGame(); // состояние воздух
+            }
+            else if (Flags.Get(FlagName.Water))
+            {
+                return new BaseGame(); // состояние вода
+            }
+            else if (Flags.Get(FlagName.WaterBody))
+            {
+                if (Flags.Get(FlagName.Shift) || Flags.Get(FlagName.Sneak))
+                {
+                    return new BaseGame(); // состояние вода
+                }
+            }
+            return new BaseGame(); // состояние земля
+        }
+
+
+        public static void GetEnvState1()
+        {
+            if (Flags.Get(FlagName.Fly))
+            {
+                // состояние полёт
+            }
+        }
     }
 }
 

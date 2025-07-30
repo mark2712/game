@@ -5,12 +5,10 @@ namespace Stats
     [System.Serializable]
     public class InitStats
     {
-        public int Level = 1;
-        public int Experience = 0;
-
-        public FloatStat Health = new(100f, 1f);
-        public FloatStat Mana = new(100f, 1f);
-        public FloatStat Stamina = new(100f, 1f);
+        public LVL LVL = new(1, 0);
+        public FloatStat Health = new(100f, 1f, 90f);
+        public FloatStat Mana = new(100f, 1f, 50f);
+        public FloatStat Stamina = new(100f, 1f, 50f);
 
         public float Stealth = 1f;
         public float Luck = 1f;
