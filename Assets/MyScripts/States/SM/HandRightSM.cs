@@ -1,6 +1,6 @@
 namespace States
 {
-    public class RightHandSM : SM
+    public class HandRightSM : SM
     {
         public override State DefaultState => new RHandEmpty();
     }

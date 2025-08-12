@@ -6,7 +6,7 @@ namespace Entities
     public abstract class BaseEntity : MonoBehaviour
     {
         public virtual string EntityName { get; set; }
-        public virtual string EntityId { get; set; }
+        public virtual string EntityID { get; set; }
         public virtual string EntityPrefabPath { get; set; }
         // public virtual Stats.BaseStats Stats { get; set; }
         public virtual Stats.BaseStats InitStats { get; set; } = new Stats.BaseStats();

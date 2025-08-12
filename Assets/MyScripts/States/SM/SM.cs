@@ -32,8 +32,8 @@ namespace States
             {
                 "MainSM" => "#ffe2ae",
                 "HandsSM" => "#c2aeff",
-                "RightHandSM" => "#aec7ff",
-                "LeftHandSM" => "#aeecff",
+                "HandRightSM" => "#aec7ff",
+                "HandLeftSM" => "#aeecff",
                 "ModalSM" => "#edfb7c",
                 _ => "#ffffff",
             };

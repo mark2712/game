@@ -6,7 +6,7 @@
 
 1. Создайте класс `SM` (создаются без иерархии):
 ```csharp
-public class RightHandSM : SM
+public class HandRightSM : SM
 {
     public override State DefaultState => new RHandEmpty();
 }
@@ -14,15 +14,15 @@ public class RightHandSM : SM
 
 2. Зарегистрируйте SM в конструкторе `SMController`:
 ```csharp
-RightHandSM = new();
-Register(RightHandSM);
+HandRightSM = new();
+Register(HandRightSM);
 ```
 
 3. Создай базовый State для этой SM
 ```csharp
-public abstract class RightHandBase : State
+public abstract class HandRightBase : State
 {
-    public override SM SM => SMController.RightHandSM;
+    public override SM SM => SMController.HandRightSM;
 }
 ```
 
@@ -68,6 +68,8 @@ public override State Mouse1Performed()
 ### ConflictRule
 
 Для избежания конфликтов между разными SM рекомендуется использовать `ConflictRule`. Можно создать несколько разных UIModalSM и настроить ConflictRule между ними.
+
+Можно добавить в ConflictRule родительское состоние и тогда в него попадут все наследники. Так можно настроить ConflictRule для целой SM.
 
 ```csharp
 public class TakeWeapon : BaseHands

@@ -5,7 +5,7 @@ namespace Entities
     public class TestEntity : BaseEntity
     {
         public override string EntityName => "TestEntity";
-        public override string EntityId { get; set; } = "0";
+        public override string EntityID => "0";
         // public override Stats.BaseStats Stats { get; set; } // задать статы по умолчанию для этой сущности
         public override void StartDialogue()
         {

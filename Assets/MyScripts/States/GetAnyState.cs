@@ -105,11 +105,73 @@ namespace States
         }
 
 
-        public static void GetEnvState1()
+        public static void GetHit()
         {
             if (Flags.Get(FlagName.Fly))
             {
-                // состояние полёт
+
+            }
+            else if (Flags.Get(FlagName.Water))
+            {
+
+            }
+            else // if (Flags.Get(FlagName.Ground))
+            {
+                if (Flags.Get(FlagName.Sneak))
+                {
+                    if (Flags.Get(FlagName.Air))
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+                else if (Flags.Get(FlagName.Shift))
+                {
+                    if (Flags.Get(FlagName.Air))
+                    {
+
+                    }
+                }
+                else
+                {
+                    if (Flags.Get(FlagName.Air))
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+
+            // комбо системы если пресонаж на земле
+            if (Flags.Get(FlagName.Sneak))
+            {
+                if (Flags.Get(FlagName.HandsRope) || Flags.Get(FlagName.HandsShackled))
+                {
+                    if (Flags.Get(FlagName.LegsRope) || Flags.Get(FlagName.LegsShackled))
+                    {
+                        // скрытно бей плечом
+                    }
+                    // скрытно бей ногами
+                }
+                if (Flags.Get(FlagName.LegsRope) || Flags.Get(FlagName.LegsShackled))
+                {
+                    if (Flags.Get(FlagName.HandsRope) || Flags.Get(FlagName.HandsShackled))
+                    {
+                        // скрытно бей плечом
+                    }
+                    // скрытно бей руками
+                }
+                // скрытно бей ногами
+            }
+            else
+            {
+
             }
         }
     }

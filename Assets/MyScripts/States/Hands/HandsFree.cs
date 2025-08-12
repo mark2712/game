@@ -7,7 +7,7 @@ namespace States
         public override void Enter()
         {
             base.Enter();
-            // GameContext.playerAnimationController.SwordLeftHand();
+            // GameContext.playerAnimationController.SwordHandLeft();
             GameContext.PlayerAnimationController.HandsNone();
         }
 

@@ -8,8 +8,8 @@ namespace States
         public ModalSM ModalSM;
         public LegsSM LegsSM;
         public HandsSM HandsSM;
-        public RightHandSM RightHandSM;
-        public LeftHandSM LeftHandSM;
+        public HandRightSM HandRightSM;
+        public HandLeftSM HandLeftSM;
         public readonly List<SM> allSM = new();
 
         public SMController()
