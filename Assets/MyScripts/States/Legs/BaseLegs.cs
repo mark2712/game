@@ -6,15 +6,15 @@ namespace States
     {
         public override SM SM => SMController.LegsSM;
 
-        public override State OnLegsRopeChanged()
+        public BaseLegs() : base()
         {
-            return SM.GetLegsState();
-        }
+            RegisterEvent(StateEvent.LegsRopeChanged, (state, i) => { return SM.GetLegsState(); });
 
-        public override State F2_performed()
-        {
-            Flags.Inverse(FlagName.LegsRope);
-            return null;
+            RegisterEvent(StateEvent.F2, (state, i) =>
+            {
+                Flags.Inverse(FlagName.LegsRope);
+                return null;
+            });
         }
     }
 }

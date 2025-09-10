@@ -7,7 +7,10 @@ namespace States
             base.Enter();
             GameContext.PlayerAnimationController.Kick();
             StartTimer(1200);
-            RegisterEvent(StateEventType.HitFinished, _ => HitFinished());
+            RegisterEvent(StateEvent.HitFinished, (state, i) =>
+            {
+                return HitFinished();
+            });
         }
 
         public override void Exit()
@@ -22,7 +25,7 @@ namespace States
 
             if (IsTimerFinished())
             {
-                SM.TriggerEvent(StateEventType.HitFinished);
+                SM.TriggerEvent(StateEvent.HitFinished);
             }
         }
 

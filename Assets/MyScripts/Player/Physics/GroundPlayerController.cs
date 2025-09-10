@@ -2,14 +2,16 @@ using UnityEngine;
 
 namespace Player
 {
-    public class GroundPlayerController : PlayerController
+    public class GroundPlayerController : PlayerController, IPlayerController
     {
+        public float MoveInputUp { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public float MoveInputDown { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
         public override float NowMoveSpeed { get; set; }
-        public float jumpForce = 9f;
-        public float gravityScaleNow = 2f;
+        protected float jumpForce = 9f;
+        protected float gravityScaleNow = 2f;
 
-        public bool isMoveOn; // движение разрешено
-        public bool isJumpOn; // прыжок разрешен
+        protected bool isMoveOn; // движение разрешено
+        protected bool isJumpOn; // прыжок разрешен
         protected Vector3 move; // хранит информацию о движении, отсюда можно получить направление движения
 
         public GroundPlayerController(GameObject Player) : base(Player) { }

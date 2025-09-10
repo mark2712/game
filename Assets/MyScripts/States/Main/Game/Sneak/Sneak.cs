@@ -24,13 +24,6 @@ namespace States
             UpdateAnimation();
         }
 
-        // public override State MoveInput(Vector2 moveInput)
-        // {
-        //     base.MoveInput(moveInput);
-        //     this.moveInput = moveInput;
-        //     return null;
-        // }
-
         private void UpdateAnimation()
         {
             // Вычисляем новое направление

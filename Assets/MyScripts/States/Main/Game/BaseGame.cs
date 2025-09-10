@@ -8,12 +8,38 @@ namespace States
     public class BaseGame : MainBase
     {
         public override bool Reentry => false;
-        // public override IEnumerable<Type> AllowedStates => new[]
-        // {
-        //     typeof(HandsState),
-        //     typeof(ModalState)
-        // };
 
+        public BaseGame() : base()
+        {
+            // RegisterEvent(StateEvent.MyEvent, (state, i) =>
+            // {
+            //     Debug.Log("MyEvent in BaseGame");
+            //     InvokeEvent(StateEvent.MyEvent, i - 1);
+            //     return null;
+            // });
+
+            RegisterEvent(StateEvent.Mouse1Performed, (state, i) => { return SMController.HandsSM.InvokeEvent(StateEvent.Mouse1Performed); });
+            RegisterEvent(StateEvent.Mouse2Performed, (state, i) => { return SMController.HandsSM.InvokeEvent(StateEvent.Mouse2Performed); });
+
+            RegisterEvent(StateEvent.SpacePerformed, (state, i) => { return new Jump(); });
+            RegisterEvent(StateEvent.TabPerformed, (state, i) => { return SMController.HandsSM.InvokeEvent(StateEvent.TabPerformed); });
+            RegisterEvent(StateEvent.ConsolePerformed, (state, i) => { SM.GoToLayer(new Console()); return null; });
+
+            RegisterEvent(StateEvent.MoveChanged, (state, i) => { return SM.GetGameState(); });
+            RegisterEvent(StateEvent.GroundChanged, (state, i) => { return SM.GetGameState(); });
+            RegisterEvent(StateEvent.ShiftChanged, (state, i) => { return SM.GetGameState(); });
+            RegisterEvent(StateEvent.SneakChanged, (state, i) => { return SM.GetGameState(); });
+            RegisterEvent(StateEvent.LegsRopeChanged, (state, i) => { return SMController.LegsSM.InvokeEvent(StateEvent.LegsRopeChanged); });
+            RegisterEvent(StateEvent.HandsRopeChanged, (state, i) => { return SMController.HandsSM.InvokeEvent(StateEvent.HandsRopeChanged); });
+
+            RegisterEvent(StateEvent.KeyI, (state, i) => { CounterFPS.Inc(); return null; });
+            RegisterEvent(StateEvent.KeyZ, (state, i) => { GameContext.CamerasController.ChangeActiveCameraThirdFirstPerson(); return null; });
+
+            RegisterEvent(StateEvent.F1, (state, i) => { return SMController.HandsSM.InvokeEvent(StateEvent.F1); });
+            RegisterEvent(StateEvent.F2, (state, i) => { return SMController.LegsSM.InvokeEvent(StateEvent.F2); });
+
+            RegisterEventsShiftSneak();
+        }
 
         public override void Enter()
         {
@@ -26,42 +52,11 @@ namespace States
             GameContext.PlayerController.SetMoveInput(GameContext.InputController.MoveInput);
         }
 
-        // Flags
-        public override State OnMoveChanged() { return SM.GetGameState(); }
-        public override State OnGroundChanged() { return SM.GetGameState(); }
-        public override State OnShiftChanged() { return SM.GetGameState(); }
-        public override State OnSneakChanged() { return SM.GetGameState(); }
-        public override State OnLegsRopeChanged() { return SMController.LegsSM.State.OnLegsRopeChanged(); }
-        public override State OnHandsRopeChanged() { return SMController.HandsSM.State.OnHandsRopeChanged(); }
-
         //Inputs
-        public override State ScrollPerformed(InputAction.CallbackContext ctx) { GameContext.CameraPlayerController.OnScrollInputPerformed(ctx); return null; }
-
-        public override State SpacePerformed() { return new Jump(); }
-        public override State ConsolePerformed() { SM.GoToLayer(new Console()); return null; }
-
-        // public override State KeyT_performed() { return new DialogState(); }
-
-        public override State TabPerformed() { return SMController.HandsSM.State.TabPerformed(); }
-        public override State KeyZ_performed() { GameContext.CamerasController.ChangeActiveCameraThirdFirstPerson(); return null; }
-        public override State KeyI_performed() { CounterFPS.Inc(); return null; }
-
-        public override State Mouse1Performed() { return SMController.HandsSM.State.Mouse1Performed(); }
-        // public override State Mouse2Performed() { return SMController.HandsSM.State.Mouse2Performed(); }
-
-        public override State F1_performed() { return SMController.HandsSM.State.F1_performed(); }
-        public override State F2_performed() { return SMController.LegsSM.State.F2_performed(); }
-
-
-        // Shift - Sneak
-        public override State ShiftPerformed() { Flags.Set(FlagName.Shift, true); return null; }
-        public override State ShiftCanceled() { Flags.Set(FlagName.Shift, false); return null; }
-        public override State KeyX_performed() { Flags.Inverse(FlagName.Shift); return null; }
-
-        public override State CtrlPerformed() { Flags.Set(FlagName.Sneak, true); return null; }
-        public override State CtrlCanceled() { Flags.Set(FlagName.Sneak, false); return null; }
-        public override State AltPerformed() { Flags.Set(FlagName.Sneak, true); return null; }
-        public override State AltCanceled() { Flags.Set(FlagName.Sneak, false); return null; }
-        public override State KeyC_performed() { Flags.Inverse(FlagName.Sneak); return null; }
+        public override State ScrollPerformed(InputAction.CallbackContext ctx)
+        {
+            GameContext.CameraPlayerController.OnScrollInputPerformed(ctx);
+            return null;
+        }
     }
 }

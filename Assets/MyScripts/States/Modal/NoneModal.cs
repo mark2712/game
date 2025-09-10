@@ -2,9 +2,10 @@ namespace States
 {
     public class NoneModal : ModalBase
     {
-        public override State TabPerformed()
+        public NoneModal() : base()
         {
-            return new Inventory();
+            RegisterEvent(StateEvent.TabPerformed, (state, i) => { return new Inventory(); });
+
         }
     }
 }

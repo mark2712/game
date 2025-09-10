@@ -2,6 +2,11 @@ namespace States
 {
     public class LegsFree : BaseLegs
     {
+        public LegsFree() : base()
+        {
+            RegisterEvent(StateEvent.Mouse1Performed, (state, i) => { return new Hit(); });
+        }
+
         public override void Enter()
         {
             base.Enter();
@@ -11,11 +16,6 @@ namespace States
         public override void Exit()
         {
             base.Exit();
-        }
-
-        public override State Mouse1Performed()
-        {
-            return new Hit();
         }
     }
 }

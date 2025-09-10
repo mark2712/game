@@ -350,6 +350,78 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""F5"",
+                    ""type"": ""Button"",
+                    ""id"": ""94fb430d-a0b8-4ce6-8d9f-42ef2d1fe608"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""F6"",
+                    ""type"": ""Button"",
+                    ""id"": ""9c928138-6d4c-4cbe-b5f2-c659d0ff4093"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""F7"",
+                    ""type"": ""Button"",
+                    ""id"": ""30273728-abf9-4f8a-89d7-7b60935bccf5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""F8"",
+                    ""type"": ""Button"",
+                    ""id"": ""297afa13-0316-40d6-a269-004979a4e31c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""F9"",
+                    ""type"": ""Button"",
+                    ""id"": ""c26657e6-756a-4399-b434-3fc818d1d143"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""F10"",
+                    ""type"": ""Button"",
+                    ""id"": ""ff724a69-3e57-4a7e-af21-46b017e882b9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""F11"",
+                    ""type"": ""Button"",
+                    ""id"": ""18a6c578-edb3-4f51-8d6b-4beed5963244"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""F12"",
+                    ""type"": ""Button"",
+                    ""id"": ""5bf88bda-6ac1-4079-931d-b92282d85e56"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -814,6 +886,94 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""F4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3507d9af-8444-4f3d-962a-31d89e8cabbb"",
+                    ""path"": ""<Keyboard>/f5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""F5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0cec0857-d735-4b83-8d1f-53b93bde9502"",
+                    ""path"": ""<Keyboard>/f6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""F6"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ec3e7fd2-c85f-4b38-aef2-6d0911f93b5b"",
+                    ""path"": ""<Keyboard>/f7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""F7"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a65d54cd-c6e8-44a3-9eef-ab4ccc6f88c7"",
+                    ""path"": ""<Keyboard>/f8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""F8"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0b53db5b-0f4b-4fe6-8d9b-53bbdb0a2744"",
+                    ""path"": ""<Keyboard>/f9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""F9"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1fee010c-bfaf-44cd-81a0-8ffd246566e7"",
+                    ""path"": ""<Keyboard>/f10"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""F10"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""19952aaa-d821-4c78-b76d-2a021523b580"",
+                    ""path"": ""<Keyboard>/f11"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""F11"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f8c75f24-6d58-4b45-a5cc-545228f22b8b"",
+                    ""path"": ""<Keyboard>/f12"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""F12"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1145,6 +1305,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_F2 = m_Player.FindAction("F2", throwIfNotFound: true);
         m_Player_F3 = m_Player.FindAction("F3", throwIfNotFound: true);
         m_Player_F4 = m_Player.FindAction("F4", throwIfNotFound: true);
+        m_Player_F5 = m_Player.FindAction("F5", throwIfNotFound: true);
+        m_Player_F6 = m_Player.FindAction("F6", throwIfNotFound: true);
+        m_Player_F7 = m_Player.FindAction("F7", throwIfNotFound: true);
+        m_Player_F8 = m_Player.FindAction("F8", throwIfNotFound: true);
+        m_Player_F9 = m_Player.FindAction("F9", throwIfNotFound: true);
+        m_Player_F10 = m_Player.FindAction("F10", throwIfNotFound: true);
+        m_Player_F11 = m_Player.FindAction("F11", throwIfNotFound: true);
+        m_Player_F12 = m_Player.FindAction("F12", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
@@ -1265,6 +1433,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_F2;
     private readonly InputAction m_Player_F3;
     private readonly InputAction m_Player_F4;
+    private readonly InputAction m_Player_F5;
+    private readonly InputAction m_Player_F6;
+    private readonly InputAction m_Player_F7;
+    private readonly InputAction m_Player_F8;
+    private readonly InputAction m_Player_F9;
+    private readonly InputAction m_Player_F10;
+    private readonly InputAction m_Player_F11;
+    private readonly InputAction m_Player_F12;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1305,6 +1481,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @F2 => m_Wrapper.m_Player_F2;
         public InputAction @F3 => m_Wrapper.m_Player_F3;
         public InputAction @F4 => m_Wrapper.m_Player_F4;
+        public InputAction @F5 => m_Wrapper.m_Player_F5;
+        public InputAction @F6 => m_Wrapper.m_Player_F6;
+        public InputAction @F7 => m_Wrapper.m_Player_F7;
+        public InputAction @F8 => m_Wrapper.m_Player_F8;
+        public InputAction @F9 => m_Wrapper.m_Player_F9;
+        public InputAction @F10 => m_Wrapper.m_Player_F10;
+        public InputAction @F11 => m_Wrapper.m_Player_F11;
+        public InputAction @F12 => m_Wrapper.m_Player_F12;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1422,6 +1606,30 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @F4.started += instance.OnF4;
             @F4.performed += instance.OnF4;
             @F4.canceled += instance.OnF4;
+            @F5.started += instance.OnF5;
+            @F5.performed += instance.OnF5;
+            @F5.canceled += instance.OnF5;
+            @F6.started += instance.OnF6;
+            @F6.performed += instance.OnF6;
+            @F6.canceled += instance.OnF6;
+            @F7.started += instance.OnF7;
+            @F7.performed += instance.OnF7;
+            @F7.canceled += instance.OnF7;
+            @F8.started += instance.OnF8;
+            @F8.performed += instance.OnF8;
+            @F8.canceled += instance.OnF8;
+            @F9.started += instance.OnF9;
+            @F9.performed += instance.OnF9;
+            @F9.canceled += instance.OnF9;
+            @F10.started += instance.OnF10;
+            @F10.performed += instance.OnF10;
+            @F10.canceled += instance.OnF10;
+            @F11.started += instance.OnF11;
+            @F11.performed += instance.OnF11;
+            @F11.canceled += instance.OnF11;
+            @F12.started += instance.OnF12;
+            @F12.performed += instance.OnF12;
+            @F12.canceled += instance.OnF12;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1534,6 +1742,30 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @F4.started -= instance.OnF4;
             @F4.performed -= instance.OnF4;
             @F4.canceled -= instance.OnF4;
+            @F5.started -= instance.OnF5;
+            @F5.performed -= instance.OnF5;
+            @F5.canceled -= instance.OnF5;
+            @F6.started -= instance.OnF6;
+            @F6.performed -= instance.OnF6;
+            @F6.canceled -= instance.OnF6;
+            @F7.started -= instance.OnF7;
+            @F7.performed -= instance.OnF7;
+            @F7.canceled -= instance.OnF7;
+            @F8.started -= instance.OnF8;
+            @F8.performed -= instance.OnF8;
+            @F8.canceled -= instance.OnF8;
+            @F9.started -= instance.OnF9;
+            @F9.performed -= instance.OnF9;
+            @F9.canceled -= instance.OnF9;
+            @F10.started -= instance.OnF10;
+            @F10.performed -= instance.OnF10;
+            @F10.canceled -= instance.OnF10;
+            @F11.started -= instance.OnF11;
+            @F11.performed -= instance.OnF11;
+            @F11.canceled -= instance.OnF11;
+            @F12.started -= instance.OnF12;
+            @F12.performed -= instance.OnF12;
+            @F12.canceled -= instance.OnF12;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1784,6 +2016,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnF2(InputAction.CallbackContext context);
         void OnF3(InputAction.CallbackContext context);
         void OnF4(InputAction.CallbackContext context);
+        void OnF5(InputAction.CallbackContext context);
+        void OnF6(InputAction.CallbackContext context);
+        void OnF7(InputAction.CallbackContext context);
+        void OnF8(InputAction.CallbackContext context);
+        void OnF9(InputAction.CallbackContext context);
+        void OnF10(InputAction.CallbackContext context);
+        void OnF11(InputAction.CallbackContext context);
+        void OnF12(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

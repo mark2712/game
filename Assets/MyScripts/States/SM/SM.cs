@@ -42,7 +42,7 @@ namespace States
         }
 
         /*
-        ВАЖНО! Переход к сотояниям нужно осуществлять строго в состянии (через очередь событий). Если переход произойдет не как вызов метода у текущего сотояния, то могут быть потенциальные проблемы. Используйте такой переход с умом. Так же можно положить новое состояние сразу в State, но это можно делать только в особых случаях.
+        ВАЖНО! Переход к сотояниям нужно осуществлять строго через возврат состояния (через очередь событий). Если переход произойдет не как вызов события у текущего сотояния, то могут быть потенциальные проблемы. Используйте такой переход с умом. Так же можно положить новое состояние сразу в State, но это можно делать только в особых случаях.
         */
         public virtual void GoToState(State newState)
         {
@@ -52,7 +52,7 @@ namespace States
         }
 
         // Layers
-        // используется только для паузы, может терять промежуточные состояния и переходы
+        // используется только для паузы, может терять промежуточные состояния и переходы (НЕБЕЗОПАСНО!)
         private Stack<State> _stateStack = new Stack<State>();
         private State NextLayerState;
 
@@ -74,7 +74,7 @@ namespace States
             {
                 State.Exit();
                 State = _stateStack.Pop();
-                Debug.Log($"Возврат к состоянию: {State.GetType().Name}");
+                // Debug.Log($"Возврат к состоянию: {State.GetType().Name}");
             }
         }
 
@@ -83,64 +83,16 @@ namespace States
         public void Update() { State.Update(); }
         public void LateUpdate() { State.LateUpdate(); }
 
-        public void TriggerEvent(StateEventType eventType)
+        public void TriggerEvent(StateEvent eventType)
         {
-            EventQueue.AddEvent(() => State.HandleEvent(eventType));
+            EventQueue.AddEvent(() => State.InvokeEvent(eventType));
         }
 
-        public void OnMoveChanged() { EventQueue.AddEvent(() => State.OnMoveChanged()); }
-        public void OnGroundChanged() { EventQueue.AddEvent(() => State.OnGroundChanged()); }
-        public void OnShiftChanged() { EventQueue.AddEvent(() => State.OnShiftChanged()); }
-        public void OnSneakChanged() { EventQueue.AddEvent(() => State.OnSneakChanged()); }
+        public State InvokeEvent(StateEvent eventType)
+        {
+            return State.InvokeEvent(eventType);
+        }
 
-        public void OnHandsRopeChanged() { EventQueue.AddEvent(() => State.OnHandsRopeChanged()); }
-        public void OnLegsRopeChanged() { EventQueue.AddEvent(() => State.OnLegsRopeChanged()); }
-
-        // public void OnGameOverChanged() { EventQueue.AddEvent(() => State.OnGameOverChanged()); }
-        // public void StartDialog() { EventQueue.AddEvent(() => State.StartDialog()); }
-
-
-        public void EscPerformed() { EventQueue.AddEvent(() => State.EscPerformed()); }
-        public void ConsolePerformed() { EventQueue.AddEvent(() => State.ConsolePerformed()); }
         public void ScrollPerformed(InputAction.CallbackContext ctx) { EventQueue.AddEvent(() => State.ScrollPerformed(ctx)); }
-
-        public void Mouse1Performed() { EventQueue.AddEvent(() => State.Mouse1Performed()); }
-        public void Mouse2Performed() { EventQueue.AddEvent(() => State.Mouse2Performed()); }
-        public void Mouse3Performed() { EventQueue.AddEvent(() => State.Mouse3Performed()); }
-
-        public void TabPerformed() { EventQueue.AddEvent(() => State.TabPerformed()); }
-        public void ShiftPerformed() { EventQueue.AddEvent(() => State.ShiftPerformed()); }
-        public void ShiftCanceled() { EventQueue.AddEvent(() => State.ShiftCanceled()); }
-        public void CtrlPerformed() { EventQueue.AddEvent(() => State.CtrlPerformed()); }
-        public void CtrlCanceled() { EventQueue.AddEvent(() => State.CtrlCanceled()); }
-        public void AltPerformed() { EventQueue.AddEvent(() => State.AltPerformed()); }
-        public void AltCanceled() { EventQueue.AddEvent(() => State.AltCanceled()); }
-        public void SpacePerformed() { EventQueue.AddEvent(() => State.SpacePerformed()); }
-
-        public void KeyQ_performed() { EventQueue.AddEvent(() => State.KeyQ_performed()); }
-        public void KeyE_performed() { EventQueue.AddEvent(() => State.KeyE_performed()); }
-        public void KeyR_performed() { EventQueue.AddEvent(() => State.KeyR_performed()); }
-        public void KeyT_performed() { EventQueue.AddEvent(() => State.KeyT_performed()); }
-        public void KeyI_performed() { EventQueue.AddEvent(() => State.KeyI_performed()); }
-        public void KeyF_performed() { EventQueue.AddEvent(() => State.KeyF_performed()); }
-        public void KeyZ_performed() { EventQueue.AddEvent(() => State.KeyZ_performed()); }
-        public void KeyX_performed() { EventQueue.AddEvent(() => State.KeyX_performed()); }
-        public void KeyC_performed() { EventQueue.AddEvent(() => State.KeyC_performed()); }
-
-        public void Num1_performed() { EventQueue.AddEvent(() => State.Num1_performed()); }
-        public void Num2_performed() { EventQueue.AddEvent(() => State.Num2_performed()); }
-        public void Num3_performed() { EventQueue.AddEvent(() => State.Num3_performed()); }
-        public void Num4_performed() { EventQueue.AddEvent(() => State.Num4_performed()); }
-        public void Num5_performed() { EventQueue.AddEvent(() => State.Num5_performed()); }
-        public void Num6_performed() { EventQueue.AddEvent(() => State.Num6_performed()); }
-        public void Num7_performed() { EventQueue.AddEvent(() => State.Num7_performed()); }
-        public void Num8_performed() { EventQueue.AddEvent(() => State.Num8_performed()); }
-        public void Num9_performed() { EventQueue.AddEvent(() => State.Num9_performed()); }
-        public void Num0_performed() { EventQueue.AddEvent(() => State.Num0_performed()); }
-
-        public void F1_performed() { EventQueue.AddEvent(() => State.F1_performed()); }
-        public void F2_performed() { EventQueue.AddEvent(() => State.F2_performed()); }
-        public void F3_performed() { EventQueue.AddEvent(() => State.F3_performed()); }
-        public void F4_performed() { EventQueue.AddEvent(() => State.F4_performed()); }
     }
 }

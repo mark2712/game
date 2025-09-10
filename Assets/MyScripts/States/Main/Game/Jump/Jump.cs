@@ -5,11 +5,37 @@ namespace States
     public class Jump : BaseAir
     {
         public override bool Reentry => true;
+
+        public Jump() : base()
+        {
+            // RegisterEvent(StateEvent.MyEvent, (state, i) =>
+            // {
+            //     var result = InvokeEvent(StateEvent.MyEvent, i - 1);
+            //     Debug.Log("MyEvent in Jump");
+            //     return null;
+            // });
+
+            RegisterEvent(StateEvent.JumpFinished, (state, i) =>
+            {
+                return JumpFinished();
+            });
+
+            RegisterEvent(StateEvent.SpacePerformed, (state, i) => { return null; });
+
+            RegisterEvent(StateEvent.MoveChanged, (state, i) => { return null; });
+            RegisterEvent(StateEvent.GroundChanged, (state, i) => { return null; });
+            RegisterEvent(StateEvent.ShiftChanged, (state, i) => { return null; });
+            RegisterEvent(StateEvent.SneakChanged, (state, i) => { return null; });
+        }
+
+
         public override void Enter()
         {
             base.Enter();
             DoJump();
-            RegisterEvent(StateEventType.JumpFinished, _ => JumpFinished());
+            // RegisterEvent(StateEventType.JumpFinished, _ => JumpFinished());
+
+            InvokeEvent(StateEvent.MyEvent);
         }
 
         protected virtual void DoJump()
@@ -25,18 +51,11 @@ namespace States
 
             if (IsTimerFinished())
             {
-                SM.TriggerEvent(StateEventType.JumpFinished);
+                SM.TriggerEvent(StateEvent.JumpFinished);
                 // JumpFinished();
             }
         }
 
         public State JumpFinished() { return SM.GetGameState(); }
-
-        public override State SpacePerformed() { return null; }
-
-        public override State OnMoveChanged() { return null; }
-        public override State OnGroundChanged() { return null; }
-        public override State OnShiftChanged() { return null; }
-        public override State OnSneakChanged() { return null; }
     }
 }

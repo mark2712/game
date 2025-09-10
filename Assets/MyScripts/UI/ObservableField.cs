@@ -54,3 +54,11 @@ namespace UI
         }
     }
 }
+
+
+// public interface IObservableData<T>
+// {
+//     T Value { get; set; }
+//     void Subscribe(Component component);
+//     void Unsubscribe(Component component);
+// }

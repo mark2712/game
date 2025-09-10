@@ -33,16 +33,16 @@ namespace Entities
             Save();
             NowStats = new(BaseStats);
 
-            Debug.Log(BaseStats.HealthMax);
-            Debug.Log(NowStats.Health.NowValue);
+            // Debug.Log(BaseStats.HealthMax);
+            // Debug.Log(NowStats.Health.NowValue);
 
-            BaseStats.HealthMax = 70;
-            Debug.Log(BaseStats.HealthMax);
-            Debug.Log(NowStats.Health.NowValue);
+            // BaseStats.HealthMax = 70;
+            // Debug.Log(BaseStats.HealthMax);
+            // Debug.Log(NowStats.Health.NowValue);
 
-            NowStats.Health.ChangeNowValue(50, true);
-            Debug.Log(BaseStats.HealthMax);
-            Debug.Log(NowStats.Health.NowValue);
+            // NowStats.Health.ChangeNowValue(50, true);
+            // Debug.Log(BaseStats.HealthMax);
+            // Debug.Log(NowStats.Health.NowValue);
         }
 
         public virtual void StartDialogue() { }

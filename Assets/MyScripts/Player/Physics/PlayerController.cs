@@ -48,7 +48,7 @@ namespace Player
         public float _groundedRayLength;
         public bool slopeLimitCollisionOn = false;
 
-        public Vector2 MoveInput;
+        public Vector2 MoveInput { get; set; }
         protected Vector3 _platformVelocity;
 
         public Transform player; // Тело игрока

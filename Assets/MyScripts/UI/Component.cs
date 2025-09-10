@@ -69,6 +69,85 @@ namespace UI
     }
 
 
+
+    public class Component2_1
+    {
+        public bool IsOpen { get; set; } = false;
+        public void Open()
+        {
+            // проверяем наличие GameObject, если его нет то создаём
+            IsOpen = true;
+            Update();
+        }
+        public void Update()
+        {
+            // логика при обновлении
+            // например изменяем отображаемое значение здоровья
+        }
+        public void Close()
+        {
+            IsOpen = false;
+        }
+        public void Destroy()
+        {
+            Close();
+            // удаляем GameObject
+        }
+    }
+
+
+    public class Component2
+    {
+        private GameObject view; // ссылка на UI-объект (если он есть)
+        public bool IsOpen { get; private set; }
+
+        public void Open(Transform parent)
+        {
+            if (view == null)
+            {
+                view = GameObject.Instantiate(GetPrefab(), parent);
+                OnCreated(view); // инициализация
+            }
+
+            IsOpen = true;
+            Update();
+        }
+
+        public void Update()
+        {
+            if (!IsOpen || view == null)
+                return;
+
+            OnUpdate(view);
+        }
+
+        public void Close()
+        {
+            if (!IsOpen)
+                return;
+
+            IsOpen = false;
+            OnClosed(view); // отписки, скрытие и т.д.
+        }
+
+        public void Destroy()
+        {
+            Close();
+            if (view != null)
+            {
+                GameObject.Destroy(view);
+                view = null;
+            }
+        }
+
+        // ---- точки расширения ----
+        protected virtual GameObject GetPrefab() => null;
+        protected virtual void OnCreated(GameObject view) { }
+        protected virtual void OnUpdate(GameObject view) { }
+        protected virtual void OnClosed(GameObject view) { }
+    }
+
+
     // public class Component
     // {
     //     public UINames Name { get; private set; }

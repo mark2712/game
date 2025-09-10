@@ -2,6 +2,11 @@ namespace States
 {
     public class Inventory : ModalBase
     {
+        public Inventory() : base()
+        {
+            RegisterEvent(StateEvent.TabPerformed, (state, i) => { return new NoneModal(); });
+        }
+
         public override void Enter()
         {
             base.Enter();
@@ -12,11 +17,6 @@ namespace States
         {
             base.Exit();
             GameContext.UIManager.ToggleInventory(false);
-        }
-
-        public override State TabPerformed()
-        {
-            return new NoneModal();
         }
     }
 }

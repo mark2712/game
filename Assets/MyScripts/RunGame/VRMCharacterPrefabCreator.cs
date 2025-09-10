@@ -7,7 +7,7 @@ using UniVRM10;
 public class VRMCharacterPrefabCreator : MonoBehaviour
 {
     // Путь к папке с моделями
-    private string modelsPath => Path.Combine(DataPathManager.ModelsVRMPath, "Source");
+    private string modelsPath => Path.Combine(DataPathManager.ModelsVRM, "Source");
 
     // Структура для хранения модели и её координат
     [System.Serializable]

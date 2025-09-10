@@ -6,13 +6,6 @@ using UnityEngine.InputSystem;
 
 namespace States
 {
-    public enum StateEventType
-    {
-        JumpFinished,
-        HitFinished,
-        InventoryOpened,
-    }
-
     public abstract class ConflictRule
     {
         public SMController SMController = GameContext.SMController;
@@ -58,37 +51,6 @@ namespace States
             }
         }
 
-        /* Создание кастомных событий */
-        public delegate State StateEventHandler(State state);
-        private readonly Dictionary<StateEventType, StateEventHandler> _eventHandlers = new();
-
-        protected void RegisterEvent(StateEventType type, StateEventHandler handler)
-        {
-            _eventHandlers[type] = handler;
-        }
-
-        // выполнить событие
-        public virtual State HandleEvent(StateEventType type)
-        {
-            return _eventHandlers.TryGetValue(type, out var handler) ? handler(this) : null;
-        }
-
-
-        /* Переход в состояние */
-        protected virtual void GoToState<TNewState>() where TNewState : State
-        {
-            TNewState newState = Activator.CreateInstance(typeof(TNewState)) as TNewState;
-            SM.GoToState(newState);
-        }
-        protected virtual void GoToState(State newState)
-        {
-            SM.GoToState(newState);
-        }
-
-        protected virtual void GoToGameState()
-        {
-            SM.GoToState(SM.GetGameState());
-        }
 
         /* Таймер */
         private Dictionary<string, float> timers = new Dictionary<string, float>();
@@ -111,8 +73,74 @@ namespace States
             return false;
         }
 
+        /* Переход в состояние (НЕБЕЗОПАСНО! лучше использовать InvokeEvent) */
+        // protected virtual void GoToState<TNewState>() where TNewState : State
+        // {
+        //     TNewState newState = Activator.CreateInstance(typeof(TNewState)) as TNewState;
+        //     SM.GoToState(newState);
+        // }
+        // protected virtual void GoToState(State newState)
+        // {
+        //     SM.GoToState(newState);
+        // }
 
-        /* SM */
+
+        /* События */
+        public readonly Dictionary<StateEvent, List<Func<State, int, State>>> _events = new();
+
+        /// <summary>
+        /// Регистрирует обработчик события для текущего состояния.
+        /// </summary>
+        protected void RegisterEvent(StateEvent evt, Func<State, int, State> handler)
+        {
+            if (!_events.TryGetValue(evt, out var handlers))
+            {
+                handlers = new List<Func<State, int, State>>();
+                _events[evt] = handlers;
+            }
+
+            handlers.Add(handler);
+        }
+
+        /// <summary>
+        /// Вызывает обработчик события для текущего состояния или базовых состояний.
+        /// </summary>
+        public virtual State InvokeEvent(StateEvent evt, int? index = null)
+        {
+            if (!_events.TryGetValue(evt, out var handlers))
+            {
+                // DebugLog($"Нет события {evt}");
+                return null;
+            }
+
+            int currentIndex = index ?? (handlers.Count - 1);
+
+            if (currentIndex < 0 || currentIndex >= handlers.Count)
+            {
+                DebugLog($"Нет события для номера {currentIndex} | {evt}");
+                return null;
+            }
+
+            return _events[evt][currentIndex](this, currentIndex);
+        }
+
+        /// <summary>
+        /// Вызывает обработчик базового состояния для события. (Аналог base.InvokeEvent в наследовании)
+        /// </summary>
+        protected State InvokeEventBase(StateEvent evt, int currentIndex)
+        {
+            return InvokeEvent(evt, currentIndex - 1);
+        }
+
+        private void DebugLog(object str)
+        {
+#if UNITY_EDITOR
+            Debug.LogWarning(str);
+#endif
+        }
+
+
+        /* SM События */
         public virtual void Enter() { }
         public virtual void Exit() { }
 
@@ -121,59 +149,20 @@ namespace States
         public virtual void Update() { }
         public virtual void LateUpdate() { }
 
-        /* События флагов */
-        public virtual State OnMoveChanged() { return null; }
-        public virtual State OnGroundChanged() { return null; }
-        public virtual State OnShiftChanged() { return null; }
-        public virtual State OnSneakChanged() { return null; }
-        public virtual State OnHandsRopeChanged() { return null; }
-        public virtual State OnLegsRopeChanged() { return null; }
 
         /* Прочие события */
-        // public virtual State StartDialog() { return null; }
-
-        /* События ввода */
         public virtual State ScrollPerformed(InputAction.CallbackContext ctx) { return null; }
+        public virtual void RegisterEventsShiftSneak()
+        {
+            RegisterEvent(StateEvent.ShiftPerformed, (state, i) => { Flags.Set(FlagName.Shift, true); return null; });
+            RegisterEvent(StateEvent.ShiftCanceled, (state, i) => { Flags.Set(FlagName.Shift, false); return null; });
+            RegisterEvent(StateEvent.KeyX, (state, i) => { Flags.Inverse(FlagName.Shift); return null; });
 
-        public virtual State Mouse1Performed() { return null; }
-        public virtual State Mouse2Performed() { return null; }
-        public virtual State Mouse3Performed() { return null; }
-
-        public virtual State EscPerformed() { return null; }
-        public virtual State ConsolePerformed() { return null; }
-        public virtual State TabPerformed() { return null; }
-        public virtual State ShiftPerformed() { return null; }
-        public virtual State ShiftCanceled() { return null; }
-        public virtual State CtrlPerformed() { return null; }
-        public virtual State CtrlCanceled() { return null; }
-        public virtual State AltPerformed() { return null; }
-        public virtual State AltCanceled() { return null; }
-        public virtual State SpacePerformed() { return null; }
-
-        public virtual State KeyQ_performed() { return null; }
-        public virtual State KeyE_performed() { return null; }
-        public virtual State KeyR_performed() { return null; }
-        public virtual State KeyT_performed() { return null; }
-        public virtual State KeyI_performed() { return null; }
-        public virtual State KeyF_performed() { return null; }
-        public virtual State KeyZ_performed() { return null; }
-        public virtual State KeyX_performed() { return null; }
-        public virtual State KeyC_performed() { return null; }
-
-        public virtual State Num1_performed() { return null; }
-        public virtual State Num2_performed() { return null; }
-        public virtual State Num3_performed() { return null; }
-        public virtual State Num4_performed() { return null; }
-        public virtual State Num5_performed() { return null; }
-        public virtual State Num6_performed() { return null; }
-        public virtual State Num7_performed() { return null; }
-        public virtual State Num8_performed() { return null; }
-        public virtual State Num9_performed() { return null; }
-        public virtual State Num0_performed() { return null; }
-
-        public virtual State F1_performed() { return null; }
-        public virtual State F2_performed() { return null; }
-        public virtual State F3_performed() { return null; }
-        public virtual State F4_performed() { return null; }
+            RegisterEvent(StateEvent.CtrlPerformed, (state, i) => { Flags.Set(FlagName.Sneak, true); return null; });
+            RegisterEvent(StateEvent.CtrlCanceled, (state, i) => { Flags.Set(FlagName.Shift, false); return null; });
+            RegisterEvent(StateEvent.AltPerformed, (state, i) => { Flags.Set(FlagName.Shift, true); return null; });
+            RegisterEvent(StateEvent.AltCanceled, (state, i) => { Flags.Set(FlagName.Shift, false); return null; });
+            RegisterEvent(StateEvent.KeyC, (state, i) => { Flags.Inverse(FlagName.Sneak); return null; });
+        }
     }
 }

@@ -1,7 +1,26 @@
+using UnityEngine;
+
 namespace States
 {
     public class Console : PauseBase
     {
+        public override SM SM => SMController.MainSM;
+
+        public Console() : base()
+        {
+            RegisterEvent(StateEvent.ConsolePerformed, (state, i) =>
+            {
+                SM.ReturnToLayer();
+                return null;
+            });
+
+            RegisterEvent(StateEvent.EscPerformed, (state, i) =>
+            {
+                SM.ReturnToLayer();
+                return null;
+            });
+        }
+
         public override void Enter()
         {
             base.Enter();
@@ -12,18 +31,6 @@ namespace States
         {
             base.Exit();
             GameContext.UIManager.ToggleConsole(false);
-        }
-
-        public override State ConsolePerformed()
-        {
-            SM.ReturnToLayer();
-            return null;
-        }
-
-        public override State EscPerformed()
-        {
-            SM.ReturnToLayer();
-            return null;
         }
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerModelRotationSync : MonoBehaviour
+public class PlayerModelRotationSync : MonoBehaviour // прикрепляется на модель
 {
     private Transform syncObj; // объект игрока с которым синхронизируется вращение
     private Transform player; // Ссылка на Transform игрока
