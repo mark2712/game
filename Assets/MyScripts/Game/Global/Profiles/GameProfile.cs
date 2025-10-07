@@ -1,6 +1,7 @@
 using System;
+using UniRx;
 
-public enum ProfileType
+public enum ProfileTypes
 {
     User,   // обычный для основных игры
     System  // системный (например для экрана загрузки)
@@ -8,39 +9,46 @@ public enum ProfileType
 
 public class GameProfile
 {
-    public string ProfileId;
-    public string Name;
-    public string VisibleName;
-    public ProfileType Type = ProfileType.System;
-    public Difficulty Difficulty = Difficulty.Normal;
+    public readonly ReactiveProperty<string> ProfileId = new("");
+    public readonly ReactiveProperty<string> Name = new("");
+    public readonly ReactiveProperty<string> VisibleName = new("");
+    public readonly ReactiveProperty<ProfileTypes> ProfileType = new(ProfileTypes.System);
+    public readonly ReactiveProperty<DifficultyGame> Difficulty = new(DifficultyGame.Normal);
 
     public GameProfile(string name)
     {
-        ProfileId = $"{DateTime.Now:yyyyMMdd_HHmmss}";
-        Name = name;
-        VisibleName = name;
-        // Difficulty = GlobalGame.Settings.DefaultDifficulty;
+        ProfileId.Value  = $"{DateTime.Now:yyyyMMdd_HHmmss}";
+        Name.Value = name;
+        VisibleName.Value = name;
+        // ProfileType.Value = ProfileType.System;
+        // Difficulty.Value = Difficulty.Normal;
+    }
+
+    public GameProfile ChangeProfileType(ProfileTypes type)
+    {
+        ProfileType.Value = type;
+        return this;
     }
 
     public GameProfileData Save()
     {
         return new GameProfileData()
         {
-            ProfileId = ProfileId,
-            Name = Name,
-            VisibleName = VisibleName,
-            Type = Type,
-            Difficulty = Difficulty,
+            ProfileId = ProfileId.Value,
+            Name = Name.Value,
+            VisibleName = VisibleName.Value,
+            ProfileType = ProfileType.Value,
+            Difficulty = Difficulty.Value,
         };
     }
 
     public void Load(GameProfileData gameProfileData)
     {
-        ProfileId = gameProfileData.ProfileId;
-        Name = gameProfileData.Name;
-        VisibleName = gameProfileData.VisibleName;
-        Type = gameProfileData.Type;
-        Difficulty = gameProfileData.Difficulty;
+        ProfileId.Value = gameProfileData.ProfileId;
+        Name.Value = gameProfileData.Name;
+        VisibleName.Value = gameProfileData.VisibleName;
+        ProfileType.Value = gameProfileData.ProfileType;
+        Difficulty.Value = gameProfileData.Difficulty;
     }
 }
 
@@ -50,6 +58,6 @@ public class GameProfileData
     public string ProfileId;
     public string Name;
     public string VisibleName;
-    public ProfileType Type = ProfileType.System;
-    public Difficulty Difficulty = Difficulty.Normal;
+    public ProfileTypes ProfileType = ProfileTypes.System;
+    public DifficultyGame Difficulty = DifficultyGame.Normal;
 }

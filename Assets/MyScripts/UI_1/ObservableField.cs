@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace UI
+namespace UI_1
 {
     public static class ExempleFields
     {

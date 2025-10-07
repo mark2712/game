@@ -38,6 +38,6 @@ public class InitGlobalGame : MonoBehaviour
 
     void LateUpdate()
     {
-
+        GlobalGame.UIController.RenderAll();
     }
 }

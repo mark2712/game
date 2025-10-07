@@ -1,4 +1,4 @@
-public enum Difficulty
+public enum DifficultyGame
 {
     Easy,
     Normal,

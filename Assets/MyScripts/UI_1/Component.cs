@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-namespace UI
+namespace UI_1
 {
     public class Component
     {
@@ -96,6 +98,10 @@ namespace UI
     }
 
 
+
+
+
+
     public class Component2
     {
         private GameObject view; // ссылка на UI-объект (если он есть)
@@ -146,6 +152,137 @@ namespace UI
         protected virtual void OnUpdate(GameObject view) { }
         protected virtual void OnClosed(GameObject view) { }
     }
+
+
+
+
+
+    public abstract class UIComponent<TProps> : MonoBehaviour
+    {
+        protected TProps Props;
+        public GameObject Container;
+        public GameObject View;
+
+        public void Bind(TProps props)
+        {
+            Props = props;
+        }
+
+        public UIComponent<TChildProps> CreateChild<TChildProps, TChild>(GameObject prefab, Transform parent, TChildProps props) where TChild : UIComponent<TChildProps>
+        {
+            var go = GameObject.Instantiate(prefab, parent);
+            var child = go.GetComponent<TChild>();
+            child.Bind(props);
+            child.OpenUI();
+            return child;
+        }
+
+        public UIComponent<TProps> CreateContainer(GameObject container)
+        {
+            Container = container;
+            UIComponent<TProps> UIComponentContainer = Container.AddComponent<UIComponent<TProps>>();
+            // UIComponentContainer.UIComponent = this;
+
+            return UIComponentContainer;
+        }
+
+        public void OpenUI()
+        {
+            // загрузить префаб View в gameObject
+            // найти все вложенные UIComponent в View и сдлеать OpenUI() у них
+            Render();
+        }
+        public void CloseUI() { }
+        public void DestroyUI() { }
+        public virtual void Render() { }
+    }
+
+
+    public class ComponentProfiles : UIComponent<Type>
+    {
+        private Dictionary<string, GameProfile> Profiles = new();
+
+        // public ComponentProfiles(Type props) : base(props)
+        // {
+        //     // подписатся на данные из модели:
+        //     // Profiles = Use(GameProfiles.Profiles); // хук Use автоматически подпишет на изменение Profiles
+        // }
+
+        public override void Render()
+        {
+            // очистить список отображаемых профилей 
+            // имея Profiles обновить данные в View
+            foreach (var profile in Profiles)
+            {
+                // CreateChild<string, ComponentProfile>(profilePrefab, profilesContainer, profile.Value.ProfileId);
+                ComponentProfile componentProfile = new();
+                Transform ProfilesContainer = View.transform.Find("контейнер для профилей");
+                CreateContainer(ProfilesContainer.gameObject);
+                componentProfile.OpenUI();
+            }
+        }
+    }
+
+
+    public class ComponentProfile : UIComponent<string>
+    {
+        private GameProfile Profile;
+
+        // public ComponentProfile(string props) : base(props)
+        // {
+        //     // подписатся на данные из модели:
+        //     // Profile = Use(GameProfiles.Profiles[Props.GameProfileName]); // хук Use автоматически подпишет на изменение Profile
+        // }
+
+        public override void Render()
+        {
+            // имея GameProfile Profile обновить данные в View
+        }
+
+        public void OnClickButton() { } // пример нажатие кнопки
+    }
+
+
+
+    public class UIProfile : MonoBehaviour
+    {
+        public Button OpenProfile;
+        public Button DeleteProfile;
+
+        void Start()
+        {
+            // OpenProfile.onClick.AddListener((props) => Debug.Log($"OpenProfile {props}"));
+            // DeleteProfile.onClick.AddListener((props) => Debug.Log($"DeleteProfile {props}"));
+
+            // OpenProfile.onClick.AddListener(() => Props.OpenProfile?.Invoke());
+            // DeleteProfile.onClick.AddListener(() => Props.DeleteProfile?.Invoke());
+        }
+    }
+
+
+
+
+
+
+
+
+    // public class ComponentProps { }
+
+    // public class ComponentProfileProps
+    // {
+    //     public string GameProfileName;
+    //     // public ComponentProfileProps(string name)
+    //     // {
+    //     //     GameProfileName = name;
+    //     // }
+    // }
+
+
+
+
+
+    // public void Bind(ComponentProps props) { }
+    // public void OpenUI(Transform parent) { }
 
 
     // public class Component

@@ -2,17 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using UniRx;
 using UnityEngine;
 
 public class GameProfiles
 {
     private static readonly Logger Logger = new("GameProfiles");
-    private Dictionary<string, GameProfile> _profiles = new();
-    public IReadOnlyDictionary<string, GameProfile> Profiles => _profiles;
+    private readonly ReactiveDictionary<string, GameProfile> _profiles = new();
+    public IReadOnlyReactiveDictionary<string, GameProfile> Profiles => _profiles; // Только чтение и подписки
 
     public void Add(GameProfile profile)
     {
-        _profiles[profile.ProfileId] = profile;
+        _profiles[profile.ProfileId.Value] = profile;
     }
 
     public void Remove(string profileId)
@@ -20,27 +21,29 @@ public class GameProfiles
         _profiles.Remove(profileId);
     }
 
-    public string Create(string Name, string profileId = null)
+    public GameProfile Create(string Name, string profileId = null, ProfileTypes type = ProfileTypes.System)
     {
         GameProfile profile = new(Name);
         if (profileId != null)
         {
-            profile.ProfileId = profileId;
+            profile.ProfileId.Value = profileId;
         }
 
-        if (_profiles.ContainsKey(profile.ProfileId))
+        if (_profiles.ContainsKey(profile.ProfileId.Value))
         {
-            return "Профиль с таким ID уже существует";
+            Logger.Warning("Профиль с таким ID уже существует");
+            return null;
         }
 
         bool duplicate = _profiles.Values.Any(p => p.Name == profile.Name);
         if (duplicate)
         {
-            profile.VisibleName = $"{profile.Name} {profile.ProfileId}";
+            profile.VisibleName.Value = $"{profile.Name} {profile.ProfileId}";
         }
 
+        profile.ProfileType.Value = type;
         Add(profile);
-        return "Ок";
+        return profile;
     }
 
     public void Archive(string profileId)
@@ -82,11 +85,13 @@ public class GameProfiles
             GameProfileData profileData = SaveDataJSON.Load<GameProfileData>(profileDir, "Profile");
             GameProfile profile = new("");
             profile.Load(profileData);
-            _profiles[profile.ProfileId] = profile;
+            _profiles[profile.ProfileId.Value] = profile;
         }
 
         // создать профиль для сцены загрузки
         Create("SystemLoad", "SystemLoad");
+        Create("Test Profile 1", "Test Profile 1", ProfileTypes.User);
+        Create("Test Profile 2", "Test Profile 2", ProfileTypes.User);
     }
 
     public void Save()
@@ -94,7 +99,7 @@ public class GameProfiles
         foreach (var kvp in _profiles)
         {
             GameProfile profile = kvp.Value;
-            SaveDataJSON.Save(profile.Save(), Path.Combine(DataPathManager.Profiles, profile.ProfileId), "Profile");
+            SaveDataJSON.Save(profile.Save(), Path.Combine(DataPathManager.Profiles, profile.ProfileId.Value), "Profile");
         }
     }
 }

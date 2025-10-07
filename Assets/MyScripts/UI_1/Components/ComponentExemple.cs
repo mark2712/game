@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UI
+namespace UI_1
 {
     public class ComponentExemple : Component
     {

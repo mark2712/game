@@ -4,5 +4,5 @@ using System;
 public class GlobalGameSettings
 {
     public int MaxFPS = 500;
-    public Difficulty DefaultDifficulty = Difficulty.Normal;
+    public DifficultyGame DefaultDifficulty = DifficultyGame.Normal;
 }

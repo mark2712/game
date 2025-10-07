@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UI
+namespace UI_1
 {
     public class UIRender : MonoBehaviour
     {
